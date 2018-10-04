@@ -22,9 +22,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
-            android:parentActivityName=".SplashScreen">
+            android:name=".LoginScreen"
+            android:label="@string/title_activity_login_screen"
+            android:parentActivityName=".SplashScreen"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.halaltokens.halaltokens.SplashScreen" />
