@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "484842987162",
+    "firebase_url": "https://halaltokens.firebaseio.com",
+    "project_id": "halaltokens",
+    "storage_bucket": "halaltokens.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484842987162:android:0cf80ed9714bc673",
+        "android_client_info": {
+          "package_name": "com.halaltokens.halaltokens"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "484842987162-7fb8ro5jh6oa3odivgmmfd8mji1u9aho.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.halaltokens.halaltokens",
+            "certificate_hash": "cf847fc30b055159fdcd2ade226574b5a1d67610"
+          }
+        },
+        {
+          "client_id": "484842987162-s8heqpc8vj0ed5mnn717q2t5uhphclj0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvlQi7oXgtWrEF1iJ_Fm0bhY8yzMcRXf8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484842987162-s8heqpc8vj0ed5mnn717q2t5uhphclj0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
