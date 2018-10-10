@@ -1,9 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationScreen">
+    android:background="@drawable/grad_login_bg"
+    tools:context=".LoginScreen">
 
-</android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/urooms_reg_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/billabong"
+        android:text="@string/urooms"
+        android:textColor="@color/white"
+        android:textSize="75sp" />
+
+    <EditText
+        android:id="@+id/edit_text_email"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="177dp"
+        android:autofillHints="@string/prompt_email"
+        android:background="#55000000"
+        android:fontFamily="@font/roboto_regular"
+        android:hint="@string/email_address"
+        android:inputType="textEmailAddress"
+        android:padding="15dp"
+        android:textColor="@color/white"
+        android:textColorHint="#ffffff"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/edit_text_password"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="122dp"
+        android:autofillHints="@string/prompt_password"
+        android:background="#55000000"
+        android:fontFamily="@font/roboto_regular"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:textColor="@color/white"
+        android:textColorHint="#ffffff"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/reg_button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="62dp"
+        android:background="@drawable/grad_bg"
+        android:fontFamily="@font/roboto_bold"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:text="@string/sign_up"
+        android:textColor="#000000" />
+
+    <Button
+        android:id="@+id/already_user_button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11dp"
+        android:background="@color/transparent"
+        android:fontFamily="@font/roboto_light"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowRadius="4"
+        android:text="@string/already_a_user_click_here_to_log_in"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/sign_up_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="270dp"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="loading.json"
+        app:lottie_loop="true"
+
+        />
+
+
+</RelativeLayout>

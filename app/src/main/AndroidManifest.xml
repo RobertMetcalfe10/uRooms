@@ -30,6 +30,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.halaltokens.halaltokens.SplashScreen" />
         </activity>
+        <activity android:name=".RegistrationScreen"></activity>
     </application>
 
 </manifest>
