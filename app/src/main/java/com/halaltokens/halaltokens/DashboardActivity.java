@@ -23,8 +23,9 @@ import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.halaltokens.halaltokens.dummy.DummyContent;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity implements RoomFragment.OnListFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -46,11 +47,15 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem("TEST", R.mipmap.ic_launcher);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("TEST2", R.mipmap.ic_launcher);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem("Home", R.mipmap.ic_launcher);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Favourites", R.mipmap.ic_launcher);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem("QR", R.mipmap.ic_launcher);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem("Settings", R.mipmap.ic_launcher);
         final AHBottomNavigation ahBottomNavigation = findViewById(R.id.bottom_navigation);
         ahBottomNavigation.addItem(item1);
         ahBottomNavigation.addItem(item2);
+        ahBottomNavigation.addItem(item3);
+        ahBottomNavigation.addItem(item4);
         ahBottomNavigation.setCurrentItem(0);
 
         // Set background color
@@ -121,6 +126,11 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+        Log.v("item", item.content);
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -170,13 +180,18 @@ public class DashboardActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+
+            if(position == 0) {
+                return RoomFragment.newInstance(1);
+            } else {
+                return PlaceholderFragment.newInstance(position + 1);
+            }
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 4;
         }
     }
 }
