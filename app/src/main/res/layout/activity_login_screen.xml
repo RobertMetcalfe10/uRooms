@@ -84,5 +84,19 @@
         android:textColor="@color/white"
         android:textSize="12sp" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/sign_up_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="270dp"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="loading.json"
+        app:lottie_loop="true"
+
+        />
+
+
 
 </RelativeLayout>
