@@ -1,11 +1,9 @@
 package com.halaltokens.halaltokens;
 
+import android.content.Intent;
 import android.graphics.Color;
-import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,10 +17,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+
+import java.util.ArrayList;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -76,7 +79,7 @@ public class DashboardActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -131,8 +134,7 @@ public class DashboardActivity extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        public PlaceholderFragment() {
-        }
+        public PlaceholderFragment(){}
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -150,9 +152,70 @@ public class DashboardActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+//            TextView textView = rootView.findViewById(R.id.section_label);
+//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            //creating an arraylist which contains available rooms
+            ArrayList<String> listOfRooms = new ArrayList<>();
+            listOfRooms.add("first room");
+            listOfRooms.add("second room");
+            listOfRooms.add("third room");
+            listOfRooms.add("fourth room");
+
+            ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, listOfRooms);
+
+            //listview to show the rooms
+            ListView lv = rootView.findViewById(R.id.listView);
+            lv.setAdapter(itemsAdapter);
+
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    String value = (String)adapterView.getItemAtPosition(i);
+
+                    // consider using Java coding conventions (upper first char class names!!!)
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                    // Replace whatever is in the fragment_container view with this fragment,
+                    // and add the transaction to the back stack
+                    transaction.replace(R.id.frag, individualRoomFragment.newInstance("new frag"));
+                    transaction.addToBackStack(null);
+
+                    // Commit the transaction
+                    transaction.commit();
+
+                }
+            });
+
             return rootView;
+        }
+    }
+
+    //another fragment for the individual room info
+    public static class individualRoomFragment extends Fragment {
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View v = inflater.inflate(R.layout.individual_room_frag, container, false);
+
+            TextView tv = v.findViewById(R.id.textViewFrag);
+            tv.setText(getArguments().getString("Wagwan from individual room"));
+
+            return v;
+        }
+
+        public individualRoomFragment(){}
+
+        public static individualRoomFragment newInstance(String text) {
+
+            individualRoomFragment f = new individualRoomFragment();
+            Bundle b = new Bundle();
+            b.putString("msg", text);
+
+            f.setArguments(b);
+
+            return f;
         }
     }
 
