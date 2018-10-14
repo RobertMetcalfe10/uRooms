@@ -3,6 +3,7 @@ package com.halaltokens.halaltokens;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.halaltokens.halaltokens.Runnables.AgRunnable;
 import com.halaltokens.halaltokens.Runnables.CompSciRunnable;
@@ -29,15 +30,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DoSomeTask doSomeTask = new DoSomeTask();
-        doSomeTask.execute();
+        Scraper scraper = new Scraper();
+        scraper.execute();
     }
 
-    class DoSomeTask extends AsyncTask{
+    class Scraper extends AsyncTask<String,Integer,String>{
 
         @Override
-        protected Object doInBackground(Object[] objects) {
+        protected void onProgressUpdate(Integer... values) {
+            //Update the progress of current task
+        }
 
+        @Override
+        protected String doInBackground(String... strings) {
             Map<String, String> map = new HashMap<>();
             map.put("p_butn", "1");
             map.put("p_username", "15551647");
@@ -60,25 +65,27 @@ public class MainActivity extends AppCompatActivity {
             threadPoolExecutor.execute(new AgRunnable(getApplicationContext()));
             //science east
             threadPoolExecutor.execute(new SciEastRunnable(getApplicationContext()));
-
             //science hub
             threadPoolExecutor.execute(new SciHubRunnable(getApplicationContext()));
-
             //science north
             threadPoolExecutor.execute(new SciNorthRunnable(getApplicationContext()));
-
             //science south
             threadPoolExecutor.execute(new SciSouthRunnable(getApplicationContext()));
-
             //science west
             threadPoolExecutor.execute(new SciWestRunnable(getApplicationContext()));
-
             //health science
             threadPoolExecutor.execute(new HealthScienceRunnable(getApplicationContext()));
-
             //eng
             threadPoolExecutor.execute(new EngRunnable(getApplicationContext()));
-            return null;
+            threadPoolExecutor.shutdown();
+            while (!threadPoolExecutor.isTerminated()) { }
+            return "Finished all threads";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            //Show the result obtained from doInBackground
+            Log.i("Finished",s);
         }
     }
 }
