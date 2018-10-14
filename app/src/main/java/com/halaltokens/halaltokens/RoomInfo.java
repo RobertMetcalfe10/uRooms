@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 public class RoomInfo {
 
+    private String roomName;
     private String startTime;
     private String endTime;
     private String moduleCode;
@@ -49,6 +50,19 @@ public class RoomInfo {
         setEndTime(iterator.next().toString());
         setModuleCode(iterator.next().toString());
         setOrganization(iterator.next().toString());
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public String toString() {
+
+        return "Room "+getRoomName()+"\n"+getStartTime()+"\n"+getEndTime()+"\n"+getModuleCode()+"\n"+getOrganization();
     }
 
 }

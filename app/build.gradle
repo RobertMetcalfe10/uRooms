@@ -28,6 +28,10 @@ android {
 //        pickFirst 'lib/armeabi-v7a/htmlunit.so'
 //        pickFirst 'lib/x86/htmlunit.so'
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 dependencies {
