@@ -137,12 +137,13 @@ public class DashboardActivity extends AppCompatActivity {
 
         public PlaceholderFragment(){}
 
+        private static PlaceholderFragment fragment;
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
         public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+            fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -182,7 +183,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                     // Replace whatever is in the fragment_container view with this fragment,
                     // and add the transaction to the back stack
-                    transaction.replace(container.getId(), new individualRoomFragment());
+                    transaction.replace(container.getId(), individualRoomFragment.newInstance(value));
                     transaction.addToBackStack(null);
 
                     // Commit the transaction
@@ -213,18 +214,18 @@ public class DashboardActivity extends AppCompatActivity {
         public void onViewCreated(View view, Bundle savedInstanceState) {
             // Setup any handles to view objects here
 //            tv = view.getRootView().findViewById(R.id.textViewFrag);
-//            assert getArguments() != null;
-//            tv.setText(getArguments().getString("msg"));
-            tv.setText("BLAH");
-            Toast.makeText(getContext(), "INSIDE NEW FRAGMENT: " + tv.getText(), Toast.LENGTH_LONG).show();
+            if (getArguments() != null) {
+                tv.setText(getArguments().getString("msg"));
+                Toast.makeText(getContext(), "INSIDE NEW FRAGMENT: " + tv.getText(), Toast.LENGTH_LONG).show();
+            }
         }
 
         public individualRoomFragment(){}
 
-        public static individualRoomFragment newInstance(String text) {
+        public static individualRoomFragment newInstance(String msg) {
             individualRoomFragment fragment = new individualRoomFragment();
             Bundle args = new Bundle();
-            args.putString("msg", text);
+            args.putString("msg", msg);
             fragment.setArguments(args);
             return fragment;
         }
@@ -244,7 +245,17 @@ public class DashboardActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+//            return individualRoomFragment.newInstance("Blah");
+
+            switch (position) {
+                case 0: // Fragment # 0 - This will show FirstFragment
+                    return PlaceholderFragment.newInstance(position);
+                case 1: // Fragment # 0 - This will show FirstFragment different title
+                    return PlaceholderFragment.newInstance(position+1);
+                default:
+                    return null;
+            }
+
         }
 
         @Override
