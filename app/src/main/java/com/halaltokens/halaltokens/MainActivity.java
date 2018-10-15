@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.halaltokens.halaltokens.Runnables.AgRunnable;
+import com.halaltokens.halaltokens.Runnables.ArtsRunnable;
 import com.halaltokens.halaltokens.Runnables.CompSciRunnable;
 import com.halaltokens.halaltokens.Runnables.EngRunnable;
 import com.halaltokens.halaltokens.Runnables.HealthScienceRunnable;
@@ -77,8 +78,9 @@ public class MainActivity extends AppCompatActivity {
             threadPoolExecutor.execute(new HealthScienceRunnable(getApplicationContext()));
             //eng
             threadPoolExecutor.execute(new EngRunnable(getApplicationContext()));
+            //arts
+            threadPoolExecutor.execute(new ArtsRunnable(getApplicationContext()));
             threadPoolExecutor.shutdown();
-            while (!threadPoolExecutor.isTerminated()) { }
             return "Finished all threads";
         }
 
