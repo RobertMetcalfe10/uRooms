@@ -1,6 +1,5 @@
 package com.halaltokens.halaltokens;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -21,11 +20,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -149,7 +150,7 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
 //            TextView textView = rootView.findViewById(R.id.section_label);
@@ -162,7 +163,7 @@ public class DashboardActivity extends AppCompatActivity {
             listOfRooms.add("third room");
             listOfRooms.add("fourth room");
 
-            ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, listOfRooms);
+            ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, listOfRooms);
 
             //listview to show the rooms
             ListView lv = rootView.findViewById(R.id.listView);
@@ -174,12 +175,14 @@ public class DashboardActivity extends AppCompatActivity {
 
                     String value = (String)adapterView.getItemAtPosition(i);
 
-                    // consider using Java coding conventions (upper first char class names!!!)
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+//                    FragmentManager fragmentManager = getFragmentManager();
+//                    Fragment current_fragment = fragmentManager.findFragmentById(R.id.frag);
 
                     // Replace whatever is in the fragment_container view with this fragment,
                     // and add the transaction to the back stack
-                    transaction.replace(R.id.frag, individualRoomFragment.newInstance("new frag"));
+                    transaction.replace(container.getId(), new individualRoomFragment());
                     transaction.addToBackStack(null);
 
                     // Commit the transaction
@@ -195,27 +198,35 @@ public class DashboardActivity extends AppCompatActivity {
     //another fragment for the individual room info
     public static class individualRoomFragment extends Fragment {
 
+        private static TextView tv;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.individual_room_frag, container, false);
-
-            TextView tv = v.findViewById(R.id.textViewFrag);
-            tv.setText(getArguments().getString("Wagwan from individual room"));
+            tv = v.findViewById(R.id.textViewFrag);
+//            tv.setText(getArguments().getString("msg"));
 
             return v;
+        }
+
+        @Override
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            // Setup any handles to view objects here
+//            tv = view.getRootView().findViewById(R.id.textViewFrag);
+//            assert getArguments() != null;
+//            tv.setText(getArguments().getString("msg"));
+            tv.setText("BLAH");
+            Toast.makeText(getContext(), "INSIDE NEW FRAGMENT: " + tv.getText(), Toast.LENGTH_LONG).show();
         }
 
         public individualRoomFragment(){}
 
         public static individualRoomFragment newInstance(String text) {
-
-            individualRoomFragment f = new individualRoomFragment();
-            Bundle b = new Bundle();
-            b.putString("msg", text);
-
-            f.setArguments(b);
-
-            return f;
+            individualRoomFragment fragment = new individualRoomFragment();
+            Bundle args = new Bundle();
+            args.putString("msg", text);
+            fragment.setArguments(args);
+            return fragment;
         }
     }
 
