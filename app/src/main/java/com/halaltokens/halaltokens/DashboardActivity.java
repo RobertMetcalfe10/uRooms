@@ -1,7 +1,9 @@
 package com.halaltokens.halaltokens;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -19,8 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Spinner;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -130,10 +131,10 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-        Log.v("item", item.content);
-    }
+//    @Override
+//    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+//        Log.v("item", item.content);
+//    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -144,6 +145,7 @@ public class DashboardActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private static PlaceholderFragment fragment;
 
         public PlaceholderFragment(){}
 
@@ -161,21 +163,19 @@ public class DashboardActivity extends AppCompatActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, final ViewGroup container,
-                                 Bundle savedInstanceState) {
+                                 final Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
-//            TextView textView = rootView.findViewById(R.id.section_label);
-//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
             //creating an arraylist which contains available rooms
-            ArrayList<String> listOfRooms = new ArrayList<>();
-            listOfRooms.add("first room");
-            listOfRooms.add("second room");
-            listOfRooms.add("third room");
-            listOfRooms.add("fourth room");
+            final ArrayList<String> listOfBuildings = new ArrayList<>();
+            listOfBuildings.add("first building");
+            listOfBuildings.add("second building");
+            listOfBuildings.add("third building");
+            listOfBuildings.add("fourth building");
 
-            ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, listOfRooms);
+            ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, listOfBuildings);
 
-            //listview to show the rooms
+            //listview to show the buildings
             ListView lv = rootView.findViewById(R.id.listView);
             lv.setAdapter(itemsAdapter);
 
@@ -183,60 +183,31 @@ public class DashboardActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                    String value = (String)adapterView.getItemAtPosition(i);
+//                    String value = (String)adapterView.getItemAtPosition(i);
+//
+//                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//
+//                    // Replace whatever is in the fragment_container view with this fragment,
+//                    // and add the transaction to the back stack
+//                    transaction.replace(container.getId(), IndividualRoomFragment.newInstance(value));
+//                    transaction.addToBackStack(null);
+//
+//                    // Commit the transaction
+//                    transaction.commit();
 
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    //Getting the instance of Spinner and applying OnItemSelectedListener on it
+                    Spinner spin = view.findViewById(R.id.simpleSpinner);
 
-//                    FragmentManager fragmentManager = getFragmentManager();
-//                    Fragment current_fragment = fragmentManager.findFragmentById(R.id.frag);
-
-                    // Replace whatever is in the fragment_container view with this fragment,
-                    // and add the transaction to the back stack
-                    transaction.replace(container.getId(), individualRoomFragment.newInstance(value));
-                    transaction.addToBackStack(null);
-
-                    // Commit the transaction
-                    transaction.commit();
+                    //Creating the ArrayAdapter instance having the bank name list
+                    ArrayAdapter aa = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_item, listOfBuildings);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    //Setting the ArrayAdapter data on the Spinner
+                    spin.setAdapter(aa);
 
                 }
             });
 
             return rootView;
-        }
-    }
-
-    //another fragment for the individual room info
-    public static class individualRoomFragment extends Fragment {
-
-        private static TextView tv;
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.individual_room_frag, container, false);
-            tv = v.findViewById(R.id.textViewFrag);
-//            tv.setText(getArguments().getString("msg"));
-
-            return v;
-        }
-
-        @Override
-        public void onViewCreated(View view, Bundle savedInstanceState) {
-            // Setup any handles to view objects here
-//            tv = view.getRootView().findViewById(R.id.textViewFrag);
-            if (getArguments() != null) {
-                tv.setText(getArguments().getString("msg"));
-                Toast.makeText(getContext(), "INSIDE NEW FRAGMENT: " + tv.getText(), Toast.LENGTH_LONG).show();
-            }
-        }
-
-        public individualRoomFragment(){}
-
-        public static individualRoomFragment newInstance(String msg) {
-            individualRoomFragment fragment = new individualRoomFragment();
-            Bundle args = new Bundle();
-            args.putString("msg", msg);
-            fragment.setArguments(args);
-            return fragment;
         }
     }
 
@@ -254,13 +225,17 @@ public class DashboardActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-//            return individualRoomFragment.newInstance("Blah");
+//            return IndividualRoomFragment.newInstance("Blah");
 
             switch (position) {
                 case 0: // Fragment # 0 - This will show FirstFragment
                     return PlaceholderFragment.newInstance(position);
                 case 1: // Fragment # 0 - This will show FirstFragment different title
                     return PlaceholderFragment.newInstance(position+1);
+                case 2: // Fragment # 0 - This will show FirstFragment
+                    return PlaceholderFragment.newInstance(position+2);
+                case 3: // Fragment # 0 - This will show FirstFragment different title
+                    return PlaceholderFragment.newInstance(position+3);
                 default:
                     return null;
             }
