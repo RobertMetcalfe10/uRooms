@@ -6,12 +6,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Camera;
 import android.net.Uri;
-import android.os.Vibrator;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -21,6 +20,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
@@ -31,9 +32,11 @@ import static android.media.MediaRecorder.VideoSource.CAMERA;
 public class BarcodeActivity extends AppCompatActivity {
 
     SurfaceView surfaceView;
+    SurfaceView surfaceView2;
     CameraSource cameraSource;
     TextView textview;
     BarcodeDetector barcodeDetector;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class BarcodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_barcode);
 
         surfaceView = findViewById(R.id.camerapreview);
+        surfaceView2 = findViewById(R.id.camerapreview2);
+
         textview = findViewById(R.id.textview);
         barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
         cameraSource = new CameraSource.Builder(this, barcodeDetector).setRequestedPreviewSize(640, 480).build();
@@ -75,40 +80,17 @@ public class BarcodeActivity extends AppCompatActivity {
             public void release() {
 
             }
-//
-//            public void ask(View v){
-//                askForPermission(Manifest.permission.CAMERA,CAMERA);
-//            }
-//
-//            final Integer CAMERA = 0x5;
-//
-//            public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//               super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//                if(ActivityCompat.checkSelfPermission(BarcodeActivity.this, permissions[0]) == PackageManager.PERMISSION_GRANTED){
-//
-//                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//                                startActivityForResult(takePictureIntent, 12);
-//                            }
-//
-//                    Toast.makeText(BarcodeActivity.this, "Permission granted", Toast.LENGTH_SHORT).show();
-//                }else{
-//                    Toast.makeText(BarcodeActivity.this, "Permission denied", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
+
                 final SparseArray<Barcode> qrCodes = detections.getDetectedItems();
 
                 if(qrCodes.size()!=0){
                     textview.post(new Runnable() {
                         @Override
                         public void run() {
-                            Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-
-                           textview.setText(qrCodes.valueAt(0).displayValue);
+                            cameraSource.stop();
                             String link = qrCodes.valueAt(0).displayValue;
                             Intent viewIntent =
                                     new Intent("android.intent.action.VIEW",
@@ -126,13 +108,13 @@ public class BarcodeActivity extends AppCompatActivity {
         int requestCode = 1;
         if (ContextCompat.checkSelfPermission(BarcodeActivity.this, permission) != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(BarcodeActivity.this, permission)) {
-                //This is called if user has denied the permission before
-                //In this case I am just asking the permission again
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(BarcodeActivity.this, permission)) {
+//                //This is called if user has denied the permission before
+//                //In this case I am just asking the permission again
+//                ActivityCompat.requestPermissions(BarcodeActivity.this, new String[]{permission}, requestCode);
+//            } else {
                 ActivityCompat.requestPermissions(BarcodeActivity.this, new String[]{permission}, requestCode);
-            } else {
-                ActivityCompat.requestPermissions(BarcodeActivity.this, new String[]{permission}, requestCode);
-            }
+//            }
         } else {
             Toast.makeText(BarcodeActivity.this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
         }

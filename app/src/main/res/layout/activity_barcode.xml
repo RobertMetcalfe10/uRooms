@@ -11,23 +11,28 @@
     <SurfaceView
         android:id="@+id/camerapreview"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="63dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="19dp" />
+         />
+
+    <SurfaceView
+        android:id="@+id/camerapreview2"
+
+        android:layout_width="200sp"
+        android:layout_height="200sp"
+        android:layout_centerInParent="true"
+         />
 
     <TextView
         android:id="@+id/textview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="12dp"
         android:gravity="center"
         android:text="Please Focus on the QR Code"
+        android:layout_marginTop="500sp"
         android:textSize="20sp"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="319dp" />
+       />
 </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
