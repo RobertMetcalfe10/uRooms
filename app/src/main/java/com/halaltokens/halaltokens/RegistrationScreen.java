@@ -127,7 +127,6 @@ public class RegistrationScreen extends AppCompatActivity implements View.OnClic
                 signUpProgress.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
 
-                    finish();
                     Toast.makeText(getApplicationContext(), "User Registration Complete", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(RegistrationScreen.this, LoginScreen.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
