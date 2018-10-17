@@ -14,4 +14,12 @@
         completions."
     </string>
     <string name="title_activity_login_screen">LoginScreen</string>
+    <string name="urooms">uRooms</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="not_a_user_click_here_to_sign_up">Not a User? Click here to Sign Up</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_a_user_click_here_to_log_in">Already a User? Click here to Log In</string>
+    <string name="sign_out">sign_out</string>
 </resources>
