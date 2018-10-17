@@ -1,9 +1,7 @@
 package com.halaltokens.halaltokens;
 
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -12,25 +10,19 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.ExpandableListView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-import com.halaltokens.halaltokens.dummy.DummyContent;
 
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.List;
 
-public class DashboardActivity extends AppCompatActivity {
+
+public class DashboardActivity extends AppCompatActivity implements PlaceholderFragment.OnItemClickListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -77,9 +69,6 @@ public class DashboardActivity extends AppCompatActivity {
         ahBottomNavigation.setForceTint(true);
         Log.i("Current", String.valueOf(ahBottomNavigation.getItemsCount()));
 
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -131,84 +120,12 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-//        Log.v("item", item.content);
-//    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        private static PlaceholderFragment fragment;
-
-        public PlaceholderFragment(){}
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, final ViewGroup container,
-                                 final Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
-
-            //creating an arraylist which contains available rooms
-            final ArrayList<String> listOfBuildings = new ArrayList<>();
-            listOfBuildings.add("first building");
-            listOfBuildings.add("second building");
-            listOfBuildings.add("third building");
-            listOfBuildings.add("fourth building");
-
-            ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, listOfBuildings);
-
-            //listview to show the buildings
-            ListView lv = rootView.findViewById(R.id.listView);
-            lv.setAdapter(itemsAdapter);
-
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-//                    String value = (String)adapterView.getItemAtPosition(i);
-//
-//                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//
-//                    // Replace whatever is in the fragment_container view with this fragment,
-//                    // and add the transaction to the back stack
-//                    transaction.replace(container.getId(), IndividualRoomFragment.newInstance(value));
-//                    transaction.addToBackStack(null);
-//
-//                    // Commit the transaction
-//                    transaction.commit();
-
-                    //Getting the instance of Spinner and applying OnItemSelectedListener on it
-                    Spinner spin = view.findViewById(R.id.simpleSpinner);
-
-                    //Creating the ArrayAdapter instance having the bank name list
-                    ArrayAdapter aa = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_item, listOfBuildings);
-                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    //Setting the ArrayAdapter data on the Spinner
-                    spin.setAdapter(aa);
-
-                }
-            });
-
-            return rootView;
-        }
+    @Override
+    public void onBuildingClicked(String building) {
+//        Log.v("Building", building);
+        Intent intent = new Intent(this, RoomsAvailable.class);
+        intent.putExtra("building", building);
+        startActivity(intent);
     }
 
     /**
@@ -231,11 +148,11 @@ public class DashboardActivity extends AppCompatActivity {
                 case 0: // Fragment # 0 - This will show FirstFragment
                     return PlaceholderFragment.newInstance(position);
                 case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return PlaceholderFragment.newInstance(position+1);
+                    return PlaceholderFragment.newInstance(position + 1);
                 case 2: // Fragment # 0 - This will show FirstFragment
-                    return PlaceholderFragment.newInstance(position+2);
+                    return PlaceholderFragment.newInstance(position + 2);
                 case 3: // Fragment # 0 - This will show FirstFragment different title
-                    return PlaceholderFragment.newInstance(position+3);
+                    return PlaceholderFragment.newInstance(position + 3);
                 default:
                     return null;
             }
@@ -249,3 +166,4 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 }
+
