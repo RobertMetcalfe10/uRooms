@@ -1,12 +1,17 @@
 package com.halaltokens.halaltokens;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -35,6 +40,21 @@ public class RegistrationScreen extends AppCompatActivity implements View.OnClic
 
         findViewById(R.id.reg_button).setOnClickListener(this);
         findViewById(R.id.already_user_button).setOnClickListener(this);
+
+        editPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    hideKeyboard(editPassword);
+                    registerUser();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+
 
 
     }
@@ -123,6 +143,12 @@ public class RegistrationScreen extends AppCompatActivity implements View.OnClic
             }
         });
     }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+    }
+
 }
 
 

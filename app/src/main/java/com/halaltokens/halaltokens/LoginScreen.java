@@ -1,5 +1,6 @@
 package com.halaltokens.halaltokens;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,9 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -29,7 +34,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     EditText editEmail, editPassword;
     private LottieAnimationView signUpProgress;
     private FirebaseAuth.AuthStateListener authStateListener;
-
 
 
     @Override
@@ -51,17 +55,26 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if(firebaseUser != null){
-//                    Toast.makeText(getApplicationContext(), "SIGNED IN", Toast.LENGTH_SHORT).show();
+                if (firebaseUser != null) {
                     finish();
                     startActivity(new Intent(getApplicationContext(), TestActivity.class));
-
-                }else {
-                    Toast.makeText(getApplicationContext(), "NOT SIGNED IN", Toast.LENGTH_SHORT).show();
 
                 }
             }
         };
+
+        editPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    hideKeyboard(editPassword);
+                    userLogin();
+                    return true;
+                }
+                return false;
+            }
+        });
+
 
     }
 
@@ -83,11 +96,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     protected void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(authStateListener);
-//        if (firebaseAuth.getCurrentUser() != null) {
-//            Log.d("HERE",firebaseAuth.getCurrentUser().toString());
-//            finish();
-//            startActivity(new Intent(this, TestActivity.class));
-//        }
     }
 
 
@@ -149,7 +157,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                             firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    new SweetAlertDialog(LoginScreen.this,SweetAlertDialog.ERROR_TYPE)
+                                    new SweetAlertDialog(LoginScreen.this, SweetAlertDialog.ERROR_TYPE)
                                             .setTitleText("Verification Required")
                                             .setContentText("Please check your email for a verification link")
                                             .show();
@@ -164,10 +172,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         });
     }
 
-
-//    public void openSignUpActivity() {
-////        Intent intent = new Intent(this, RegistrationScreen.class);
-////        startActivity(intent);
-////    }
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
 }

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/grad_login_bg"
-    tools:context=".LoginScreen">
+    tools:context=".LoginScreen"
+    android:onClick="hideKeyboard">
 
 
     <TextView
@@ -52,7 +53,8 @@
         android:padding="15dp"
         android:textColor="@color/white"
         android:textColorHint="#ffffff"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:imeOptions="actionSend" />
 
     <Button
         android:id="@+id/reg_button"
