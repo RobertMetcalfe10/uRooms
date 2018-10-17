@@ -1,11 +1,13 @@
 package com.halaltokens.halaltokens;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.halaltokens.halaltokens.Runnables.AgRunnable;
 import com.halaltokens.halaltokens.Runnables.ArtsRunnable;
@@ -41,6 +43,19 @@ public class MainActivity extends AppCompatActivity {
     public void buttonClick(View view) {
         Scraper2 scraper2 = new Scraper2();
         scraper2.execute();
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent
+                .putExtra(Intent.EXTRA_TEXT,
+                        "<---YOUR TEXT HERE--->.");
+        sendIntent.setType("text/plain");
+        sendIntent.setPackage("com.facebook.orca");
+        try {
+            startActivity(sendIntent);
+        }
+        catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this,"Please Install Facebook Messenger", Toast.LENGTH_LONG).show();
+        }
     }
 
     class Scraper extends AsyncTask<String, Integer, String> {
