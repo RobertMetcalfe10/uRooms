@@ -10,7 +10,7 @@
 
 
     <TextView
-        android:id="@+id/urooms_login_text"
+        android:id="@+id/urooms_reg_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -49,15 +49,15 @@
         android:background="#55000000"
         android:fontFamily="@font/roboto_regular"
         android:hint="@string/password"
-        android:imeOptions="actionSend"
         android:inputType="textPassword"
         android:padding="15dp"
         android:textColor="@color/white"
         android:textColorHint="#ffffff"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:imeOptions="actionSend" />
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/reg_button"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -67,11 +67,11 @@
         android:fontFamily="@font/roboto_bold"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:text="@string/log_in"
+        android:text="@string/sign_up"
         android:textColor="#000000" />
 
     <Button
-        android:id="@+id/sign_up_button"
+        android:id="@+id/already_user_button"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -82,7 +82,7 @@
         android:shadowColor="#000000"
         android:shadowDx="2"
         android:shadowRadius="4"
-        android:text="@string/not_a_user_click_here_to_sign_up"
+        android:text="@string/already_a_user_click_here_to_log_in"
         android:textColor="@color/white"
         android:textSize="12sp" />
 
@@ -98,7 +98,6 @@
         app:lottie_loop="true"
 
         />
-
 
 
 </RelativeLayout>
