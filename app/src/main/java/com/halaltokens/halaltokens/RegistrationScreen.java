@@ -20,6 +20,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class RegistrationScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -127,7 +130,9 @@ public class RegistrationScreen extends AppCompatActivity implements View.OnClic
                 signUpProgress.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
 
-                    Toast.makeText(getApplicationContext(), "User Registration Complete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "User Registration Complete\nEmail Verification Sent", Toast.LENGTH_SHORT).show();
+                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                    firebaseUser.sendEmailVerification();
                     Intent i = new Intent(RegistrationScreen.this, LoginScreen.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);

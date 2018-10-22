@@ -165,5 +165,10 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
             return 4;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
 

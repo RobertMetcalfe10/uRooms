@@ -1,6 +1,8 @@
 package com.halaltokens.halaltokens;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,14 +28,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
-    FirebaseAuth firebaseAuth;
-    EditText editEmail, editPassword;
+    private FirebaseAuth firebaseAuth;
+    private EditText editEmail, editPassword;
     private LottieAnimationView signUpProgress;
-    private FirebaseAuth.AuthStateListener authStateListener;
 
 
     @Override
@@ -51,16 +54,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         editPassword = findViewById(R.id.edit_text_password);
         signUpProgress = findViewById(R.id.sign_up_progress);
 
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if (firebaseUser != null &&  firebaseUser.isEmailVerified()) {
-                    startActivity(new Intent(getApplicationContext(), TestActivity.class));
 
-                }
-            }
-        };
 
         editPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -94,7 +88,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onStart() {
         super.onStart();
-        firebaseAuth.addAuthStateListener(authStateListener);
     }
 
 
@@ -148,20 +141,15 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                     if (firebaseUser != null) {
                         if (firebaseUser.isEmailVerified()) {
 
-                            Intent i = new Intent(LoginScreen.this, TestActivity.class);
+                            Intent i = new Intent(LoginScreen.this, DashboardActivity.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
 
                         } else {
-                            firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    new SweetAlertDialog(LoginScreen.this, SweetAlertDialog.ERROR_TYPE)
-                                            .setTitleText("Verification Required")
-                                            .setContentText("Please check your email for a verification link")
-                                            .show();
-                                }
-                            });
+                            new SweetAlertDialog(LoginScreen.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Verification Required")
+                                    .setContentText("Please check your email for a verification link")
+                                    .show();
                         }
                     }
                 } else {
