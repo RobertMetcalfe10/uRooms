@@ -40,21 +40,16 @@ public class RoomsAvailable extends AppCompatActivity {
         // setting list adapter
         expListView.setAdapter(listAdapter);
 
-        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        expListView.setOnChildClickListener((expandableListView, view, groupPosition, childPosition, id) -> {
 
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long id) {
+            //getting the data clicked on
+            TextView tv = view.findViewById(R.id.lblListItem);
+            String data = tv.getText().toString();
 
-                //getting the data clicked on
-                TextView tv = view.findViewById(R.id.lblListItem);
-                String data = tv.getText().toString();
+            //showing an alart dialog for each specific rooms info
+            Utils.showOkAlertDialog(view.getContext(), data, "ROOM INFO");
 
-                //showing an alart dialog for each specific rooms info
-                Utils.showOkAlertDialog(view.getContext(), data, "ROOM INFO");
-
-                return true;
-            }
-
+            return true;
         });
 
     }
