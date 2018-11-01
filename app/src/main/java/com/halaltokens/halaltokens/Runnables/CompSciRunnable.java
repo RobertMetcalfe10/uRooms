@@ -12,6 +12,8 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
+import io.realm.Realm;
+
 public class CompSciRunnable implements Runnable {
 
     private static Context context = null;
@@ -30,6 +32,10 @@ public class CompSciRunnable implements Runnable {
                     roomInfo.setRoomName(doc.title().substring(10));
                     roomInfo.setRoomInfo(doc.getElementById("RB200|0."+i).children());
                     Log.v("Comp",roomInfo.toString());
+                    Realm realm = Realm.getDefaultInstance();
+                    realm.beginTransaction();
+                    realm.copyToRealmOrUpdate(roomInfo);
+                    realm.commitTransaction();
                 } catch (NullPointerException e) {
                     break;
                 }

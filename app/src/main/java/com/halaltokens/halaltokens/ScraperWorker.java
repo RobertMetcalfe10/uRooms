@@ -21,7 +21,6 @@ import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -29,6 +28,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
+import io.realm.Realm;
 
 public class ScraperWorker extends Worker {
 
@@ -41,6 +41,8 @@ public class ScraperWorker extends Worker {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("");
         ref.child("Times on phone").push().setValue("Worked: "+LocalDateTime.now());
+
+        Realm realm = Realm.getDefaultInstance();
 
         try {
 

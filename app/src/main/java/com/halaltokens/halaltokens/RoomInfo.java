@@ -4,8 +4,12 @@ import org.jsoup.select.Elements;
 
 import java.util.Iterator;
 
-public class RoomInfo {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class RoomInfo extends RealmObject {
+
+    @PrimaryKey
     private String roomName;
     private String startTime;
     private String endTime;

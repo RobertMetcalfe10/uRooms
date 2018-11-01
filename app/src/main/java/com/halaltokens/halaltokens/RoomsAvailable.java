@@ -3,6 +3,7 @@ package com.halaltokens.halaltokens;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import io.realm.Realm;
 
 public class RoomsAvailable extends AppCompatActivity {
 
@@ -29,6 +32,10 @@ public class RoomsAvailable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rooms_available);
+        Realm realm = Realm.getDefaultInstance();
+        //make realmobject class that stores room infos, then use in Where
+//        Log.v("Realm",realm.where(ArrayList.class).findAll().toString());
+
 
         Intent intent = getIntent();
         building = intent.getStringExtra("building"); //will be useful later

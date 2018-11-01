@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
+import io.realm.Realm;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class SplashScreen extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
 
+        Realm.init(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
