@@ -3,11 +3,11 @@ apply plugin: 'com.google.gms.google-services'
 
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 26
     defaultConfig {
         applicationId "com.halaltokens.halaltokens"
         minSdkVersion 26
-        targetSdkVersion 27
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -20,15 +20,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-//
+
     packagingOptions {
             exclude 'META-INF/DEPENDENCIES'
             exclude 'META-INF/NOTICE'
             exclude 'META-INF/NOTICE.txt'
             exclude 'META-INF/LICENSE'
             exclude 'META-INF/LICENSE.txt'
-//        pickFirst 'lib/armeabi-v7a/htmlunit.so'
-//        pickFirst 'lib/x86/htmlunit.so'
     }
     compileOptions {
         sourceCompatibility = '1.8'
@@ -38,6 +36,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation "android.arch.work:work-runtime:1.0.0-alpha10"
     implementation 'org.jsoup:jsoup:1.11.3'
     implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'

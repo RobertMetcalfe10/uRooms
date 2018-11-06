@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 public class RoomInfo {
 
+    private String firebaseKey;
     private String roomName;
     private String startTime;
     private String endTime;
@@ -65,4 +66,11 @@ public class RoomInfo {
         return "Room "+getRoomName()+"\n"+getStartTime()+"\n"+getEndTime()+"\n"+getModuleCode()+"\n"+getOrganization();
     }
 
+    public String getFirebaseKey() {
+        return firebaseKey;
+    }
+
+    public void setFirebaseKey(String firebaseKey) {
+        this.firebaseKey = firebaseKey;
+    }
 }

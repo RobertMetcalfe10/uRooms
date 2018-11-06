@@ -2,6 +2,7 @@ package com.halaltokens.halaltokens;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -18,9 +19,11 @@ import com.halaltokens.halaltokens.Runnables.SciWestRunnable;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,32 +35,40 @@ import androidx.work.WorkerParameters;
 
 public class ScraperWorker extends Worker {
 
+    public static Connection.Response response = null;
+
     public ScraperWorker(@NonNull Context context, @NonNull WorkerParameters params) {
         super(context, params);
     }
 
     @Override
     public Worker.Result doWork() {
+            Log.v("HELP", LocalDateTime.now().toString());
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("");
+        ref.setValue(null);
         ref.child("Times on phone").push().setValue("Worked: "+LocalDateTime.now());
 
         try {
-
             Map<String, String> map = new HashMap<>();
             map.put("p_butn", "1");
-            map.put("p_title", "Welcome to SISWeb");
+            map.put("p_title", "Welcome+to+SISWeb");
             map.put("p_username", "15551647");
             map.put("p_password", "Destiny10");
             map.put("p_forward", "W_HU_MENU.P_DISPLAY_MENU¬p_menu=SI-HOME");
             map.put("p_lmet", "SISWEB");
+            map.put("p_parameters", "");
 
             try {
-                Jsoup.connect("https://sisweb.ucd.ie/usis/W_HU_LOGIN.P_PROC_LOGINBUT")
+                Connection.Response loginForm = Jsoup.connect("https://sisweb.ucd.ie/usis/W_HU_MENU.P_DISPLAY_MENU?p_menu=SI-HOME")
+                        .method(Connection.Method.GET)
+                        .execute();
+                response = Jsoup.connect("https://sisweb.ucd.ie/usis/W_HU_LOGIN.P_PROC_LOGINBUT")
                         .method(Connection.Method.POST)
                         .data(map)
-                        .post();
-            } catch (IOException e) {
+                        .cookies(loginForm.cookies())
+                        .execute();
+                } catch (IOException e) {
                 e.printStackTrace();
             }
 

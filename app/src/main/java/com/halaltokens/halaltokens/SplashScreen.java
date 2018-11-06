@@ -13,8 +13,10 @@ import android.view.WindowManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
+import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
@@ -26,12 +28,14 @@ public class SplashScreen extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
+
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -56,20 +60,16 @@ public class SplashScreen extends AppCompatActivity {
             }
         };
 
-
-        PeriodicWorkRequest.Builder scraperBuilder = new PeriodicWorkRequest.Builder(ScraperWorker.class, 2, TimeUnit.HOURS);
-        // ...if you want, you can apply constraints to the builder here...
-
-        // Create the actual work object:
-        PeriodicWorkRequest scraperWork = scraperBuilder.build();
-        // Then enqueue the recurring task:
-        WorkManager.getInstance().enqueue(scraperWork);
-
     }
 
     @Override
     public void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(authStateListener);
+        PeriodicWorkRequest.Builder scraperBuilder = new PeriodicWorkRequest.Builder(ScraperWorker.class, 24, TimeUnit.HOURS);
+        PeriodicWorkRequest scraperWork = scraperBuilder.build();
+        WorkManager.getInstance().cancelAllWork();
+        WorkManager.getInstance().enqueueUniquePeriodicWork("Scraper",ExistingPeriodicWorkPolicy.KEEP,scraperWork);
+
     }
 }
