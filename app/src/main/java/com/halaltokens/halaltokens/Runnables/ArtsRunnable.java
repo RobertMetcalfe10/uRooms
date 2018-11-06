@@ -63,7 +63,6 @@ public class ArtsRunnable implements Runnable {
 
 
         threadPoolExecutor.submit(() -> {
-            ArrayList arrayList = new ArrayList();
             for (String page : artsArraylist) {
                 try {
                     Document doc = Jsoup.connect(page).get();
@@ -73,7 +72,6 @@ public class ArtsRunnable implements Runnable {
                             roomInfo.setRoomName(doc.title().substring(10));
                             roomInfo.setRoomInfo(doc.getElementById("RB200|0." + i).children());
                             Log.v("ArtsRunnable", roomInfo.toString());
-                            arrayList.add(roomInfo);
 
                         } catch (NullPointerException e) {
                             break;
@@ -83,10 +81,6 @@ public class ArtsRunnable implements Runnable {
                     e.printStackTrace();
                 }
             }
-            Realm realm = Realm.getDefaultInstance();
-            realm.beginTransaction();
-            realm.copyToRealmOrUpdate(arrayList);
-            realm.commitTransaction();
         });
 
         threadPoolExecutor.submit(() -> {

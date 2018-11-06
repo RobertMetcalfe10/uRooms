@@ -51,10 +51,6 @@ public class AgRunnable implements Runnable {
                         roomInfo.setRoomName(doc.title().substring(10));
                         roomInfo.setRoomInfo(doc.getElementById("RB200|0." + i).children());
                         Log.v("AG", roomInfo.toString());
-                        Realm realm = Realm.getDefaultInstance();
-                        realm.beginTransaction();
-                        realm.copyToRealmOrUpdate(roomInfo);
-                        realm.commitTransaction();
                     } catch (NullPointerException e) {
                         break;
                     }
