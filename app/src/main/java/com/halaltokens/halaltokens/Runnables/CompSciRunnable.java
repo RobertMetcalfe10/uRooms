@@ -1,25 +1,18 @@
 package com.halaltokens.halaltokens.Runnables;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.halaltokens.halaltokens.R;
 import com.halaltokens.halaltokens.RoomInfo;
 import com.halaltokens.halaltokens.ScraperWorker;
 
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class CompSciRunnable implements Runnable {
 

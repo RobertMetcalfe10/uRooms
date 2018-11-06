@@ -37,6 +37,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import io.realm.Realm;
+
 public class RoomsAvailable extends AppCompatActivity {
 
     ExpandableListAdapter listAdapter;
@@ -54,6 +56,10 @@ public class RoomsAvailable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rooms_available);
+        Realm realm = Realm.getDefaultInstance();
+        //make realmobject class that stores room infos, then use in Where
+//        Log.v("Realm",realm.where(ArrayList.class).findAll().toString());
+
 
         Intent intent = getIntent();
         building = intent.getStringExtra("building"); //will be useful later

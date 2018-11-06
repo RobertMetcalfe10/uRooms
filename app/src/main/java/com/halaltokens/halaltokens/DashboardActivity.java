@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import io.realm.Realm;
+
 
 public class DashboardActivity extends AppCompatActivity implements PlaceholderFragment.OnItemClickListener {
 
@@ -43,7 +45,7 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
+        
         AHBottomNavigationItem item1 = new AHBottomNavigationItem("Home", R.mipmap.ic_launcher);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem("Favourites", R.mipmap.ic_launcher);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem("QR", R.mipmap.ic_launcher);

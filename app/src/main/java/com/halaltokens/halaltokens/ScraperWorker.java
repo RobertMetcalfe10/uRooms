@@ -19,12 +19,9 @@ import com.halaltokens.halaltokens.Runnables.SciWestRunnable;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -43,13 +40,14 @@ public class ScraperWorker extends Worker {
 
     @Override
     public Worker.Result doWork() {
-            Log.v("HELP", LocalDateTime.now().toString());
+        Log.v("HELP", LocalDateTime.now().toString());
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("");
         ref.setValue(null);
         ref.child("Times on phone").push().setValue("Worked: "+LocalDateTime.now());
 
         try {
+
             Map<String, String> map = new HashMap<>();
             map.put("p_butn", "1");
             map.put("p_title", "Welcome+to+SISWeb");
