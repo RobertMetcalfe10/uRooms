@@ -43,6 +43,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.login_button).setOnClickListener(this);
+        findViewById(R.id.forgot_password_activity).setOnClickListener(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -56,7 +57,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null &&  firebaseUser.isEmailVerified()) {
-                    startActivity(new Intent(getApplicationContext(), TestActivity.class));
+                    startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
 
                 }
             }
@@ -88,7 +89,12 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             case R.id.login_button:
                 userLogin();
                 break;
+
+            case R.id.forgot_password_activity:
+                finish();
+                startActivity(new Intent(this,ForgotPassword.class));
         }
+
     }
 
     @Override
@@ -148,7 +154,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                     if (firebaseUser != null) {
                         if (firebaseUser.isEmailVerified()) {
 
-                            Intent i = new Intent(LoginScreen.this, TestActivity.class);
+                            Intent i = new Intent(LoginScreen.this, DashboardActivity.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
 
