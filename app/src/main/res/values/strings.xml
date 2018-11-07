@@ -35,4 +35,5 @@
     <string name="title_activity_forgot_password">ForgotPassword</string>
     <string name="send_email">Send Email</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="sign_out_button">Sign Out</string>
 </resources>
