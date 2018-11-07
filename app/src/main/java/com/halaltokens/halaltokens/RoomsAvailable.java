@@ -15,6 +15,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
@@ -107,19 +108,6 @@ public class RoomsAvailable extends AppCompatActivity {
             AlertDialog alertDialog = Utils.showOkAlertDialog(view.getContext(), data, roomsMap.toString());
             alertDialog.show();
 
-//            Intent sendIntent = new Intent();
-//            sendIntent.setAction(Intent.ACTION_SEND);
-//            sendIntent.putExtra(Intent.EXTRA_TEXT, roomInfos.toString());
-//            sendIntent.setType("text/plain");
-//
-//            sendIntent.setPackage("com.facebook.orca");
-//            try {
-//                startActivity(sendIntent);
-//            }
-//            catch (android.content.ActivityNotFoundException ex) {
-//                Toast.makeText(this,"Please install facebook messenger.",Toast.LENGTH_LONG).show();
-//            }
-
 
             return true;
         });
@@ -134,9 +122,9 @@ public class RoomsAvailable extends AppCompatActivity {
         roomsAvailableMoreThan1hr = new ArrayList<>();
 
         // Adding child data
-        listDataHeader.add("Rooms Available now in");
-        listDataHeader.add("Rooms Avaiable in 1hr");
-        listDataHeader.add("Rooms Avaiable in > 1h");
+        listDataHeader.add("Rooms Available now");
+        listDataHeader.add("Rooms Available in 1hr");
+        listDataHeader.add("Rooms Available in > 1h");
 
         // Adding child data
         roomsAvailableNow.add("Room 1");
