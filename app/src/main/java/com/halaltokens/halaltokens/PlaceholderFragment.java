@@ -61,10 +61,15 @@ public class PlaceholderFragment extends Fragment {
 
         //creating an arraylist which contains available rooms
         final ArrayList<String> listOfBuildings = new ArrayList<>();
-        listOfBuildings.add("first building");
-        listOfBuildings.add("second building");
-        listOfBuildings.add("third building");
-        listOfBuildings.add("fourth building");
+        listOfBuildings.add("CompSci");
+        listOfBuildings.add("Arts");
+        listOfBuildings.add("Eng");
+        listOfBuildings.add("HealthScience");
+        listOfBuildings.add("SciEast");
+        listOfBuildings.add("SciHub");
+        listOfBuildings.add("SciNorth");
+        listOfBuildings.add("SciSouth");
+        listOfBuildings.add("SciWest");
 
         ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, listOfBuildings);
 
@@ -72,12 +77,7 @@ public class PlaceholderFragment extends Fragment {
         ListView lv = rootView.findViewById(R.id.listView);
         lv.setAdapter(itemsAdapter);
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                callback.onBuildingClicked((String) adapterView.getItemAtPosition(i));
-            }
-        });
+        lv.setOnItemClickListener((adapterView, view, i, l) -> callback.onBuildingClicked((String) adapterView.getItemAtPosition(i)));
 
         return rootView;
     }

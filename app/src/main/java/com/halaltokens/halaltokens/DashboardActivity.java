@@ -126,7 +126,7 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
     public void onBuildingClicked(String building) {
 //        Log.v("Building", building);
         Intent intent = new Intent(this, RoomsAvailable.class);
-        intent.putExtra("building", building);
+        intent.putExtra("Building", building);
         startActivity(intent);
     }
 
