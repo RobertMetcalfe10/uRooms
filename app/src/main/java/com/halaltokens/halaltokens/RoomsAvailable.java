@@ -71,6 +71,7 @@ public class RoomsAvailable extends AppCompatActivity {
                 try  {
 
                     try {
+                        //connects to firebase
                         response = Jsoup.connect("https://halaltokens.firebaseio.com/CompSci.json?print=pretty").ignoreContentType(true).execute().body();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -101,39 +102,12 @@ public class RoomsAvailable extends AppCompatActivity {
         // setting list adapter
         expListView.setAdapter(listAdapter);
 
-
-//        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference ref = database.getReference("");
-//        ArrayList<RoomInfo> compSciRooms = new ArrayList<>();
-//        ValueEventListener changeListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                compSciRooms.clear();
-//                for (DataSnapshot child : dataSnapshot.child("CompSci").getChildren()) {
-//                    RoomInfo roomInfo = child.getValue(RoomInfo.class);
-//                    compSciRooms.add(roomInfo);
-//                }
-//                Log.v("ROOMS", "ROOMS");
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        };
-//        ref.addValueEventListener(changeListener);
-
         expListView.setOnChildClickListener((expandableListView, view, groupPosition, childPosition, id) -> {
 
             //getting the data clicked on
             TextView tv = view.findViewById(R.id.lblListItem);
             String data = tv.getText().toString();
 
-            //showing an alart dialog for each specific rooms info
-
-//            ref.child("Updater").setValue(LocalDateTime.now());
-
-//            new Connect().doInBackground("");
             AlertDialog alertDialog = Utils.showOkAlertDialog(view.getContext(), data, roomInfoForRoom.toString());
             alertDialog.show();
 
@@ -151,9 +125,9 @@ public class RoomsAvailable extends AppCompatActivity {
         roomsAvailableMoreThan1hr = new ArrayList<>();
 
         // Adding child data
-        listDataHeader.add("Rooms Available now in");
-        listDataHeader.add("Rooms Avaiable in 1hr");
-        listDataHeader.add("Rooms Avaiable in > 1h");
+        listDataHeader.add("Rooms Available now");
+        listDataHeader.add("Rooms Available in 1hr");
+        listDataHeader.add("Rooms Available in > 1h");
 
         // Adding child data
         roomsAvailableNow.add("Room 1");
@@ -182,17 +156,3 @@ public class RoomsAvailable extends AppCompatActivity {
     }
 }
 
-class Connect extends AsyncTask<String,String,String> {
-
-    @Override
-    protected String doInBackground(String... strings) {
-        Connection.Response response = null;
-        try {
-            response = Jsoup.connect("https://docs-examples.firebaseio.com/rest/saving-data/fireblog/posts.json?print=pretty").execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Log.v("ROOMS", response.statusMessage());
-        return null;
-    }
-}

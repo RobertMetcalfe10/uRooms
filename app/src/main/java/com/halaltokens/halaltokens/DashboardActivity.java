@@ -169,8 +169,8 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
     }
 
     @Override
-    public void onBackPressed() {
-        finish();
+    public void onBackPressed(){
+        //TODO: When user pressed back from home page, close the app...
     }
 }
 
