@@ -44,7 +44,7 @@ public class ScraperWorker extends Worker {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("");
         ref.setValue(null);
-        ref.child("Times on phone").push().setValue("Worked: "+LocalDateTime.now());
+        ref.child("Times on phone").push().setValue(LocalDateTime.now());
 
         try {
 

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -34,7 +36,8 @@ public class RoomsAvailable extends AppCompatActivity {
     List<String> roomsAvailableMoreThan1hr;
     String building;
     String response = null;
-    ArrayList<RoomInfo> roomInfoForRoom = new ArrayList<>();
+    ArrayList<RoomInfo> roomInfos = new ArrayList<>();
+    Map<String,ArrayList<RoomInfo>> roomsMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +61,29 @@ public class RoomsAvailable extends AppCompatActivity {
                 JsonObject jsonObject = jsonParser.parse(response).getAsJsonObject();
                 GsonBuilder gsonBuilder = new GsonBuilder();
                 Gson gson = gsonBuilder.create();
-                roomInfoForRoom.clear();
+                roomsMap.clear();
+                ArrayList<RoomInfo> roomInfoArrayList= new ArrayList<>();
+                String roomName = "";
                 for (Map.Entry<String, JsonElement> object: jsonObject.entrySet()) {
-                    roomInfoForRoom.add(gson.fromJson(object.getValue(), (Type) RoomInfo.class));
+                    RoomInfo roomInfo = gson.fromJson(object.getValue(), (Type) RoomInfo.class);
+                    if (roomName.equals("")) {
+                        roomName = roomInfo.getRoomName();
+                        roomInfoArrayList.add(roomInfo);
+                        continue;
+                    }
+                    if (!roomInfo.getRoomName().equals(roomName)) {
+                        roomsMap.put(roomName.trim(),roomInfoArrayList);
+                        Log.v("ROOMMAP", roomsMap.toString());
+                        roomInfoArrayList.clear();
+                        roomName = roomInfo.getRoomName();
+                        roomInfoArrayList.add(roomInfo);
+                    } else {
+                        roomInfoArrayList.add(roomInfo);
+                    }
                     Log.v("ROOMS", gson.fromJson(object.getValue(), (Type) RoomInfo.class).toString());
                 }
-
+                roomsMap.put(roomName.trim(),roomInfoArrayList);
+                Log.v("MAP", roomsMap.toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -84,8 +104,21 @@ public class RoomsAvailable extends AppCompatActivity {
             TextView tv = view.findViewById(R.id.lblListItem);
             String data = tv.getText().toString();
 
-            AlertDialog alertDialog = Utils.showOkAlertDialog(view.getContext(), data, roomInfoForRoom.toString());
+            AlertDialog alertDialog = Utils.showOkAlertDialog(view.getContext(), data, roomsMap.toString());
             alertDialog.show();
+
+//            Intent sendIntent = new Intent();
+//            sendIntent.setAction(Intent.ACTION_SEND);
+//            sendIntent.putExtra(Intent.EXTRA_TEXT, roomInfos.toString());
+//            sendIntent.setType("text/plain");
+//
+//            sendIntent.setPackage("com.facebook.orca");
+//            try {
+//                startActivity(sendIntent);
+//            }
+//            catch (android.content.ActivityNotFoundException ex) {
+//                Toast.makeText(this,"Please install facebook messenger.",Toast.LENGTH_LONG).show();
+//            }
 
 
             return true;

@@ -3,6 +3,8 @@ package com.halaltokens.halaltokens.Runnables;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.halaltokens.halaltokens.R;
 import com.halaltokens.halaltokens.RoomInfo;
 import com.halaltokens.halaltokens.ScraperWorker;
@@ -39,6 +41,10 @@ public class SciHubRunnable implements Runnable {
         sciHubArraylist.add(context.getString(R.string.H2_32));
         sciHubArraylist.add(context.getString(R.string.H2_38));
         sciHubArraylist.add(context.getString(R.string.H2_40));
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("");
+
         for (String page : sciHubArraylist) {
             try {
                 Document doc = Jsoup.connect(page).cookies(ScraperWorker.response.cookies()).get();
@@ -48,6 +54,7 @@ public class SciHubRunnable implements Runnable {
                         roomInfo.setRoomName(doc.title().substring(10));
                         roomInfo.setRoomInfo(doc.getElementById("RB200|0." + i).children());
                         Log.v("SciHubRunnable", roomInfo.toString());
+                        ref.child("SciHub").push().setValue(roomInfo);
                     } catch (NullPointerException e) {
                         break;
                     }
