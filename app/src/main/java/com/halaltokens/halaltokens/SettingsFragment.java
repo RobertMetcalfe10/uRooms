@@ -1,6 +1,7 @@
 package com.halaltokens.halaltokens;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -23,6 +27,8 @@ public class SettingsFragment extends Fragment {
      * fragment.
      */
     private static SettingsFragment fragment;
+    private FirebaseAuth firebaseAuth;
+
 
 
     public SettingsFragment() {
@@ -42,9 +48,22 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         Button signOutButton = rootView.findViewById(R.id.sign_out_button);
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (firebaseAuth.getCurrentUser() != null) {
+                    firebaseAuth.signOut();
+                    Intent i = new Intent(getContext(), LoginScreen.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }else Toast.makeText(getContext(), "This should not happen. If you see this message you broke the app. Congrats", Toast.LENGTH_LONG).show();
 
-
+            }
+        });
         return rootView;
     }
+
 }
