@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.halaltokens.halaltokens.R;
 import com.halaltokens.halaltokens.RoomInfo;
+import com.halaltokens.halaltokens.ScraperWorker;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,7 +32,7 @@ public class SciEastRunnable implements Runnable {
         sciEastArrayList.add(context.getString(R.string.E2_18));
         for (String page : sciEastArrayList) {
             try {
-                Document doc = Jsoup.connect(page).get();
+                Document doc = Jsoup.connect(page).cookies(ScraperWorker.response.cookies()).get();
                 for (int i = 1; i <= 10; i++) {
                     try {
                         RoomInfo roomInfo = new RoomInfo();

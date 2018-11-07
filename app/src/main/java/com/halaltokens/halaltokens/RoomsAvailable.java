@@ -2,42 +2,27 @@ package com.halaltokens.halaltokens;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.halaltokens.halaltokens.Runnables.CompSciRunnable;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import io.realm.Realm;
 
 public class RoomsAvailable extends AppCompatActivity {
 
@@ -56,41 +41,33 @@ public class RoomsAvailable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rooms_available);
-        Realm realm = Realm.getDefaultInstance();
-        //make realmobject class that stores room infos, then use in Where
-//        Log.v("Realm",realm.where(ArrayList.class).findAll().toString());
-
 
         Intent intent = getIntent();
-        building = intent.getStringExtra("building"); //will be useful later
+        building = intent.getStringExtra("Building");
+        Log.v("Building",building);
 
-        Thread thread = new Thread(new Runnable() {
+        Thread thread = new Thread(() -> {
+            try  {
 
-            @Override
-            public void run() {
-                try  {
+                try {
+                    response = Jsoup.connect("https://halaltokens.firebaseio.com/"+building+".json?print=pretty").ignoreContentType(true).execute().body();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                    try {
-                        //connects to firebase
-                        response = Jsoup.connect("https://halaltokens.firebaseio.com/CompSci.json?print=pretty").ignoreContentType(true).execute().body();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    JsonParser jsonParser = new JsonParser();
-                    JsonObject jsonObject = jsonParser.parse(response).getAsJsonObject();
-                    GsonBuilder gsonBuilder = new GsonBuilder();
-                    Gson gson = gsonBuilder.create();
-                    roomInfoForRoom.clear();
-                    for (Map.Entry<String, JsonElement> object: jsonObject.entrySet()) {
-                        roomInfoForRoom.add(gson.fromJson(object.getValue(), (Type) RoomInfo.class));
-                        Log.v("ROOMS", gson.fromJson(object.getValue(), (Type) RoomInfo.class).toString());
-                    }
+                JsonParser jsonParser = new JsonParser();
+                JsonObject jsonObject = jsonParser.parse(response).getAsJsonObject();
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                Gson gson = gsonBuilder.create();
+                roomInfoForRoom.clear();
+                for (Map.Entry<String, JsonElement> object: jsonObject.entrySet()) {
+                    roomInfoForRoom.add(gson.fromJson(object.getValue(), (Type) RoomInfo.class));
+                    Log.v("ROOMS", gson.fromJson(object.getValue(), (Type) RoomInfo.class).toString());
+                }
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
         });
 
         thread.start();

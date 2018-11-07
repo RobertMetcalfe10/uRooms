@@ -12,16 +12,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ExpandableListView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import io.realm.Realm;
 
 
 public class DashboardActivity extends AppCompatActivity implements PlaceholderFragment.OnItemClickListener {
@@ -126,7 +120,7 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
     public void onBuildingClicked(String building) {
 //        Log.v("Building", building);
         Intent intent = new Intent(this, RoomsAvailable.class);
-        intent.putExtra("building", building);
+        intent.putExtra("Building", building);
         startActivity(intent);
     }
 
@@ -154,7 +148,7 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
                 case 2: // Fragment # 0 - This will show FirstFragment
                     return PlaceholderFragment.newInstance(position + 2);
                 case 3: // Fragment # 0 - This will show FirstFragment different title
-                    return PlaceholderFragment.newInstance(position + 3);
+                    return SettingsFragment.newInstance();
                 default:
                     return null;
             }

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.halaltokens.halaltokens.R;
 import com.halaltokens.halaltokens.RoomInfo;
+import com.halaltokens.halaltokens.ScraperWorker;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -65,7 +66,7 @@ public class ArtsRunnable implements Runnable {
         threadPoolExecutor.submit(() -> {
             for (String page : artsArraylist) {
                 try {
-                    Document doc = Jsoup.connect(page).get();
+                    Document doc = Jsoup.connect(page).cookies(ScraperWorker.response.cookies()).get();
                     for (int i = 1; i <= 10; i++) {
                         try {
                             RoomInfo roomInfo = new RoomInfo();
@@ -86,7 +87,7 @@ public class ArtsRunnable implements Runnable {
         threadPoolExecutor.submit(() -> {
             for (String page : artsArraylist2) {
                 try {
-                    Document doc = Jsoup.connect(page).get();
+                    Document doc = Jsoup.connect(page).cookies(ScraperWorker.response.cookies()).get();
                     for (int i = 1; i <= 10; i++) {
                         try {
                             RoomInfo roomInfo = new RoomInfo();
@@ -106,7 +107,7 @@ public class ArtsRunnable implements Runnable {
         threadPoolExecutor.submit(() -> {
             for (String page : artsArraylist3) {
                 try {
-                    Document doc = Jsoup.connect(page).get();
+                    Document doc = Jsoup.connect(page).cookies(ScraperWorker.response.cookies()).get();
                     for (int i = 1; i <= 10; i++) {
                         try {
                             RoomInfo roomInfo = new RoomInfo();
@@ -126,7 +127,7 @@ public class ArtsRunnable implements Runnable {
         threadPoolExecutor.submit(() -> {
             for (String page : artsArraylist4) {
                 try {
-                    Document doc = Jsoup.connect(page).get();
+                    Document doc = Jsoup.connect(page).cookies(ScraperWorker.response.cookies()).get();
                     for (int i = 1; i <= 10; i++) {
                         try {
                             RoomInfo roomInfo = new RoomInfo();
