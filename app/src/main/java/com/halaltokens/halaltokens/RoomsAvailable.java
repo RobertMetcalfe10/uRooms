@@ -1,7 +1,11 @@
 package com.halaltokens.halaltokens;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,11 +34,11 @@ public class RoomsAvailable extends AppCompatActivity {
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
-    List<String> roomsAvailableNow;
-    List<String> roomsAvailable1hr;
-    List<String> roomsAvailableMoreThan1hr;
+    List<String> listDataHeader = new ArrayList<>();;
+    HashMap<String, List<String>> listDataChild = new HashMap<>();
+    List<String> roomsAvailableNow = new ArrayList<>();
+    List<String> roomsAvailable1hr = new ArrayList<>();
+    List<String> roomsAvailableMoreThan1hr = new ArrayList<>();
     String building;
     String response = null;
     Map<String,ArrayList<RoomInfo>> roomsMap = new ConcurrentHashMap<>();
@@ -51,53 +55,66 @@ public class RoomsAvailable extends AppCompatActivity {
         building = intent.getStringExtra("Building");
         Log.v("Building",building);
 
-        Thread thread = new Thread(() -> {
-            try  {
+        @SuppressLint("StaticFieldLeak") AsyncTask<Context,String,String> asyncTask = new AsyncTask<Context, String, String>() {
 
-                try {
-                    response = Jsoup.connect("https://halaltokens.firebaseio.com/"+building+".json?print=pretty").ignoreContentType(true).execute().body();
-                } catch (IOException e) {
+            @Override
+            protected String doInBackground(Context... contexts) {
+                try  {
+
+                    try {
+                        response = Jsoup.connect("https://halaltokens.firebaseio.com/"+building+".json?print=pretty").ignoreContentType(true).execute().body();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    JsonParser jsonParser = new JsonParser();
+                    JsonObject jsonObject = jsonParser.parse(response).getAsJsonObject();
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    Gson gson = gsonBuilder.create();
+                    roomsMap.clear();
+                    ArrayList<RoomInfo> roomInfoArrayList= new ArrayList<>();
+                    String roomName = "";
+                    for (Map.Entry<String, JsonElement> object: jsonObject.entrySet()) {
+                        RoomInfo roomInfo = gson.fromJson(object.getValue(), (Type) RoomInfo.class);
+                        if (roomName.equals("")) {
+                            roomName = roomInfo.getRoomName();
+                            roomInfoArrayList.add(roomInfo);
+                            continue;
+                        }
+                        if (!roomInfo.getRoomName().equals(roomName)) {
+                            roomsMap.put(roomName.trim(), (ArrayList<RoomInfo>) roomInfoArrayList.clone());
+                            roomInfoArrayList.clear();
+                            roomName = roomInfo.getRoomName();
+                            roomInfoArrayList.add(roomInfo);
+                        } else {
+                            roomInfoArrayList.add(roomInfo);
+                        }
+                    }
+                    roomsMap.put(roomName.trim(),roomInfoArrayList);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                JsonParser jsonParser = new JsonParser();
-                JsonObject jsonObject = jsonParser.parse(response).getAsJsonObject();
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                Gson gson = gsonBuilder.create();
-                roomsMap.clear();
-                ArrayList<RoomInfo> roomInfoArrayList= new ArrayList<>();
-                String roomName = "";
-                for (Map.Entry<String, JsonElement> object: jsonObject.entrySet()) {
-                    RoomInfo roomInfo = gson.fromJson(object.getValue(), (Type) RoomInfo.class);
-                    if (roomName.equals("")) {
-                        roomName = roomInfo.getRoomName();
-                        roomInfoArrayList.add(roomInfo);
-                        continue;
-                    }
-                    if (!roomInfo.getRoomName().equals(roomName)) {
-                        System.out.println(roomInfoArrayList);
-                        roomsMap.put(roomName.trim(), (ArrayList<RoomInfo>) roomInfoArrayList.clone());
-                        roomInfoArrayList.clear();
-                        roomName = roomInfo.getRoomName();
-                        roomInfoArrayList.add(roomInfo);
-                    } else {
-                        roomInfoArrayList.add(roomInfo);
-                    }
-                }
-                roomsMap.put(roomName.trim(),roomInfoArrayList);
-            } catch (Exception e) {
-                e.printStackTrace();
+                return null;
             }
-        });
 
-        thread.start();
+            protected void onPostExecute(String str) {
+                prepareListData();
+
+                listAdapter = new ExpandableListAdapter(getApplicationContext(), listDataHeader, listDataChild);
+                // setting list adapter
+                expListView.setAdapter(listAdapter);
+            }
+        };
+        asyncTask.execute(this);
 
         expListView = findViewById(R.id.expandableListView);
-        prepareListData();
-        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
 
+        prepareListData();
+
+        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
         // setting list adapter
         expListView.setAdapter(listAdapter);
+
 
         expListView.setOnChildClickListener((expandableListView, view, groupPosition, childPosition, id) -> {
 
@@ -105,9 +122,8 @@ public class RoomsAvailable extends AppCompatActivity {
             TextView tv = view.findViewById(R.id.lblListItem);
             String data = tv.getText().toString();
 
-            AlertDialog alertDialog = Utils.showOkAlertDialog(view.getContext(), data, roomsMap.toString());
+            AlertDialog alertDialog = Utils.showOkAlertDialog(RoomsAvailable.this, data, roomsMap.get(data).toString());
             alertDialog.show();
-
 
             return true;
         });
@@ -127,11 +143,7 @@ public class RoomsAvailable extends AppCompatActivity {
         listDataHeader.add("Rooms Available in > 1h");
 
         // Adding child data
-        roomsAvailableNow.add("Room 1");
-        roomsAvailableNow.add("Room 2");
-        roomsAvailableNow.add("Room 3");
-        roomsAvailableNow.add("Room 4");
-        roomsAvailableNow.add("Room 5");
+        roomsAvailableNow.addAll(roomsMap.keySet());
 
         //rooms available in 1 hr
         roomsAvailable1hr.add("Room 1");
