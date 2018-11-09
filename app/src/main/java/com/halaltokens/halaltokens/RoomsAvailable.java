@@ -15,7 +15,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class RoomsAvailable extends AppCompatActivity {
@@ -37,13 +37,15 @@ public class RoomsAvailable extends AppCompatActivity {
     List<String> roomsAvailableMoreThan1hr;
     String building;
     String response = null;
-    ArrayList<RoomInfo> roomInfos = new ArrayList<>();
-    Map<String,ArrayList<RoomInfo>> roomsMap = new HashMap<>();
+    Map<String,ArrayList<RoomInfo>> roomsMap = new ConcurrentHashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rooms_available);
+
+
 
         Intent intent = getIntent();
         building = intent.getStringExtra("Building");
@@ -73,18 +75,16 @@ public class RoomsAvailable extends AppCompatActivity {
                         continue;
                     }
                     if (!roomInfo.getRoomName().equals(roomName)) {
-                        roomsMap.put(roomName.trim(),roomInfoArrayList);
-                        Log.v("ROOMMAP", roomsMap.toString());
+                        System.out.println(roomInfoArrayList);
+                        roomsMap.put(roomName.trim(), (ArrayList<RoomInfo>) roomInfoArrayList.clone());
                         roomInfoArrayList.clear();
                         roomName = roomInfo.getRoomName();
                         roomInfoArrayList.add(roomInfo);
                     } else {
                         roomInfoArrayList.add(roomInfo);
                     }
-                    Log.v("ROOMS", gson.fromJson(object.getValue(), (Type) RoomInfo.class).toString());
                 }
                 roomsMap.put(roomName.trim(),roomInfoArrayList);
-                Log.v("MAP", roomsMap.toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
