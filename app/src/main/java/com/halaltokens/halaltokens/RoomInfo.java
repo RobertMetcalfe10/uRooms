@@ -62,7 +62,7 @@ public class RoomInfo {
 
     public String toString() {
 
-        return "Room "+getRoomName()+"\n"+getStartTime()+"\n"+getEndTime()+"\n"+getModuleCode()+"\n"+getOrganization();
+        return "Room " + getRoomName() + "\n" + getStartTime() + "\n" + getEndTime() + "\n" + getModuleCode() + "\n" + getOrganization();
     }
 
 }

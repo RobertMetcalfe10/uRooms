@@ -49,11 +49,9 @@ public class RoomsAvailable extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rooms_available);
 
-
-
         Intent intent = getIntent();
         building = intent.getStringExtra("Building");
-        Log.v("Building",building);
+        Log.v("Building", building);
 
         @SuppressLint("StaticFieldLeak") AsyncTask<Context,String,String> asyncTask = new AsyncTask<Context, String, String>() {
 
