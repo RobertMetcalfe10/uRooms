@@ -68,10 +68,11 @@ public class SplashScreen extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(authStateListener);
-        PeriodicWorkRequest.Builder scraperBuilder = new PeriodicWorkRequest.Builder(ScraperWorker.class, 24, TimeUnit.HOURS);
-        PeriodicWorkRequest scraperWork = scraperBuilder.build();
-        WorkManager.getInstance().cancelAllWork();
-        WorkManager.getInstance().enqueueUniquePeriodicWork("Scraper",ExistingPeriodicWorkPolicy.KEEP,scraperWork);
+//        This is where all the scraper work starts
+//        PeriodicWorkRequest.Builder scraperBuilder = new PeriodicWorkRequest.Builder(ScraperWorker.class, 24, TimeUnit.HOURS);
+//        PeriodicWorkRequest scraperWork = scraperBuilder.build();
+//        WorkManager.getInstance().cancelAllWork();
+//        WorkManager.getInstance().enqueueUniquePeriodicWork("Scraper",ExistingPeriodicWorkPolicy.KEEP,scraperWork);
 
     }
 }
