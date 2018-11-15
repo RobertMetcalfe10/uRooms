@@ -39,7 +39,6 @@ public class RoomsAvailable extends AppCompatActivity {
     ;
     HashMap<String, List<String>> listDataChild = new HashMap<>();
     List<String> roomsAvailableNow = new ArrayList<>();
-    List<String> roomsAvailable1hr = new ArrayList<>();
     List<String> roomsAvailableMoreThan1hr = new ArrayList<>();
     String building;
     String response = null;
@@ -137,15 +136,16 @@ public class RoomsAvailable extends AppCompatActivity {
 
             AlertDialog alertDialog = Utils.showOkAlertDialog(RoomsAvailable.this, data, roomsMap.get(data).toString());
             alertDialog.show();
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, roomsMap.get(data).toString());
-            sendIntent.setType("text/plain");
-
-// Verify that the intent will resolve to an activity
-            if (sendIntent.resolveActivity(getPackageManager()) != null) {
-                startActivity(sendIntent);
-            }
+//            intent to share
+//            Intent sendIntent = new Intent();
+//            sendIntent.setAction(Intent.ACTION_SEND);
+//            sendIntent.putExtra(Intent.EXTRA_TEXT, roomsMap.get(data).toString());
+//            sendIntent.setType("text/plain");
+//
+//// Verify that the intent will resolve to an activity
+//            if (sendIntent.resolveActivity(getPackageManager()) != null) {
+//                startActivity(sendIntent);
+//            }
 
             return true;
         });
