@@ -12,7 +12,7 @@ import android.widget.Button;
 
 public class Utils {
 
-    //alert dialog (OK button only)
+    //alert dialog for room info
     public static AlertDialog showOkAlertDialog(Context context, String title, String message) {
 
         LayoutInflater factory = LayoutInflater.from(context);
@@ -22,29 +22,22 @@ public class Utils {
         .setView(view)
         .setTitle(title)
         .setMessage(message)
-//        .setPositiveButton(android.R.string.ok, null);
         .setNegativeButton("Cancel", (dialogs, which) -> {
-            //
 
         }).setPositiveButton("", (dialogs, which) -> {
-            //
 
         }).create();
 
         dialog.setOnShowListener(dialogInterface -> {
             Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
 
-            // if you do the following it will be left aligned, doesn't look
-            // correct
-            // button.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_media_play,
-            // 0, 0, 0);
-
-            Drawable drawable = context.getApplicationContext().getResources().getDrawable(
-                    android.R.drawable.btn_star);
+            //could replace this drawable with a material heart outline and when clicked a material filled heart
+            Drawable drawable = context.getApplicationContext().getResources().getDrawable(android.R.drawable.star_off, null);
 
             // set the bounds to place the drawable a bit right
             drawable.setBounds((int) (drawable.getIntrinsicWidth() * 0.5),
-                    0, (int) (drawable.getIntrinsicWidth() * 1.5),
+                    0,
+                    (int) (drawable.getIntrinsicWidth() * 1.5),
                     drawable.getIntrinsicHeight());
             button.setCompoundDrawables(drawable, null, null, null);
             button.setTextColor(Color.BLACK);
