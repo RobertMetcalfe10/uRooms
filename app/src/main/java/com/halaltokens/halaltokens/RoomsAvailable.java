@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -151,13 +152,17 @@ public class RoomsAvailable extends AppCompatActivity {
             TextView tv = view.findViewById(R.id.lblListItem);
             String data = tv.getText().toString();
 
-            FavAlertDialog favAlertDialog = new FavAlertDialog(RoomsAvailable.this, () -> {
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.copyToRealmOrUpdate(roomsMap.get(data));
-                realm.commitTransaction();
-                Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());
-            }, data, roomsMap.get(data).toString());
+            ArrayList<RoomInfo> roomList = roomsMap.get(data);
+
+            FavAlertDialog favAlertDialog = new FavAlertDialog(RoomsAvailable.this, new OnDialogFavListener() {
+                @Override
+                public void onDialogFavButtonClicked() {
+                    Realm realm = Realm.getDefaultInstance();
+                    realm.beginTransaction();
+                    realm.copyToRealmOrUpdate(roomsMap.get(data));
+                    realm.commitTransaction();
+                    Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());                }
+            }, data, roomList);
             favAlertDialog.show();
 //            intent to share
 //            Intent sendIntent = new Intent();

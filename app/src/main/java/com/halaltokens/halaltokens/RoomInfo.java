@@ -3,6 +3,7 @@ package com.halaltokens.halaltokens;
 import org.jsoup.select.Elements;
 
 import java.util.Iterator;
+import java.util.List;
 
 import io.realm.RealmObject;
 
@@ -66,5 +67,6 @@ public class RoomInfo extends RealmObject {
 
         return "Room " + getRoomName() + "\n" + getStartTime() + "\n" + getEndTime() + "\n" + getModuleCode() + "\n" + getOrganization();
     }
+
 
 }
