@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class DashboardActivity extends AppCompatActivity implements BuildingFragment.OnItemClickListener, QRFragment.OnFragmentInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements BuildingFragment.OnItemClickListener,QRFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,7 +44,7 @@ public class DashboardActivity extends AppCompatActivity implements BuildingFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        
+
         AHBottomNavigationItem item1 = new AHBottomNavigationItem("Home", R.mipmap.ic_launcher);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem("Favourites", R.mipmap.ic_launcher);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem("QR", R.mipmap.ic_launcher);
@@ -154,7 +154,7 @@ public class DashboardActivity extends AppCompatActivity implements BuildingFrag
                 case 0: // Fragment # 0 - This will show FirstFragment
                     return BuildingFragment.newInstance(position);
                 case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return BuildingFragment.newInstance(position + 1);
+                    return FavFragment.newInstance();
                 case 2: // Fragment # 0 - This will show FirstFragment
                     return QRFragment.newInstance();
                 case 3: // Fragment # 0 - This will show FirstFragment different title

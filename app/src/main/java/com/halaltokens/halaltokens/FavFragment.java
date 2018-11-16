@@ -23,44 +23,34 @@ import java.util.Objects;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class SettingsFragment extends Fragment {
+public class FavFragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
      */
-    private static SettingsFragment fragment;
-    private FirebaseAuth firebaseAuth;
+    private static FavFragment fragment;
 
-    public SettingsFragment() {
+    public FavFragment() {
     }
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static SettingsFragment newInstance() {
-        fragment = new SettingsFragment();
+    public static FavFragment newInstance() {
+        fragment = new FavFragment();
         return fragment;
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
-
-        firebaseAuth = FirebaseAuth.getInstance();
+        View rootView = inflater.inflate(R.layout.fragment_fav, container, false);
 
 
-        CardView signOutButton = rootView.findViewById(R.id.sign_out_button);
-        signOutButton.setOnClickListener(v -> {
-            if (firebaseAuth.getCurrentUser() != null) {
-                firebaseAuth.signOut();
-                Intent i = new Intent(getContext(), LoginScreen.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }else Toast.makeText(getContext(), "This should not happen. If you see this message you broke the app. Congrats", Toast.LENGTH_LONG).show();
 
-        });
+
+
         return rootView;
     }
 

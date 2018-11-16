@@ -44,20 +44,14 @@ public class RegistrationScreen extends AppCompatActivity implements View.OnClic
         findViewById(R.id.reg_button).setOnClickListener(this);
         findViewById(R.id.already_user_button).setOnClickListener(this);
 
-        editPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    hideKeyboard(editPassword);
-                    registerUser();
-                    return true;
-                }
-                return false;
+        editPassword.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                hideKeyboard(editPassword);
+                registerUser();
+                return true;
             }
+            return false;
         });
-
-
-
 
 
     }
@@ -81,9 +75,6 @@ public class RegistrationScreen extends AppCompatActivity implements View.OnClic
         Intent intent = new Intent(this, LoginScreen.class);
         startActivity(intent);
     }
-
-
-
 
 
     private void registerUser() {
@@ -123,26 +114,24 @@ public class RegistrationScreen extends AppCompatActivity implements View.OnClic
 
         signUpProgress.playAnimation();
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                signUpProgress.cancelAnimation();
-                signUpProgress.setVisibility(View.GONE);
-                if (task.isSuccessful()) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            signUpProgress.cancelAnimation();
+            signUpProgress.setVisibility(View.GONE);
+            if (task.isSuccessful()) {
 
-                    Toast.makeText(getApplicationContext(), "User Registration Complete\nEmail Verification Sent", Toast.LENGTH_SHORT).show();
-                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                Toast.makeText(getApplicationContext(), "User Registration Complete\nEmail Verification Sent", Toast.LENGTH_SHORT).show();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                     firebaseUser.sendEmailVerification();
-                    Intent i = new Intent(RegistrationScreen.this, LoginScreen.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
 
-                } else {
-                    Toast.makeText(getApplicationContext(), "An Error Occurred", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(RegistrationScreen.this, LoginScreen.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
 
-                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                        Toast.makeText(getApplicationContext(), "This Email Address is already in Use.", Toast.LENGTH_SHORT).show();
-                    }
+            } else {
+                Toast.makeText(getApplicationContext(), "An Error Occurred", Toast.LENGTH_SHORT).show();
+
+                if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                    Toast.makeText(getApplicationContext(), "This Email Address is already in Use.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -150,7 +139,9 @@ public class RegistrationScreen extends AppCompatActivity implements View.OnClic
 
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
 }
