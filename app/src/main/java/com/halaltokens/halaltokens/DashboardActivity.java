@@ -154,7 +154,7 @@ public class DashboardActivity extends AppCompatActivity implements BuildingFrag
                 case 0: // Fragment # 0 - This will show FirstFragment
                     return BuildingFragment.newInstance(position);
                 case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return BuildingFragment.newInstance(position + 1);
+                    return FavFragment.newInstance();
                 case 2: // Fragment # 0 - This will show FirstFragment
                     return QRFragment.newInstance();
                 case 3: // Fragment # 0 - This will show FirstFragment different title
