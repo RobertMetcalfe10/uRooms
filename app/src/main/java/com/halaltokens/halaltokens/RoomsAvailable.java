@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -39,7 +40,6 @@ public class RoomsAvailable extends AppCompatActivity {
     HashMap<String, List<String>> listDataChild = new HashMap<>();
     List<String> roomsAvailableNow = new ArrayList<>();
     List<String> roomsAvailableNowIn1hr = new ArrayList<>();
-    List<String> roomsAvailableMoreThan1hr = new ArrayList<>();
     String building;
     String response = null;
     Map<String, ArrayList<RoomInfo>> roomsMap = new ConcurrentHashMap<>();
@@ -150,26 +150,34 @@ public class RoomsAvailable extends AppCompatActivity {
 
             //getting the data clicked on
             TextView tv = view.findViewById(R.id.lblListItem);
+            ImageView iv = view.findViewById(R.id.lblListImage);
             String data = tv.getText().toString();
+            iv.setImageResource(android.R.drawable.star_on);
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+            realm.copyToRealmOrUpdate(roomsMap.get(data).get(0));
+            realm.commitTransaction();
+            Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());
 
-            ArrayList<RoomInfo> roomList = roomsMap.get(data);
 
-            FavAlertDialog favAlertDialog = new FavAlertDialog(RoomsAvailable.this, new OnDialogFavListener() {
-                @Override
-                public void onDialogFavButtonClicked() {
-                    Realm realm = Realm.getDefaultInstance();
-                    realm.beginTransaction();
-                    realm.copyToRealmOrUpdate(roomsMap.get(data));
-                    realm.commitTransaction();
-                    Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());                }
-            }, data, roomList);
-            favAlertDialog.show();
+//            ArrayList<RoomInfo> roomList = roomsMap.get(data);
+
+//            FavAlertDialog favAlertDialog = new FavAlertDialog(RoomsAvailable.this, new OnDialogFavListener() {
+//                @Override
+//                public void onDialogFavButtonClicked() {
+//                    Realm realm = Realm.getDefaultInstance();
+//                    realm.beginTransaction();
+//                    realm.copyToRealmOrUpdate(roomsMap.get(data));
+//                    realm.commitTransaction();
+//                    Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());                }
+//            }, data, roomList);
+//            favAlertDialog.show();
 //            intent to share
 //            Intent sendIntent = new Intent();
 //            sendIntent.setAction(Intent.ACTION_SEND);
 //            sendIntent.putExtra(Intent.EXTRA_TEXT, roomsMap.get(data).toString());
 //            sendIntent.setType("text/plain");
-//
+
 //// Verify that the intent will resolve to an activity
 //            if (sendIntent.resolveActivity(getPackageManager()) != null) {
 //                startActivity(sendIntent);
