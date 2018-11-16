@@ -129,6 +129,11 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
         startActivity(intent);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
