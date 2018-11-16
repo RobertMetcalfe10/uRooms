@@ -37,6 +37,7 @@ public class RoomsAvailable extends AppCompatActivity {
     List<String> listDataHeader = new ArrayList<>();
     HashMap<String, List<String>> listDataChild = new HashMap<>();
     List<String> roomsAvailableNow = new ArrayList<>();
+    List<String> roomsAvailableNowIn1hr = new ArrayList<>();
     List<String> roomsAvailableMoreThan1hr = new ArrayList<>();
     String building;
     String response = null;
@@ -99,14 +100,32 @@ public class RoomsAvailable extends AppCompatActivity {
 
                 for (Map.Entry<String,ArrayList<RoomInfo>> roomInfos : roomsMap.entrySet()) {
                     boolean checked = false;
+                    boolean checked1 = false;
                     for (RoomInfo roomInfo : roomInfos.getValue()) {
-                        if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == LocalDateTime.now().getHour()) {
-                            checked = true;
+                        if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == Integer.parseInt(roomInfo.getEndTime().substring(0,2))-1) {
+                            if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == LocalDateTime.now().getHour() || Integer.parseInt(roomInfo.getEndTime().substring(0,2)) == LocalDateTime.now().getHour()) {
+                                checked = true;
+                                continue;
+                            }
+                        }
+                        if (roomInfo.getStartTime().substring(0,2).equals(roomInfo.getEndTime().substring(0,2))) {
+                            if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == LocalDateTime.now().getHour()) {
+                                checked = true;
+                            }
                         }
                     }
                     if (!checked) {
                         roomsAvailableNow.add(roomInfos.getKey());
                     }
+                    for (RoomInfo roomInfo : roomInfos.getValue()) {
+                        if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == LocalDateTime.now().getHour()+1) {
+                            checked1 = true;
+                        }
+                    }
+                    if (!checked1) {
+                        roomsAvailableNowIn1hr.add(roomInfos.getKey());
+                    }
+
                 }
                 prepareListData();
 
@@ -162,12 +181,9 @@ public class RoomsAvailable extends AppCompatActivity {
 
         // Adding child data
         listDataHeader.add("Rooms Available now");
-        listDataHeader.add("Rooms Available in > 1hr");
-
-        //rooms available in > 1hr
-        roomsAvailableMoreThan1hr.addAll(roomsMap.keySet());
+        listDataHeader.add("Rooms Available in an hour");
 
         listDataChild.put(listDataHeader.get(0), roomsAvailableNow); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), roomsAvailableMoreThan1hr);
+        listDataChild.put(listDataHeader.get(1), roomsAvailableNowIn1hr);
     }
 }
