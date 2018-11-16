@@ -2,6 +2,7 @@ package com.halaltokens.halaltokens;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -12,13 +13,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ExpandableListView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
-public class DashboardActivity extends AppCompatActivity implements BuildingFragment.OnItemClickListener {
+public class DashboardActivity extends AppCompatActivity implements BuildingFragment.OnItemClickListener, QRFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -124,6 +129,11 @@ public class DashboardActivity extends AppCompatActivity implements BuildingFrag
         startActivity(intent);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -146,7 +156,7 @@ public class DashboardActivity extends AppCompatActivity implements BuildingFrag
                 case 1: // Fragment # 0 - This will show FirstFragment different title
                     return BuildingFragment.newInstance(position + 1);
                 case 2: // Fragment # 0 - This will show FirstFragment
-                    return BuildingFragment.newInstance(position + 2);
+                    return QRFragment.newInstance();
                 case 3: // Fragment # 0 - This will show FirstFragment different title
                     return SettingsFragment.newInstance();
                 default:
