@@ -30,15 +30,11 @@ public class FavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
         public TextView titleView;
-        public TextView authorView;
-        public SimpleDraweeView imageView;
 
         public BookViewHolder(View v) {
             super(v);
 
             titleView = (TextView) v.findViewById(R.id.title);
-            authorView = (TextView) v.findViewById(R.id.author);
-            imageView = (SimpleDraweeView) v.findViewById(R.id.image);
         }
     }
 
@@ -70,8 +66,6 @@ public class FavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Book item = items.get(position);
         BookViewHolder vh = (BookViewHolder) holder;
         vh.titleView.setText(item.getTitle());
-        vh.authorView.setText(item.getAuthor());
-        vh.imageView.setImageURI(Uri.parse(item.getImageUrl()));
         vh.data = item;
     }
 }
