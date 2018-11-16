@@ -3,6 +3,8 @@ package com.halaltokens.halaltokens.Runnables;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.halaltokens.halaltokens.R;
 import com.halaltokens.halaltokens.RoomInfo;
 import com.halaltokens.halaltokens.ScraperWorker;
@@ -63,6 +65,9 @@ public class HealthScienceRunnable implements Runnable {
         healthScienceArraylist4.add(context.getString(R.string.B342));
         healthScienceArraylist4.add(context.getString(R.string.B109));
 
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("");
+
         ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         threadPoolExecutor.submit(() -> {
             for (String page : healthScienceArraylist) {
@@ -74,6 +79,7 @@ public class HealthScienceRunnable implements Runnable {
                             roomInfo.setRoomName(doc.title().substring(10));
                             roomInfo.setRoomInfo(doc.getElementById("RB200|0." + i).children());
                             Log.v("HealthScienceRunnable", roomInfo.toString());
+                            ref.child("HealthScience").push().setValue(roomInfo);
                         } catch (NullPointerException e) {
                             break;
                         }
@@ -94,6 +100,7 @@ public class HealthScienceRunnable implements Runnable {
                             roomInfo.setRoomName(doc.title().substring(10));
                             roomInfo.setRoomInfo(doc.getElementById("RB200|0." + i).children());
                             Log.v("HealthScienceRunnable", roomInfo.toString());
+                            ref.child("HealthScience").push().setValue(roomInfo);
                         } catch (NullPointerException e) {
                             break;
                         }
@@ -114,6 +121,7 @@ public class HealthScienceRunnable implements Runnable {
                             roomInfo.setRoomName(doc.title().substring(10));
                             roomInfo.setRoomInfo(doc.getElementById("RB200|0." + i).children());
                             Log.v("HealthScienceRunnable", roomInfo.toString());
+                            ref.child("HealthScience").push().setValue(roomInfo);
                         } catch (NullPointerException e) {
                             break;
                         }
@@ -134,6 +142,7 @@ public class HealthScienceRunnable implements Runnable {
                             roomInfo.setRoomName(doc.title().substring(10));
                             roomInfo.setRoomInfo(doc.getElementById("RB200|0." + i).children());
                             Log.v("HealthScienceRunnable", roomInfo.toString());
+                            ref.child("HealthScience").push().setValue(roomInfo);
                         } catch (NullPointerException e) {
                             break;
                         }

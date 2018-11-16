@@ -12,14 +12,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ExpandableListView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class DashboardActivity extends AppCompatActivity implements PlaceholderFragment.OnItemClickListener {
@@ -167,6 +163,8 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
     }
 
     @Override
-    public void onBackPressed() { }
+    public void onBackPressed(){
+        //TODO: When user pressed back from home page, close the app...
+    }
 }
 
