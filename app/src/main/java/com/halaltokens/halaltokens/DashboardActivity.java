@@ -125,13 +125,8 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
     public void onBuildingClicked(String building) {
 //        Log.v("Building", building);
         Intent intent = new Intent(this, RoomsAvailable.class);
-        intent.putExtra("building", building);
+        intent.putExtra("Building", building);
         startActivity(intent);
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     /**
@@ -170,6 +165,11 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
             // Show 3 total pages.
             return 4;
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        //TODO: When user pressed back from home page, close the app...
     }
 }
 
