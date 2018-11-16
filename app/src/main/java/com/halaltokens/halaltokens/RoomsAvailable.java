@@ -131,8 +131,13 @@ public class RoomsAvailable extends AppCompatActivity {
             TextView tv = view.findViewById(R.id.lblListItem);
             String data = tv.getText().toString();
 
-            AlertDialog alertDialog = Utils.showOkAlertDialog(RoomsAvailable.this, data, roomsMap.get(data).toString());
-            alertDialog.show();
+            FavAlertDialog favAlertDialog = new FavAlertDialog(RoomsAvailable.this, new OnDialogFavListener() {
+                @Override
+                public void onDialogFavButtonClicked() {
+                    Log.v("FavClicked", "clicked");
+                }
+            }, data, roomsMap.get(data).toString());
+            favAlertDialog.show();
 //            intent to share
 //            Intent sendIntent = new Intent();
 //            sendIntent.setAction(Intent.ACTION_SEND);

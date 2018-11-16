@@ -10,23 +10,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
-public class Utils {
+public class FavAlertDialog extends AlertDialog{
+    private final OnDialogFavListener listener;
+    private AlertDialog dialog;
 
-    //alert dialog for room info
-    public static AlertDialog showOkAlertDialog(Context context, String title, String message) {
+    protected FavAlertDialog(Context context, OnDialogFavListener onDialogFavListener, String title, String message) {
+        super(context);
+        listener = onDialogFavListener;
 
         LayoutInflater factory = LayoutInflater.from(context);
         final View view = factory.inflate(R.layout.alert_layout, null);
 
-        AlertDialog dialog = new AlertDialog.Builder(context)
-        .setView(view)
-        .setTitle(title)
-        .setMessage(message)
-        .setNegativeButton("Cancel", (dialogs, which) -> {
-
-        }).setPositiveButton("", (dialogs, which) -> {
-
-        }).create();
+        dialog = new AlertDialog.Builder(context)
+                .setView(view)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("TEST", (dialogs, which) -> {
+                    listener.onDialogFavButtonClicked();
+                }).create();
 
         dialog.setOnShowListener(dialogInterface -> {
             Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
@@ -45,9 +46,11 @@ public class Utils {
             // could modify the placement more here if desired
             // button.setCompoundDrawablePadding();
         });
-
-
-        return dialog;
     }
+
+    public void show() {
+        dialog.show();
+    }
+
 
 }
