@@ -18,7 +18,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
 
 
-public class DashboardActivity extends AppCompatActivity implements PlaceholderFragment.OnItemClickListener {
+public class DashboardActivity extends AppCompatActivity implements BuildingFragment.OnItemClickListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -137,16 +137,16 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+            // Return a BuildingFragment (defined as a static inner class below).
 //            return IndividualRoomFragment.newInstance("Blah");
 
             switch (position) {
                 case 0: // Fragment # 0 - This will show FirstFragment
-                    return PlaceholderFragment.newInstance(position);
+                    return BuildingFragment.newInstance(position);
                 case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return PlaceholderFragment.newInstance(position + 1);
+                    return BuildingFragment.newInstance(position + 1);
                 case 2: // Fragment # 0 - This will show FirstFragment
-                    return PlaceholderFragment.newInstance(position + 2);
+                    return BuildingFragment.newInstance(position + 2);
                 case 3: // Fragment # 0 - This will show FirstFragment different title
                     return SettingsFragment.newInstance();
                 default:
