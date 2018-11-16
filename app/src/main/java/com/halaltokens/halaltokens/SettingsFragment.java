@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -28,8 +30,6 @@ public class SettingsFragment extends Fragment {
      */
     private static SettingsFragment fragment;
     private FirebaseAuth firebaseAuth;
-
-
 
     public SettingsFragment() {
     }
@@ -50,20 +50,20 @@ public class SettingsFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        Button signOutButton = rootView.findViewById(R.id.sign_out_button);
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (firebaseAuth.getCurrentUser() != null) {
-                    firebaseAuth.signOut();
-                    Intent i = new Intent(getContext(), LoginScreen.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
-                }else Toast.makeText(getContext(), "This should not happen. If you see this message you broke the app. Congrats", Toast.LENGTH_LONG).show();
 
-            }
+        CardView signOutButton = rootView.findViewById(R.id.sign_out_button);
+        signOutButton.setOnClickListener(v -> {
+            if (firebaseAuth.getCurrentUser() != null) {
+                firebaseAuth.signOut();
+                Intent i = new Intent(getContext(), LoginScreen.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }else Toast.makeText(getContext(), "This should not happen. If you see this message you broke the app. Congrats", Toast.LENGTH_LONG).show();
+
         });
         return rootView;
     }
+
+
 
 }
