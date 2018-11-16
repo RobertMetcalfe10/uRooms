@@ -1,7 +1,6 @@
 package com.halaltokens.halaltokens;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -27,6 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import io.realm.Realm;
 
 
 public class RoomsAvailable extends AppCompatActivity {
@@ -131,11 +132,12 @@ public class RoomsAvailable extends AppCompatActivity {
             TextView tv = view.findViewById(R.id.lblListItem);
             String data = tv.getText().toString();
 
-            FavAlertDialog favAlertDialog = new FavAlertDialog(RoomsAvailable.this, new OnDialogFavListener() {
-                @Override
-                public void onDialogFavButtonClicked() {
-                    Log.v("FavClicked", "clicked");
-                }
+            FavAlertDialog favAlertDialog = new FavAlertDialog(RoomsAvailable.this, () -> {
+                Realm realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                realm.copyToRealmOrUpdate(roomsMap.get(data));
+                realm.commitTransaction();
+                Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());
             }, data, roomsMap.get(data).toString());
             favAlertDialog.show();
 //            intent to share
