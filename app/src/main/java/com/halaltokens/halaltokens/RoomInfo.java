@@ -3,6 +3,7 @@ package com.halaltokens.halaltokens;
 import org.jsoup.select.Elements;
 
 import java.util.Iterator;
+import java.util.List;
 
 public class RoomInfo {
 
@@ -64,5 +65,6 @@ public class RoomInfo {
 
         return "Room " + getRoomName() + "\n" + getStartTime() + "\n" + getEndTime() + "\n" + getModuleCode() + "\n" + getOrganization();
     }
+
 
 }

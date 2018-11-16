@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +125,8 @@ public class RoomsAvailable extends AppCompatActivity {
         // setting list adapter
         expListView.setAdapter(listAdapter);
 
+        //convert string to list
+
 
         expListView.setOnChildClickListener((expandableListView, view, groupPosition, childPosition, id) -> {
 
@@ -131,12 +134,14 @@ public class RoomsAvailable extends AppCompatActivity {
             TextView tv = view.findViewById(R.id.lblListItem);
             String data = tv.getText().toString();
 
+            ArrayList<RoomInfo> roomList = roomsMap.get(data);
+
             FavAlertDialog favAlertDialog = new FavAlertDialog(RoomsAvailable.this, new OnDialogFavListener() {
                 @Override
                 public void onDialogFavButtonClicked() {
                     Log.v("FavClicked", "clicked");
                 }
-            }, data, roomsMap.get(data).toString());
+            }, data, roomList);
             favAlertDialog.show();
 //            intent to share
 //            Intent sendIntent = new Intent();
