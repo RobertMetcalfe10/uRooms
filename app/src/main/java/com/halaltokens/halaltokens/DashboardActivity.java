@@ -13,17 +13,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ExpandableListView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-
-public class DashboardActivity extends AppCompatActivity implements BuildingFragment.OnItemClickListener, QRFragment.OnFragmentInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements QRFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -87,13 +82,10 @@ public class DashboardActivity extends AppCompatActivity implements BuildingFrag
             }
         });
 
-        ahBottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
-            @Override
-            public boolean onTabSelected(int position, boolean wasSelected) {
-                Log.i("Position", String.valueOf(position));
-                mViewPager.setCurrentItem(position);
-                return true;
-            }
+        ahBottomNavigation.setOnTabSelectedListener((position, wasSelected) -> {
+            Log.i("Position", String.valueOf(position));
+            mViewPager.setCurrentItem(position);
+            return true;
         });
 
     }
@@ -122,14 +114,6 @@ public class DashboardActivity extends AppCompatActivity implements BuildingFrag
     }
 
     @Override
-    public void onBuildingClicked(String building) {
-//        Log.v("Building", building);
-        Intent intent = new Intent(this, RoomsAvailable.class);
-        intent.putExtra("Building", building);
-        startActivity(intent);
-    }
-
-    @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
@@ -152,9 +136,17 @@ public class DashboardActivity extends AppCompatActivity implements BuildingFrag
 
             switch (position) {
                 case 0: // Fragment # 0 - This will show FirstFragment
-                    return BuildingFragment.newInstance(position);
+                    return BuildingFragment.newInstance(building -> {
+                        Intent intent = new Intent(getApplicationContext(), RoomsAvailable.class);
+                        intent.putExtra("Building", building);
+                        startActivity(intent);
+                    });
                 case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return BuildingFragment.newInstance(position + 1);
+                    return BuildingFragment.newInstance(building -> {
+                        Intent intent = new Intent(getApplicationContext(), RoomsAvailable.class);
+                        intent.putExtra("Building", building);
+                        startActivity(intent);
+                    });
                 case 2: // Fragment # 0 - This will show FirstFragment
                     return QRFragment.newInstance();
                 case 3: // Fragment # 0 - This will show FirstFragment different title
