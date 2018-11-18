@@ -9,7 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -42,14 +46,22 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         final String childText = (String) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this.context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_item, null);
         }
 
         TextView txtListChild = convertView.findViewById(R.id.lblListItem);
+        ImageView imageView = convertView.findViewById(R.id.lblListImage);
 
         txtListChild.setText(childText);
+
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<RoomInfo> roomInfoRealmResults = realm.where(RoomInfo.class).findAll();
+        for (RoomInfo roomInfo : roomInfoRealmResults) {
+            if (roomInfo.getRoomName().trim().equals(childText)) {
+                imageView.setImageResource(android.R.drawable.star_on);
+            }
+        }
         return convertView;
     }
 

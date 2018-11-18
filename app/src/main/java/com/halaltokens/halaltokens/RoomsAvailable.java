@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -37,7 +38,7 @@ public class RoomsAvailable extends AppCompatActivity {
     List<String> listDataHeader = new ArrayList<>();
     HashMap<String, List<String>> listDataChild = new HashMap<>();
     List<String> roomsAvailableNow = new ArrayList<>();
-    List<String> roomsAvailableMoreThan1hr = new ArrayList<>();
+    List<String> roomsAvailableNowIn1hr = new ArrayList<>();
     String building;
     String response = null;
     Map<String, ArrayList<RoomInfo>> roomsMap = new ConcurrentHashMap<>();
@@ -99,14 +100,32 @@ public class RoomsAvailable extends AppCompatActivity {
 
                 for (Map.Entry<String,ArrayList<RoomInfo>> roomInfos : roomsMap.entrySet()) {
                     boolean checked = false;
+                    boolean checked1 = false;
                     for (RoomInfo roomInfo : roomInfos.getValue()) {
-                        if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == LocalDateTime.now().getHour()) {
-                            checked = true;
+                        if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == Integer.parseInt(roomInfo.getEndTime().substring(0,2))-1) {
+                            if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == LocalDateTime.now().getHour() || Integer.parseInt(roomInfo.getEndTime().substring(0,2)) == LocalDateTime.now().getHour()) {
+                                checked = true;
+                                continue;
+                            }
+                        }
+                        if (roomInfo.getStartTime().substring(0,2).equals(roomInfo.getEndTime().substring(0,2))) {
+                            if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == LocalDateTime.now().getHour()) {
+                                checked = true;
+                            }
                         }
                     }
                     if (!checked) {
                         roomsAvailableNow.add(roomInfos.getKey());
                     }
+                    for (RoomInfo roomInfo : roomInfos.getValue()) {
+                        if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == LocalDateTime.now().getHour()+1) {
+                            checked1 = true;
+                        }
+                    }
+                    if (!checked1) {
+                        roomsAvailableNowIn1hr.add(roomInfos.getKey());
+                    }
+
                 }
                 prepareListData();
 
@@ -130,26 +149,34 @@ public class RoomsAvailable extends AppCompatActivity {
 
             //getting the data clicked on
             TextView tv = view.findViewById(R.id.lblListItem);
+            ImageView iv = view.findViewById(R.id.lblListImage);
             String data = tv.getText().toString();
+            iv.setImageResource(android.R.drawable.star_on);
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+            realm.copyToRealmOrUpdate(roomsMap.get(data).get(0));
+            realm.commitTransaction();
+            Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());
 
-            ArrayList<RoomInfo> roomList = roomsMap.get(data);
 
-            FavAlertDialog favAlertDialog = new FavAlertDialog(RoomsAvailable.this, new OnDialogFavListener() {
-                @Override
-                public void onDialogFavButtonClicked() {
-                    Realm realm = Realm.getDefaultInstance();
-                    realm.beginTransaction();
-                    realm.copyToRealmOrUpdate(roomsMap.get(data));
-                    realm.commitTransaction();
-                    Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());                }
-            }, data, roomList);
-            favAlertDialog.show();
+//            ArrayList<RoomInfo> roomList = roomsMap.get(data);
+
+//            FavAlertDialog favAlertDialog = new FavAlertDialog(RoomsAvailable.this, new OnDialogFavListener() {
+//                @Override
+//                public void onDialogFavButtonClicked() {
+//                    Realm realm = Realm.getDefaultInstance();
+//                    realm.beginTransaction();
+//                    realm.copyToRealmOrUpdate(roomsMap.get(data));
+//                    realm.commitTransaction();
+//                    Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());                }
+//            }, data, roomList);
+//            favAlertDialog.show();
 //            intent to share
 //            Intent sendIntent = new Intent();
 //            sendIntent.setAction(Intent.ACTION_SEND);
 //            sendIntent.putExtra(Intent.EXTRA_TEXT, roomsMap.get(data).toString());
 //            sendIntent.setType("text/plain");
-//
+
 //// Verify that the intent will resolve to an activity
 //            if (sendIntent.resolveActivity(getPackageManager()) != null) {
 //                startActivity(sendIntent);
@@ -166,12 +193,9 @@ public class RoomsAvailable extends AppCompatActivity {
 
         // Adding child data
         listDataHeader.add("Rooms Available now");
-        listDataHeader.add("Rooms Available in > 1hr");
-
-        //rooms available in > 1hr
-        roomsAvailableMoreThan1hr.addAll(roomsMap.keySet());
+        listDataHeader.add("Rooms Available in an hour");
 
         listDataChild.put(listDataHeader.get(0), roomsAvailableNow); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), roomsAvailableMoreThan1hr);
+        listDataChild.put(listDataHeader.get(1), roomsAvailableNowIn1hr);
     }
 }
