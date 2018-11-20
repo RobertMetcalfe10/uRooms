@@ -18,7 +18,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
 
-public class DashboardActivity extends AppCompatActivity implements QRFragment.OnFragmentInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements QRFragment.OnFragmentInteractionListener, FavRoomsFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -130,26 +130,20 @@ public class DashboardActivity extends AppCompatActivity implements QRFragment.O
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a BuildingFragment (defined as a static inner class below).
-//            return IndividualRoomFragment.newInstance("Blah");
 
             switch (position) {
-                case 0: // Fragment # 0 - This will show FirstFragment
+                case 0:
                     return BuildingFragment.newInstance(building -> {
                         Intent intent = new Intent(getApplicationContext(), RoomsAvailable.class);
                         intent.putExtra("Building", building);
                         startActivity(intent);
                     });
-                case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return BuildingFragment.newInstance(building -> {
-                        Intent intent = new Intent(getApplicationContext(), RoomsAvailable.class);
-                        intent.putExtra("Building", building);
-                        startActivity(intent);
-                    });
-                case 2: // Fragment # 0 - This will show FirstFragment
+                case 1:
+                    FavRoomsFragment.prepareData();
+                    return FavRoomsFragment.newInstance();
+                case 2:
                     return QRFragment.newInstance();
-                case 3: // Fragment # 0 - This will show FirstFragment different title
+                case 3:
                     return SettingsFragment.newInstance();
                 default:
                     return null;

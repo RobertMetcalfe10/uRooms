@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import io.realm.Realm;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -61,6 +63,17 @@ public class SettingsFragment extends Fragment {
                     startActivity(i);
                 }else Toast.makeText(getContext(), "This should not happen. If you see this message you broke the app. Congrats", Toast.LENGTH_LONG).show();
 
+            }
+        });
+
+        Button clearFavsButton = rootView.findViewById(R.id.clear_favs);
+        clearFavsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Realm realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                realm.deleteAll();
+                realm.commitTransaction();
             }
         });
         return rootView;
