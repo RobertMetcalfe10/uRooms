@@ -1,13 +1,18 @@
 package com.halaltokens.halaltokens;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.iambedant.text.OutlineTextView;
 
 import java.util.List;
 
@@ -16,9 +21,12 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
     //List
     private List<String> buildings;
     private BuildingFragment.OnItemClickListener clickListener;
+    private Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView buildingName;
+//        public TextView buildingName;
+        public OutlineTextView buildingName;
+        public ConstraintLayout buildingImage;
 
         MyViewHolder(View view) {
             super(view);
@@ -28,14 +36,18 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
             cardView.setRadius(30);       //set radius of cardview
             //initialize textviews
             buildingName = view.findViewById(R.id.buildingName);
-            cardView.setOnClickListener(view1 -> clickListener.onBuildingClicked(buildingConverter(buildingName.getText().toString())));
+            buildingImage = view.findViewById(R.id.card_view_layout);
+            cardView.setOnClickListener(view1 -> {
+                clickListener.onBuildingClicked(buildingConverter(buildingName.getText().toString()));
+            });
         }
     }
 
     //constructor
-    CardViewAdapter(List<String> buildings, BuildingFragment.OnItemClickListener onClickListener) {
+    CardViewAdapter(List<String> buildings, BuildingFragment.OnItemClickListener onClickListener, Context context) {
         this.buildings = buildings;
         this.clickListener = onClickListener;
+        this.context = context;
     }
 
     @NonNull
@@ -55,30 +67,39 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
         switch (building){
             case "CompSci":
                 holder.buildingName.setText("Computer Science");
+                holder.buildingImage.setBackground(ContextCompat.getDrawable(context, R.drawable.cs_building));
                 break;
             case "Arts":
                 holder.buildingName.setText("Arts");
+                holder.buildingImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arts_building));
                 break;
             case "Eng":
                 holder.buildingName.setText("Engineering");
+                holder.buildingImage.setBackground(ContextCompat.getDrawable(context, R.drawable.eng_building));
                 break;
             case "HealthScience":
                 holder.buildingName.setText("Health Science");
+                holder.buildingImage.setBackground(ContextCompat.getDrawable(context, R.drawable.h_sci_building));
                 break;
             case "SciEast":
                 holder.buildingName.setText("Science East");
+                holder.buildingImage.setBackground(ContextCompat.getDrawable(context, R.drawable.sci_east_building));
                 break;
             case "SciHub":
                 holder.buildingName.setText("Science Hub");
+                holder.buildingImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arts_building));
                 break;
             case "SciNorth":
                 holder.buildingName.setText("Science North");
+                holder.buildingImage.setBackground(ContextCompat.getDrawable(context, R.drawable.sci_north_building));
                 break;
             case "SciSouth":
                 holder.buildingName.setText("Science South");
+                holder.buildingImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arts_building));
                 break;
             case "SciWest":
                 holder.buildingName.setText("Science West");
+                holder.buildingImage.setBackground(ContextCompat.getDrawable(context, R.drawable.sci_west_building));
                 break;
             default :
                 holder.buildingName.setText(building);

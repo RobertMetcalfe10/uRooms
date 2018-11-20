@@ -1,21 +1,16 @@
 package com.halaltokens.halaltokens;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -25,7 +20,6 @@ public class BuildingFragment extends Fragment {
      * The fragment argument representing the section number for this
      * fragment.
      */
-    private static final String ARG_SECTION_NUMBER = "section_number";
     private static BuildingFragment fragment;
     private static OnItemClickListener callback;
 
@@ -58,7 +52,7 @@ public class BuildingFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recycler_view);
 
         //initialize Adapterclass with List
-        cAdapter = new CardViewAdapter(prepareData(), callback);
+        cAdapter = new CardViewAdapter(prepareData(), callback, getContext());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(cAdapter); //add adapter to recycler view
 
