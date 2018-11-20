@@ -166,7 +166,6 @@ public class DashboardActivity extends AppCompatActivity implements QRFragment.O
 
     @Override
     public void onBackPressed(){
-        //TODO: When user pressed back from home page, close the app...
     }
 }
 
