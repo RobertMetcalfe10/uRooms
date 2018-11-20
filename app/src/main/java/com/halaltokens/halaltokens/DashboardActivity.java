@@ -174,7 +174,6 @@ public class DashboardActivity extends AppCompatActivity implements BuildingFrag
 
     @Override
     public void onBackPressed(){
-        //TODO: When user pressed back from home page, close the app...
     }
 }
 
