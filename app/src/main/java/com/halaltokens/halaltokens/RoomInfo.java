@@ -7,10 +7,12 @@ import java.util.List;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmField;
 
 public class RoomInfo extends RealmObject {
 
     @PrimaryKey
+    @RealmField
     private String roomName;
     private String startTime;
     private String endTime;

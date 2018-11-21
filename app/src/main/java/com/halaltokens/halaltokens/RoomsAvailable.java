@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 
 public class RoomsAvailable extends AppCompatActivity {
@@ -146,17 +147,33 @@ public class RoomsAvailable extends AppCompatActivity {
 
 
         expListView.setOnChildClickListener((expandableListView, view, groupPosition, childPosition, id) -> {
-
             //getting the data clicked on
             TextView tv = view.findViewById(R.id.lblListItem);
             ImageView iv = view.findViewById(R.id.lblListImage);
             String data = tv.getText().toString();
-            iv.setImageResource(android.R.drawable.star_on);
-            Realm realm = Realm.getDefaultInstance();
-            realm.beginTransaction();
-            realm.copyToRealmOrUpdate(roomsMap.get(data).get(0));
-            realm.commitTransaction();
-            Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());
+            if (iv.getTag().equals("notFav")) {
+                iv.setImageResource(R.drawable.ic_favorite_black_24dp);
+                iv.setTag("Fav");
+                Realm realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                realm.copyToRealmOrUpdate(roomsMap.get(data).get(0));
+                realm.commitTransaction();
+                Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());
+            } else {
+                iv.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                iv.setTag("notFav");
+                Realm realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                RealmResults<RoomInfo> result = realm.where(RoomInfo.class).findAll();
+                for (int i=0; i<result.size(); i++) {
+                    if (result.get(i).getRoomName().trim().equals(tv.getText().toString().trim())) {
+                        result.deleteFromRealm(i);
+                    }
+                }
+                realm.commitTransaction();
+                Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());
+            }
+
 
 
 //            ArrayList<RoomInfo> roomList = roomsMap.get(data);
