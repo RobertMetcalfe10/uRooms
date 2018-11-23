@@ -36,7 +36,6 @@
                 android:textSize="30sp"
                 app:outlineColor="#000000"
                 app:outlineWidth="0.1"
-                style="@style/OverlayText"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

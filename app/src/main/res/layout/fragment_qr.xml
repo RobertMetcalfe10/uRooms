@@ -46,15 +46,29 @@
         android:layout_height="match_parent"
          />
 
-    <TextView
+    <!--<TextView-->
+        <!--android:id="@+id/textview2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginTop="500dp"-->
+        <!--android:text="@string/please_focus_on_qr_code"-->
+        <!--android:fontFamily="@font/roboto_black"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textAlignment="center"-->
+        <!--/>-->
+    <com.iambedant.text.OutlineTextView
         android:id="@+id/textview2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="500dp"
+        android:gravity="center"
         android:text="@string/please_focus_on_qr_code"
+        android:textColor="#ffffff"
         android:fontFamily="@font/roboto_black"
         android:textSize="20sp"
-        android:textAlignment="center"
-        />
+        android:shadowDx="1"
+        android:shadowDy="1"
+        app:outlineColor="#000000"
+        app:outlineWidth="0.4" />
 
 </FrameLayout>
