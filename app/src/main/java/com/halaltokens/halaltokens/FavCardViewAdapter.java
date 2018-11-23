@@ -30,7 +30,7 @@ public class FavCardViewAdapter extends RecyclerView.Adapter<FavCardViewAdapter.
             cardView.setRadius(30);       //set radius of cardview
             //initialize textviews
             roomName = view.findViewById(R.id.roomName);
-            cardView.setOnClickListener(view1 -> clickListener.onBuildingClicked(roomName.getText().toString()));
+//            cardView.setOnClickListener(view1 -> clickListener.onBuildingClicked(roomName.getText().toString()));
         }
     }
 
