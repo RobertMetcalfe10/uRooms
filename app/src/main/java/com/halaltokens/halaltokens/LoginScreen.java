@@ -1,13 +1,17 @@
 package com.halaltokens.halaltokens;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -49,6 +53,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        askForPermission();
 
         editEmail = findViewById(R.id.edit_text_email);
         editPassword = findViewById(R.id.edit_text_password);
@@ -127,9 +132,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             return;
         }
 
-
         signUpProgress.playAnimation();
-
 
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -163,6 +166,21 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private void askForPermission(){
+        String permission = Manifest.permission.CAMERA;
+        int requestCode = 1;
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            }
+        }
     }
 
 }
