@@ -166,4 +166,6 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="sign_out_button">Sign Out</string>
     <string name="please_focus_on_qr_code">Please focus on QR code</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="faq">FAQ</string>
 </resources>

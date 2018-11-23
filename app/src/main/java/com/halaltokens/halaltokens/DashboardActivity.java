@@ -158,7 +158,7 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
                 case 2: // Fragment # 0 - This will show FirstFragment
                     return QRFragment.newInstance();
                 case 3: // Fragment # 0 - This will show FirstFragment different title
-                    return PlaceholderFragment.newInstance(position + 3);
+                    return SettingsFragment.newInstance();
                 default:
                     return null;
             }
