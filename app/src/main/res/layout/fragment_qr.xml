@@ -35,11 +35,6 @@
 
                 android:background="@drawable/ic_chevron_left_black_24dp" />
 
-            <ImageView
-                android:id="@+id/text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible" />
 
         </LinearLayout>
 
@@ -51,7 +46,6 @@
         android:layout_height="match_parent"
          />
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/textview2"
         android:layout_width="match_parent"
