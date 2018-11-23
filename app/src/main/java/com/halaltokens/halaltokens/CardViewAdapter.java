@@ -33,7 +33,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
             cardView.setCardElevation(20);//setcardview elevation
             cardView.setRadius(30);       //set radius of cardview
             //initialize textviews
-            buildingName = view.findViewById(R.id.roomName);
+            buildingName = view.findViewById(R.id.buildingName);
             buildingImage = view.findViewById(R.id.card_view_layout);
             cardView.setOnClickListener(view1 -> {
                 clickListener.onBuildingClicked(buildingConverter(buildingName.getText().toString()));

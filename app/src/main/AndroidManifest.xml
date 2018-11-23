@@ -20,7 +20,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
 
-        <activity android:name=".SplashScreen">
+        <activity android:name=".SplashScreen" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +31,8 @@
             android:name=".LoginScreen"
             android:label="@string/title_activity_login_screen"
             android:parentActivityName=".SplashScreen"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.halaltokens.halaltokens.SplashScreen" />
@@ -39,11 +40,13 @@
         <activity
             android:name=".DashboardActivity"
             android:label="@string/title_activity_dashboard"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".RoomsAvailable"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RegistrationScreen" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".RegistrationScreen" android:screenOrientation="portrait" />
     </application>
 
 </manifest>

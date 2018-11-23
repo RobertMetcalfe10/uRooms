@@ -56,7 +56,7 @@ public class FavRoomsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_fav_rooms_fragments, container, false);
 
         //initialize recyclerview
-        recyclerView = rootView.findViewById(R.id.recycler_view);
+        recyclerView = rootView.findViewById(R.id.recycler_view_fav);
 
         //initialize Adapterclass with List
         cAdapter = new FavCardViewAdapter(prepareData(), callback);

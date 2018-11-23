@@ -25,7 +25,7 @@ public class FavCardViewAdapter extends RecyclerView.Adapter<FavCardViewAdapter.
         MyViewHolder(View view) {
             super(view);
             //initialize cardview
-            CardView cardView = view.findViewById(R.id.card_view);
+            CardView cardView = view.findViewById(R.id.card_view_fav);
             cardView.setCardElevation(20);//setcardview elevation
             cardView.setRadius(30);       //set radius of cardview
             //initialize textviews

@@ -66,7 +66,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Button clearFavsButton = rootView.findViewById(R.id.clear_favs);
+        Button clearFavsButton = rootView.findViewById(R.id.clearFavs);
         clearFavsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
