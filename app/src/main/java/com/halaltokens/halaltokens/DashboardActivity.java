@@ -39,7 +39,7 @@ public class DashboardActivity extends AppCompatActivity implements QRFragment.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        
+
         AHBottomNavigationItem item1 = new AHBottomNavigationItem("Home", R.drawable.ic_home_black_24dp);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem("Favourites", R.drawable.ic_favorite_black_24dp);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem("QR", R.drawable.qrcode);
