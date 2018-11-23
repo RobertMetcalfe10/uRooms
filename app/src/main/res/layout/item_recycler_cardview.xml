@@ -4,7 +4,8 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="4dp">
 
 
     <android.support.v7.widget.CardView
@@ -23,28 +24,6 @@
             android:layout_height="match_parent"
             android:background="@drawable/sci_east_building">
 
-
-            <!--<TextView-->
-                <!--android:id="@+id/buildingName"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentTop="true"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:layout_marginEnd="8dp"-->
-                <!--android:layout_marginBottom="8dp"-->
-                <!--android:gravity="center"-->
-                <!--android:text="Famous People"-->
-                <!--android:textColor="#ffffff"-->
-                <!--android:textSize="30dp"-->
-                <!--android:textStyle="bold"-->
-                <!--style="@style/OverlayText"-->
-                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toTopOf="parent" />-->
-
             <com.iambedant.text.OutlineTextView
                 android:id="@+id/buildingName"
                 android:layout_width="match_parent"
@@ -58,15 +37,16 @@
                 android:gravity="center"
                 android:text="Room"
                 android:textColor="#ffffff"
-                android:textSize="30sp"
+                android:fontFamily="@font/roboto_black"
+                android:textSize="32sp"
+                android:shadowDx="1"
+                android:shadowDy="1"
                 app:outlineColor="#000000"
-                app:outlineWidth="0.1"
-                style="@style/OverlayText"
+                app:outlineWidth="0.4"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-
 
         </android.support.constraint.ConstraintLayout>
 
