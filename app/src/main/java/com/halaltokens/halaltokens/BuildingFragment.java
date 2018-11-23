@@ -1,16 +1,16 @@
 package com.halaltokens.halaltokens;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -20,12 +20,15 @@ public class BuildingFragment extends Fragment {
      * The fragment argument representing the section number for this
      * fragment.
      */
-    private static final String ARG_SECTION_NUMBER = "section_number";
     private static BuildingFragment fragment;
-    private OnItemClickListener callback;
+    private static OnItemClickListener callback;
+
+    private RecyclerView recyclerView;
+    private CardViewAdapter cAdapter;
+    private ArrayList<String> listOfBuildings;
 
     public interface OnItemClickListener {
-        public void onBuildingClicked(String building);
+        void onBuildingClicked(String building);
     }
 
     public BuildingFragment() {
@@ -35,30 +38,36 @@ public class BuildingFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static BuildingFragment newInstance(int sectionNumber) {
+    public static BuildingFragment newInstance(OnItemClickListener onBuildingClicked) {
         fragment = new BuildingFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
+        callback = onBuildingClicked;
         return fragment;
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            callback = (OnItemClickListener) activity;
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
+        //initialize recyclerview
+        recyclerView = rootView.findViewById(R.id.recycler_view);
+
+        //initialize Adapterclass with List
+        cAdapter = new CardViewAdapter(prepareData(), callback, getContext());
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(cAdapter); //add adapter to recycler view
+
+        recyclerView.setOnClickListener(view -> {
+            int itemPosition = recyclerView.getChildAdapterPosition(view);
+            String item = listOfBuildings.get(itemPosition);
+            callback.onBuildingClicked(item);
+        });
+
+        return rootView;
+    }
+
+    public List<String> prepareData(){
         //creating an arraylist which contains available rooms
-        final ArrayList<String> listOfBuildings = new ArrayList<>();
+        listOfBuildings = new ArrayList<>();
         listOfBuildings.add("CompSci");
         listOfBuildings.add("Arts");
         listOfBuildings.add("Eng");
@@ -69,14 +78,6 @@ public class BuildingFragment extends Fragment {
         listOfBuildings.add("SciSouth");
         listOfBuildings.add("SciWest");
 
-        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, listOfBuildings);
-
-        //listview to show the buildings
-        ListView lv = rootView.findViewById(R.id.listView);
-        lv.setAdapter(itemsAdapter);
-
-        lv.setOnItemClickListener((adapterView, view, i, l) -> callback.onBuildingClicked((String) adapterView.getItemAtPosition(i)));
-
-        return rootView;
+        return listOfBuildings;
     }
 }
