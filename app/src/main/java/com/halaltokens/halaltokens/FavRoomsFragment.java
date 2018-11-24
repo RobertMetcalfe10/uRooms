@@ -1,6 +1,7 @@
 package com.halaltokens.halaltokens;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,8 @@ public class FavRoomsFragment extends Fragment {
     private static BuildingFragment.OnItemClickListener callback;
 
     private RecyclerView recyclerView;
+    private ImageView shareButton;
+    private ImageView unFaveButton;
     private FavCardViewAdapter cAdapter;
     private static ArrayList<String> listOfFavRooms;
 
@@ -57,6 +61,8 @@ public class FavRoomsFragment extends Fragment {
 
         //initialize recyclerview
         recyclerView = rootView.findViewById(R.id.recycler_view_fav);
+        shareButton = rootView.findViewById(R.id.shareButton);
+
 
         //initialize Adapterclass with List
         cAdapter = new FavCardViewAdapter(prepareData(), callback);
@@ -68,6 +74,19 @@ public class FavRoomsFragment extends Fragment {
             String item = listOfFavRooms.get(itemPosition);
             callback.onBuildingClicked(item);
         });
+
+        shareButton.setOnClickListener(view -> {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+//            sendIntent.putExtra(Intent.EXTRA_TEXT, roomsMap.get(data).toString());
+            sendIntent.setType("text/plain");
+
+// Verify that the intent will resolve to an activity
+//            if (sendIntent.resolveActivity(getPackageManager()) != null) {
+//                startActivity(sendIntent);
+//            }
+        });
+
 
         return rootView;
     }
