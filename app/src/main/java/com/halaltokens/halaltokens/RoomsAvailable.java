@@ -156,22 +156,22 @@ public class RoomsAvailable extends AppCompatActivity {
                 iv.setTag("Fav");
                 Realm realm = Realm.getDefaultInstance();
                 realm.beginTransaction();
-                realm.copyToRealmOrUpdate(roomsMap.get(data).get(0));
+                RoomInfoRealmList roomInfoRealmList = new RoomInfoRealmList();
+                roomInfoRealmList.addList(roomsMap.get(data));
+                realm.copyToRealmOrUpdate(roomInfoRealmList);
                 realm.commitTransaction();
-                Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());
             } else {
                 iv.setImageResource(R.drawable.ic_favorite_border_black_24dp);
                 iv.setTag("notFav");
                 Realm realm = Realm.getDefaultInstance();
                 realm.beginTransaction();
-                RealmResults<RoomInfo> result = realm.where(RoomInfo.class).findAll();
+                RealmResults<RoomInfoRealmList> result = realm.where(RoomInfoRealmList.class).findAll();
                 for (int i=0; i<result.size(); i++) {
-                    if (result.get(i).getRoomName().trim().equals(tv.getText().toString().trim())) {
+                    if (result.get(i).getRoomInfo(0).getRoomName().trim().equals(tv.getText().toString().trim())) {
                         result.deleteFromRealm(i);
                     }
                 }
                 realm.commitTransaction();
-                Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());
             }
 
 

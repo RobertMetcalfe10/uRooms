@@ -7,14 +7,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -29,20 +30,55 @@ import io.realm.RealmResults;
  */
 public class FavRoomsFragment extends Fragment {
 
-    private static OnItemClickListener callback;
-
     private RecyclerView recyclerView;
-    private ImageView shareButton;
-    private ImageView unFaveButton;
     private FavCardViewAdapter cAdapter;
     private static ArrayList<String> listOfFavRooms;
+    private FavCardViewAdapter.FavOnItemClickedListener favOnItemClickedListener = new FavCardViewAdapter.FavOnItemClickedListener() {
+        @Override
+        public void OnFavItemClicked(String roomName) {
+            cAdapter = new FavCardViewAdapter(prepareData());
+            recyclerView.setAdapter(cAdapter);
+        }
 
+        @Override
+        public void OnShareItemClicked(String roomName) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+            RealmResults<RoomInfo> result = realm.where(RoomInfo.class).findAll();
+            for (int i=0; i<result.size(); i++) {
+                if (result.get(i).getRoomName().trim().equals(roomName)) {
+                    sendIntent.putExtra(Intent.EXTRA_TITLE, result.get(i).getRoomName());
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, result.get(i).toString());
+                }
+            }
+            realm.commitTransaction();
+            sendIntent.setType("text/plain");
+            // Verify that the intent will resolve to an activity
+            if (sendIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                startActivity(sendIntent);
+            }
+        }
+
+        @Override
+        public void OnTextItemClicked(String roomName) {
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+            RealmResults<RoomInfoRealmList> result = realm.where(RoomInfoRealmList.class).findAll();
+            for (int i=0; i<result.size(); i++) {
+                if (result.get(i).getRoomInfo(0).getRoomName().trim().equals(roomName)) {
+                    SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(FavRoomsFragment.this.getContext(), SweetAlertDialog.NORMAL_TYPE);
+                    sweetAlertDialog.setContentText(result.get(i).toString());
+                    sweetAlertDialog.show();
+                    Log.v("FavDialog", result.get(i).toString());
+                }
+            }
+            realm.commitTransaction();
+        }
+    };
 
     private OnFragmentInteractionListener mListener;
-
-    public interface OnItemClickListener {
-        void onBuildingClicked(String building);
-    }
 
     public FavRoomsFragment() {
         // Required empty public constructor
@@ -64,33 +100,12 @@ public class FavRoomsFragment extends Fragment {
 
         //initialize recyclerview
         recyclerView = rootView.findViewById(R.id.recycler_view_fav);
-        shareButton = rootView.findViewById(R.id.shareButton);
-
 
         //initialize Adapterclass with List
-        cAdapter = new FavCardViewAdapter(prepareData(), callback);
+        cAdapter = new FavCardViewAdapter(prepareData());
+        cAdapter.setOnItemClickedListener(favOnItemClickedListener);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(cAdapter); //add adapter to recycler view
-
-        recyclerView.setOnClickListener(view -> {
-            int itemPosition = recyclerView.getChildAdapterPosition(view);
-            String item = listOfFavRooms.get(itemPosition);
-            callback.onBuildingClicked(item);
-        });
-
-        shareButton.setOnClickListener(view -> {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-//            sendIntent.putExtra(Intent.EXTRA_TEXT, roomsMap.get(data).toString());
-            sendIntent.setType("text/plain");
-
-// Verify that the intent will resolve to an activity
-//            if (sendIntent.resolveActivity(getPackageManager()) != null) {
-//                startActivity(sendIntent);
-//            }
-        });
-
-
         return rootView;
     }
 
@@ -113,7 +128,8 @@ public class FavRoomsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        cAdapter = new FavCardViewAdapter(prepareData(), callback);
+        cAdapter = new FavCardViewAdapter(prepareData());
+        cAdapter.setOnItemClickedListener(favOnItemClickedListener);
         recyclerView.setAdapter(cAdapter);
     }
 
@@ -143,4 +159,6 @@ public class FavRoomsFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

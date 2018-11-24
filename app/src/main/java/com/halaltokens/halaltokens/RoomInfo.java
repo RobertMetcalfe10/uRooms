@@ -69,7 +69,7 @@ public class RoomInfo extends RealmObject {
 
     public String toString() {
 
-        return "Room " + getRoomName() + "\n" + getStartTime() + "\n" + getEndTime() + "\n" + getModuleCode() + "\n" + getOrganization();
+        return "Room: " + getRoomName() + "\nStart Time: " + getStartTime() + "\nEnd Time: " + getEndTime() + "\nModule Code: " + getModuleCode() + "\nDepartment: " + getOrganization();
     }
 
 
