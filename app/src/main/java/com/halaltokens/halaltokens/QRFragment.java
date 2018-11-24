@@ -60,8 +60,6 @@ public class QRFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        askForPermission();
-
     }
 
     @Override
@@ -140,20 +138,6 @@ public class QRFragment extends Fragment {
         return view;
     }
 
-        private void askForPermission(){
-            String permission = Manifest.permission.CAMERA;
-            int requestCode = 1;
-            if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
-                // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), permission)) {
-                    //This is called if user has denied the permission before
-                    //In this case I am just asking the permission again
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{permission}, requestCode);
-                } else {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{permission}, requestCode);
-                }
-            }
-        }
 
     @Override
     public void onAttach(Context context) {

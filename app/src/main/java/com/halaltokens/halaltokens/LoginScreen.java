@@ -1,13 +1,17 @@
 package com.halaltokens.halaltokens;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -44,6 +48,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+        askForPermission();
 
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.login_button).setOnClickListener(this);
@@ -65,7 +70,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             }
             return false;
         });
-
 
     }
 
@@ -139,7 +143,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                     if (firebaseUser.isEmailVerified()) {
 
                         Intent i = new Intent(LoginScreen.this, DashboardActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
 
                     } else {
@@ -154,6 +158,20 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void askForPermission(){
+        String permission = Manifest.permission.CAMERA;
+        int requestCode = 1;
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            }
+        }
     }
 
     public void hideKeyboard(View view) {

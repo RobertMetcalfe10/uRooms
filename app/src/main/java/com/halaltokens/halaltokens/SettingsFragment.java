@@ -83,7 +83,7 @@ public class SettingsFragment extends Fragment {
             if (firebaseAuth.getCurrentUser() != null) {
                 firebaseAuth.signOut();
                 Intent i = new Intent(getContext(), LoginScreen.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
             }else Toast.makeText(getContext(), "This should not happen. If you see this message you broke the app. Congrats", Toast.LENGTH_LONG).show();
 
