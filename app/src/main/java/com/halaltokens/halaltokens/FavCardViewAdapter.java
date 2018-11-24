@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.iambedant.text.OutlineTextView;
 
@@ -17,10 +18,10 @@ public class FavCardViewAdapter extends RecyclerView.Adapter<FavCardViewAdapter.
 
     //List
     private List<String> buildings;
-    private BuildingFragment.OnItemClickListener clickListener;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public OutlineTextView roomName;
+        private OutlineTextView roomName;
+        private ImageView favImage;
 
         MyViewHolder(View view) {
             super(view);
@@ -30,14 +31,36 @@ public class FavCardViewAdapter extends RecyclerView.Adapter<FavCardViewAdapter.
             cardView.setRadius(30);       //set radius of cardview
             //initialize textviews
             roomName = view.findViewById(R.id.roomName);
-            cardView.setOnClickListener(view1 -> clickListener.onBuildingClicked(roomName.getText().toString()));
+            favImage = view.findViewById(R.id.favImage);
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch(v.getId())
+                    {
+                        case R.id.roomName:
+                            System.out.println("worked1");
+                            break;
+
+                        case R.id.favImage:
+                            System.out.println("worked2");
+                            break;
+
+                        default:
+                            System.out.println("Didn't work");
+                            break;
+                    }
+//                    clickListener.onBuildingClicked(roomName.getText().toString());
+                }
+            };
+            roomName.setOnClickListener(onClickListener);
+            favImage.setOnClickListener(onClickListener);
+
         }
     }
 
     //constructor
-    FavCardViewAdapter(List<String> buildings, BuildingFragment.OnItemClickListener onClickListener) {
+    FavCardViewAdapter(List<String> buildings, FavRoomsFragment.OnItemClickListener onClickListener) {
         this.buildings = buildings;
-        this.clickListener = onClickListener;
     }
 
     @NonNull

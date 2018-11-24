@@ -27,8 +27,7 @@ import io.realm.RealmResults;
  */
 public class FavRoomsFragment extends Fragment {
 
-    private static BuildingFragment fragment;
-    private static BuildingFragment.OnItemClickListener callback;
+    private static OnItemClickListener callback;
 
     private RecyclerView recyclerView;
     private FavCardViewAdapter cAdapter;
@@ -36,6 +35,10 @@ public class FavRoomsFragment extends Fragment {
 
 
     private OnFragmentInteractionListener mListener;
+
+    public interface OnItemClickListener {
+        void onBuildingClicked(String building);
+    }
 
     public FavRoomsFragment() {
         // Required empty public constructor
