@@ -143,7 +143,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                     if (firebaseUser.isEmailVerified()) {
 
                         Intent i = new Intent(LoginScreen.this, DashboardActivity.class);
-//                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
 
                     } else {
@@ -183,7 +182,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onBackPressed() {
-        finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
 }
