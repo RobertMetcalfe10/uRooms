@@ -52,6 +52,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.login_button).setOnClickListener(this);
+        findViewById(R.id.forgot_password_activity).setOnClickListener(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -84,6 +85,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             case R.id.login_button:
                 userLogin();
                 break;
+
+            case R.id.forgot_password_activity:
+                startActivity(new Intent(this,ForgotPassword.class));
         }
 
     }
