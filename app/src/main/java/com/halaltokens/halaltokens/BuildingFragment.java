@@ -68,15 +68,15 @@ public class BuildingFragment extends Fragment {
     public List<String> prepareData(){
         //creating an arraylist which contains available rooms
         listOfBuildings = new ArrayList<>();
-        listOfBuildings.add("CompSci");
-        listOfBuildings.add("Arts");
-        listOfBuildings.add("Eng");
         listOfBuildings.add("HealthScience");
+        listOfBuildings.add("Arts");
         listOfBuildings.add("SciEast");
         listOfBuildings.add("SciHub");
         listOfBuildings.add("SciNorth");
         listOfBuildings.add("SciSouth");
         listOfBuildings.add("SciWest");
+        listOfBuildings.add("CompSci");
+        listOfBuildings.add("Eng");
 
         return listOfBuildings;
     }

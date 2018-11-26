@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ public class RoomsAvailable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rooms_available);
+//        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
 
 
         Intent intent = getIntent();
@@ -133,6 +135,12 @@ public class RoomsAvailable extends AppCompatActivity {
                 listAdapter = new ExpandableListAdapter(getApplicationContext(), listDataHeader, listDataChild);
                 // setting list adapter
                 expListView.setAdapter(listAdapter);
+                try {
+                    Thread.sleep(400);
+                    findViewById(R.id.progressBar).setVisibility(View.GONE);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         };
         asyncTask.execute(this);
@@ -173,31 +181,6 @@ public class RoomsAvailable extends AppCompatActivity {
                 }
                 realm.commitTransaction();
             }
-
-
-
-//            ArrayList<RoomInfo> roomList = roomsMap.get(data);
-
-//            FavAlertDialog favAlertDialog = new FavAlertDialog(RoomsAvailable.this, new OnDialogFavListener() {
-//                @Override
-//                public void onDialogFavButtonClicked() {
-//                    Realm realm = Realm.getDefaultInstance();
-//                    realm.beginTransaction();
-//                    realm.copyToRealmOrUpdate(roomsMap.get(data));
-//                    realm.commitTransaction();
-//                    Log.v("FavClicked",realm.where(RoomInfo.class).findAll().toString());                }
-//            }, data, roomList);
-//            favAlertDialog.show();
-//            intent to share
-//            Intent sendIntent = new Intent();
-//            sendIntent.setAction(Intent.ACTION_SEND);
-//            sendIntent.putExtra(Intent.EXTRA_TEXT, roomsMap.get(data).toString());
-//            sendIntent.setType("text/plain");
-
-//// Verify that the intent will resolve to an activity
-//            if (sendIntent.resolveActivity(getPackageManager()) != null) {
-//                startActivity(sendIntent);
-//            }
 
             return true;
         });

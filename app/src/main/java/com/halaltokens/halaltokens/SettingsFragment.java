@@ -8,6 +8,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,16 +89,16 @@ public class SettingsFragment extends Fragment {
 
         });
 
-//        Button clearFavsButton = rootView.findViewById(R.id.clearFavs);
-//        clearFavsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Realm realm = Realm.getDefaultInstance();
-//                realm.beginTransaction();
-//                realm.deleteAll();
-//                realm.commitTransaction();
-//            }
-//        });
+        CardView clearFavsButton = rootView.findViewById(R.id.clearFavs);
+        clearFavsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Realm realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                realm.deleteAll();
+                realm.commitTransaction();
+            }
+        });
 
         return rootView;
     }
