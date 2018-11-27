@@ -34,11 +34,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_chevron_left_black_24dp" />
 
-            <ImageView
-                android:id="@+id/text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible" />
 
         </LinearLayout>
 
@@ -50,16 +45,29 @@
         android:layout_height="match_parent"
          />
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--<TextView-->
+        <!--android:id="@+id/textview2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginTop="500dp"-->
+        <!--android:text="@string/please_focus_on_qr_code"-->
+        <!--android:fontFamily="@font/roboto_black"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textAlignment="center"-->
+        <!--/>-->
+    <com.iambedant.text.OutlineTextView
         android:id="@+id/textview2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="470dp"
+        android:gravity="center"
         android:text="@string/please_focus_on_qr_code"
+        android:textColor="#ffffff"
         android:fontFamily="@font/roboto_black"
         android:textSize="20sp"
-        android:textAlignment="center"
-        />
+        android:shadowDx="1"
+        android:shadowDy="1"
+        app:outlineColor="#000000"
+        app:outlineWidth="0.4" />
 
 </FrameLayout>

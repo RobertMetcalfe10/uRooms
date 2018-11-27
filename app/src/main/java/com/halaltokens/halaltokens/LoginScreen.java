@@ -56,6 +56,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        askForPermission();
 
         editEmail = findViewById(R.id.edit_text_email);
         editPassword = findViewById(R.id.edit_text_password);
@@ -163,20 +164,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         });
     }
 
-    public void askForPermission(){
-        String permission = Manifest.permission.CAMERA;
-        int requestCode = 1;
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
-                //This is called if user has denied the permission before
-                //In this case I am just asking the permission again
-                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
-            }
-        }
-    }
-
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
@@ -187,6 +174,21 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onBackPressed() {
         android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
+    private void askForPermission(){
+        String permission = Manifest.permission.CAMERA;
+        int requestCode = 1;
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            }
+        }
     }
 
 }

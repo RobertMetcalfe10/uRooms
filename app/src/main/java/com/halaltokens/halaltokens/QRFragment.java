@@ -29,6 +29,7 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.iambedant.text.OutlineTextView;
 
 import org.w3c.dom.Text;
 
@@ -42,7 +43,7 @@ public class QRFragment extends Fragment {
     private static QRFragment fragment;
     SurfaceView surfaceView;
     CameraSource cameraSource;
-    TextView textView2;
+    OutlineTextView textView2;
     BarcodeDetector barcodeDetector;
     Button button;
 
