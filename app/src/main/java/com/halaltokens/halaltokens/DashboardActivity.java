@@ -39,7 +39,7 @@ public class DashboardActivity extends AppCompatActivity implements QRFragment.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        
+
         AHBottomNavigationItem item1 = new AHBottomNavigationItem("Home", R.drawable.ic_home_black_24dp);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem("Favourites", R.drawable.ic_favorite_black_24dp);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem("QR", R.drawable.qrcode);
@@ -77,7 +77,6 @@ public class DashboardActivity extends AppCompatActivity implements QRFragment.O
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 
             public void onPageSelected(int position) {
-                Log.i("Position ViewPager", String.valueOf(position));
                 ahBottomNavigation.setCurrentItem(position);
             }
         });
@@ -96,21 +95,6 @@ public class DashboardActivity extends AppCompatActivity implements QRFragment.O
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_dashboard, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -153,13 +137,18 @@ public class DashboardActivity extends AppCompatActivity implements QRFragment.O
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 4 total pages.
             return 4;
         }
     }
 
     @Override
     public void onBackPressed(){
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
 

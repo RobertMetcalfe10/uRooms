@@ -73,31 +73,25 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
             editEmail.requestFocus();
             return;
         }
-        firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+        firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
 
-                if (task.isSuccessful()) {
+            if (task.isSuccessful()) {
 
-                    new SweetAlertDialog(ForgotPassword.this, SweetAlertDialog.SUCCESS_TYPE)
-                            .setTitleText("Password Reset")
-                            .setContentText("Your password reset link has been sent.")
-                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    Intent i = new Intent(ForgotPassword.this, LoginScreen.class);
-                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(i);
-                                }
-                            })
-                            .show();
+                new SweetAlertDialog(ForgotPassword.this, SweetAlertDialog.SUCCESS_TYPE)
+                        .setTitleText("Password Reset")
+                        .setContentText("Your password reset link has been sent.")
+                        .setConfirmClickListener(sweetAlertDialog -> {
+                            Intent i = new Intent(ForgotPassword.this, LoginScreen.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i);
+                        })
+                        .show();
 
 
-                } else {
-                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-
+            } else {
+                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
+
         });
 
 

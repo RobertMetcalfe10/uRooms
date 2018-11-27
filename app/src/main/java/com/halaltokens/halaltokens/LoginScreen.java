@@ -33,6 +33,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
+import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -47,9 +48,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+        askForPermission();
 
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.login_button).setOnClickListener(this);
+        findViewById(R.id.forgot_password_activity).setOnClickListener(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -61,18 +64,14 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
 
 
-        editPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    hideKeyboard(editPassword);
-                    userLogin();
-                    return true;
-                }
-                return false;
+        editPassword.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                hideKeyboard(editPassword);
+                userLogin();
+                return true;
             }
+            return false;
         });
-
 
     }
 
@@ -87,6 +86,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             case R.id.login_button:
                 userLogin();
                 break;
+
+            case R.id.forgot_password_activity:
+                startActivity(new Intent(this,ForgotPassword.class));
         }
 
     }
@@ -109,7 +111,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editEmail.setError("Please enter a valid UCD email");
+            editEmail.setError("Please enter a valid email address");
             editEmail.requestFocus();
             return;
         }
@@ -132,40 +134,46 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             return;
         }
 
+
         signUpProgress.playAnimation();
 
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                signUpProgress.cancelAnimation();
-                signUpProgress.setVisibility(View.GONE);
-                if (task.isSuccessful()) {
 
-                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                    if (firebaseUser != null) {
-                        if (firebaseUser.isEmailVerified()) {
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            signUpProgress.cancelAnimation();
+            signUpProgress.setVisibility(View.GONE);
+            if (task.isSuccessful()) {
 
-                            Intent i = new Intent(LoginScreen.this, DashboardActivity.class);
-                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i);
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    if (firebaseUser.isEmailVerified()) {
 
-                        } else {
-                            new SweetAlertDialog(LoginScreen.this, SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Verification Required")
-                                    .setContentText("Please check your email for a verification link")
-                                    .show();
-                        }
+                        Intent i = new Intent(LoginScreen.this, DashboardActivity.class);
+                        startActivity(i);
+
+                    } else {
+                        firebaseAuth.signOut();
+                        new SweetAlertDialog(LoginScreen.this, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Verification Required")
+                                .setContentText("Please check your email for a verification link")
+                                .show();
                     }
-                } else {
-                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     private void askForPermission(){

@@ -8,6 +8,7 @@
     <color name="transparent">#00000000</color>
     <color name="gradStart">#B2FEFA</color>
     <color name="gradEnd">#0ED2F7</color>
+    <color name="coolColour">#360033</color>
 
     <color name="login_gradStart">#12c2e9</color>
     <color name="login_gradMiddle">#c471ed</color>
