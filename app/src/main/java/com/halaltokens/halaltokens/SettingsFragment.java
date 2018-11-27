@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,9 +75,14 @@ public class SettingsFragment extends Fragment {
 
         CardView faqButton = rootView.findViewById(R.id.faq_button);
         faqButton.setOnClickListener(view -> {
+
+            String faqText =    "QA: Will we get an A+?\n\nYes." +
+                                "\n-------------------------------\n QA: How do i clear my favourites?\n\nFind the clear favourites button." +
+                                "\n-------------------------------\n QA: My QR Scanner does not work\n\nHave you tried turning your phone off and on again?";
+
             new SweetAlertDialog(getActivity())
                     .setTitleText("FAQs")
-                    .setContentText(" <b>ghujiufrygh</b> whfijwefje ")
+                    .setContentText(faqText)
                     .show();
         });
 
