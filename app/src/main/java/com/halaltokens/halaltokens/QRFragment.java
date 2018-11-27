@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -115,11 +116,21 @@ public class QRFragment extends Fragment {
                         textView2.setVisibility(View.GONE);
 
                         WebView myWebView = view.findViewById(R.id.webview);
-                        myWebView.loadUrl(link);
-
                         WebSettings webSettings = myWebView.getSettings();
                         webSettings.setJavaScriptEnabled(true);
-                        myWebView.setWebViewClient(new WebViewClient());
+                        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+                        webSettings.setDomStorageEnabled(true);
+                        webSettings.setLoadsImagesAutomatically(true);
+                        myWebView.setWebViewClient(new WebViewClient() {
+                            public void onPageFinished(WebView view, String url) {
+                                Log.i("Loaded", "Finished loading URL: " +url);
+                            }
+                        });
+                        myWebView.loadUrl(link);
+
+                        if (link.contains("www.ucd.ie/rooms/")) {
+                            myWebView.loadUrl("https://sisweb.ucd.ie/usis/!W_HU_MENU.P_PUBLISH?p_tag=UROOMS&ROOMCODE="+link.substring(17,link.length()));
+                        }
 
                         button = view.findViewById(R.id.button);
                         button.setEnabled(true);
