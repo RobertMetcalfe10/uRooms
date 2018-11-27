@@ -1,13 +1,17 @@
 package com.halaltokens.halaltokens;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -44,9 +48,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+        askForPermission();
 
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.login_button).setOnClickListener(this);
+        findViewById(R.id.forgot_password_activity).setOnClickListener(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -66,7 +72,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             return false;
         });
 
-
     }
 
     @Override
@@ -80,6 +85,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             case R.id.login_button:
                 userLogin();
                 break;
+
+            case R.id.forgot_password_activity:
+                startActivity(new Intent(this,ForgotPassword.class));
         }
 
     }
@@ -139,7 +147,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                     if (firebaseUser.isEmailVerified()) {
 
                         Intent i = new Intent(LoginScreen.this, DashboardActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
 
                     } else {
@@ -156,6 +163,20 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         });
     }
 
+    public void askForPermission(){
+        String permission = Manifest.permission.CAMERA;
+        int requestCode = 1;
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            }
+        }
+    }
+
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
@@ -165,7 +186,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onBackPressed() {
-        finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
 }

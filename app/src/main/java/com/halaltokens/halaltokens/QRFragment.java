@@ -39,11 +39,7 @@ import static android.media.MediaRecorder.VideoSource.CAMERA;
 import static java.util.logging.Level.parse;
 
 public class QRFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_SECTION_NUMBER = "section_number";
     private static QRFragment fragment;
-    private OnItemClickListener callback;
     SurfaceView surfaceView;
     CameraSource cameraSource;
     TextView textView2;
@@ -51,10 +47,6 @@ public class QRFragment extends Fragment {
     Button button;
 
     private OnFragmentInteractionListener mListener;
-
-    public interface OnItemClickListener {
-//        public void onBuildingClicked(String building);
-    }
 
     public QRFragment() {
         // Required empty public constructor
@@ -68,14 +60,10 @@ public class QRFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        askForPermission();
-
-//        setContentView(R.layout.fragment_qr);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_qr, container, false);
         surfaceView = view.findViewById(R.id.camerapreview2);
         textView2 = view.findViewById(R.id.textview2);
@@ -119,36 +107,30 @@ public class QRFragment extends Fragment {
                 final TextView textView2 = view.findViewById(R.id.textview2);
 
                 if (qrCodes.size() != 0) {
-                    surfaceView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            cameraSource.stop();
-                            String link = qrCodes.valueAt(0).displayValue;
-                            surfaceView.setVisibility(View.GONE);
-                            textView2.setVisibility(View.GONE);
+                    surfaceView.post(() -> {
+                        cameraSource.stop();
+                        String link = qrCodes.valueAt(0).displayValue;
+                        surfaceView.setVisibility(View.GONE);
+                        textView2.setVisibility(View.GONE);
 
-                            WebView myWebView = (WebView) view.findViewById(R.id.webview);
-                            myWebView.loadUrl(link);
+                        WebView myWebView = view.findViewById(R.id.webview);
+                        myWebView.loadUrl(link);
 
-                            WebSettings webSettings = myWebView.getSettings();
-                            webSettings.setJavaScriptEnabled(true);
-                            myWebView.setWebViewClient(new WebViewClient());
+                        WebSettings webSettings = myWebView.getSettings();
+                        webSettings.setJavaScriptEnabled(true);
+                        myWebView.setWebViewClient(new WebViewClient());
 
-                            //Objects.requireNonNull(getActivity().getActionBar()).show();
+                        button = view.findViewById(R.id.button);
+                        button.setEnabled(true);
 
-                            button = view.findViewById(R.id.button);
-                            button.setEnabled(true);
+                        button.setOnClickListener(view1 -> {
+                            surfaceView.setVisibility(View.VISIBLE);
+                            textView2.setVisibility(View.VISIBLE);
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            button.setEnabled(false);
+                            ft.detach(QRFragment.fragment).attach(QRFragment.fragment).commit();
+                        });
 
-                            button.setOnClickListener(new View.OnClickListener() {
-                                public void onClick(View view) {
-                                    surfaceView.setVisibility(View.VISIBLE);
-                                    textView2.setVisibility(View.VISIBLE);
-                                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                    button.setEnabled(false);
-                                    ft.detach(QRFragment.fragment).attach(QRFragment.fragment).commit();
-                                }});
-
-                        }
                     });
                 }
             }
@@ -156,30 +138,6 @@ public class QRFragment extends Fragment {
         return view;
     }
 
-        private void askForPermission(){
-            String permission = Manifest.permission.CAMERA;
-            int requestCode = 1;
-            if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
-                // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), permission)) {
-                    //This is called if user has denied the permission before
-                    //In this case I am just asking the permission again
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{permission}, requestCode);
-                } else {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{permission}, requestCode);
-                }
-            } else {
-                Toast.makeText(getActivity(), "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
-            }
-        }
-        // Inflate the layout for this fragment
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -199,7 +157,6 @@ public class QRFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

@@ -40,8 +40,6 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
         firebaseAuth = FirebaseAuth.getInstance();
 
         editEmail = findViewById(R.id.edit_text_email);
-
-
     }
 
     @Override

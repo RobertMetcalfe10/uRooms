@@ -13,17 +13,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ExpandableListView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-
-public class DashboardActivity extends AppCompatActivity implements PlaceholderFragment.OnItemClickListener, QRFragment.OnFragmentInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements QRFragment.OnFragmentInteractionListener, FavRoomsFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -45,10 +40,10 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem("Home", R.mipmap.ic_launcher);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Favourites", R.mipmap.ic_launcher);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem("QR", R.mipmap.ic_launcher);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem("Settings", R.mipmap.ic_launcher);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem("Home", R.drawable.ic_home_black_24dp);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Favourites", R.drawable.ic_favorite_black_24dp);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem("QR", R.drawable.qrcode);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem("Settings", R.drawable.ic_settings_black_24dp);
         final AHBottomNavigation ahBottomNavigation = findViewById(R.id.bottom_navigation);
         ahBottomNavigation.addItem(item1);
         ahBottomNavigation.addItem(item2);
@@ -82,18 +77,14 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 
             public void onPageSelected(int position) {
-                Log.i("Position ViewPager", String.valueOf(position));
                 ahBottomNavigation.setCurrentItem(position);
             }
         });
 
-        ahBottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
-            @Override
-            public boolean onTabSelected(int position, boolean wasSelected) {
-                Log.i("Position", String.valueOf(position));
-                mViewPager.setCurrentItem(position);
-                return true;
-            }
+        ahBottomNavigation.setOnTabSelectedListener((position, wasSelected) -> {
+            Log.i("Position", String.valueOf(position));
+            mViewPager.setCurrentItem(position);
+            return true;
         });
 
     }
@@ -104,29 +95,6 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_dashboard, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBuildingClicked(String building) {
-//        Log.v("Building", building);
-        Intent intent = new Intent(this, RoomsAvailable.class);
-        intent.putExtra("Building", building);
-        startActivity(intent);
     }
 
     @Override
@@ -146,18 +114,20 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-//            return IndividualRoomFragment.newInstance("Blah");
 
             switch (position) {
-                case 0: // Fragment # 0 - This will show FirstFragment
-                    return PlaceholderFragment.newInstance(position);
-                case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return PlaceholderFragment.newInstance(position + 1);
-                case 2: // Fragment # 0 - This will show FirstFragment
+                case 0:
+                    return BuildingFragment.newInstance(building -> {
+                        Intent intent = new Intent(getApplicationContext(), RoomsAvailable.class);
+                        intent.putExtra("Building", building);
+                        startActivity(intent);
+                    });
+                case 1:
+                    FavRoomsFragment.prepareData();
+                    return FavRoomsFragment.newInstance();
+                case 2:
                     return QRFragment.newInstance();
-                case 3: // Fragment # 0 - This will show FirstFragment different title
+                case 3:
                     return SettingsFragment.newInstance();
                 default:
                     return null;
@@ -167,14 +137,18 @@ public class DashboardActivity extends AppCompatActivity implements PlaceholderF
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 4 total pages.
             return 4;
         }
     }
 
     @Override
     public void onBackPressed(){
-        //TODO: When user pressed back from home page, close the app...
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
 

@@ -82,7 +82,7 @@ public class ScraperWorker extends Worker {
                 Map<String, String> map = new HashMap<>();
                 map.put("p_butn", "1");
                 map.put("p_title", "Welcome+to+SISWeb");
-                map.put("p_username", "15551647");
+//                map.put("p_username", "15551647");
                 map.put("p_password", "Destiny10");
                 map.put("p_forward", "W_HU_MENU.P_DISPLAY_MENU¬p_menu=SI-HOME");
                 map.put("p_lmet", "SISWEB");

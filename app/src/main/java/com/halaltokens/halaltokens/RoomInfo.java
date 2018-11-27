@@ -3,9 +3,16 @@ package com.halaltokens.halaltokens;
 import org.jsoup.select.Elements;
 
 import java.util.Iterator;
+import java.util.List;
 
-public class RoomInfo {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmField;
 
+public class RoomInfo extends RealmObject {
+
+    @PrimaryKey
+    @RealmField
     private String roomName;
     private String startTime;
     private String endTime;
@@ -62,7 +69,8 @@ public class RoomInfo {
 
     public String toString() {
 
-        return "Room "+getRoomName()+"\n"+getStartTime()+"\n"+getEndTime()+"\n"+getModuleCode()+"\n"+getOrganization();
+        return "Room: " + getRoomName() + "\nStart Time: " + getStartTime() + "\nEnd Time: " + getEndTime() + "\nModule Code: " + getModuleCode() + "\nDepartment: " + getOrganization();
     }
+
 
 }
