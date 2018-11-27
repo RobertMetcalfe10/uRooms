@@ -48,7 +48,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
-        askForPermission();
 
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.login_button).setOnClickListener(this);
