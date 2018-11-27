@@ -31,6 +31,10 @@ public class RoomInfoRealmList extends RealmObject {
         return roomInfoArrayList.get(i);
     }
 
+    public int size () {
+        return roomInfoArrayList.size();
+    }
+
     @Override
     public String toString() {
         String result="";

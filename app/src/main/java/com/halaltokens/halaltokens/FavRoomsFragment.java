@@ -12,6 +12,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -72,9 +74,16 @@ public class FavRoomsFragment extends Fragment {
                 try {
                     if (result.get(i).getRoomInfo(0).getRoomName().trim().equals(roomName)) {
                         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(FavRoomsFragment.this.getContext(), SweetAlertDialog.NORMAL_TYPE);
-                        sweetAlertDialog.setContentText(result.get(i).toString());
+                        ListView roomList = new ListView(getContext());
+                        ArrayList<String> roomStrings = new ArrayList<>();
+                        for (int j=0; j<result.get(i).size(); j++) {
+                            roomStrings.add(result.get(i).getRoomInfo(j).toString());
+                        }
+                        ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, roomStrings);
+                        roomList.setAdapter(modeAdapter);
+                        sweetAlertDialog.setTitle(result.get(i).getRoomInfo(0).getRoomName());
+                        sweetAlertDialog.setCustomView(roomList);
                         sweetAlertDialog.show();
-                        Log.v("FavDialog", result.get(i).toString());
                     }
                 } catch (Exception e) { }
 

@@ -7,10 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.Spanned;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,14 +78,14 @@ public class SettingsFragment extends Fragment {
 
         CardView faqButton = rootView.findViewById(R.id.faq_button);
         faqButton.setOnClickListener(view -> {
-
-            String faqText =    "QA: Will we get an A+?\n\nYes." +
-                                "\n-------------------------------\n QA: How do i clear my favourites?\n\nFind the clear favourites button." +
-                                "\n-------------------------------\n QA: My QR Scanner does not work\n\nHave you tried turning your phone off and on again?";
+            ListView qsList = new ListView(getContext());
+            String[] qs = new String[] { "QA: Will we get an A+?", "Yes", "QA: How do I clear my favourites?", "The clear favourites button below", "QA: My QR scanner does not work?", "Have you tried turning your phone off and on again?" };
+            ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, qs);
+            qsList.setAdapter(modeAdapter);
 
             new SweetAlertDialog(getActivity())
                     .setTitleText("FAQs")
-                    .setContentText(faqText)
+                    .setCustomView(qsList)
                     .show();
         });
 
@@ -97,14 +100,14 @@ public class SettingsFragment extends Fragment {
         });
 
         CardView clearFavsButton = rootView.findViewById(R.id.clearFavs);
-        clearFavsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.deleteAll();
-                realm.commitTransaction();
-            }
+        clearFavsButton.setOnClickListener(v -> {
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+            realm.deleteAll();
+            realm.commitTransaction();
+            Toast toast = Toast.makeText(getContext(),"Favourites Cleared", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER,0,0);
+            toast.show();
         });
 
         return rootView;
