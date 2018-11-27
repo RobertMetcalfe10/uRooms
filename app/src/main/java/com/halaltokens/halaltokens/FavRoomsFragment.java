@@ -69,12 +69,15 @@ public class FavRoomsFragment extends Fragment {
             realm.beginTransaction();
             RealmResults<RoomInfoRealmList> result = realm.where(RoomInfoRealmList.class).findAll();
             for (int i=0; i<result.size(); i++) {
-                if (result.get(i).getRoomInfo(0).getRoomName().trim().equals(roomName)) {
-                    SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(FavRoomsFragment.this.getContext(), SweetAlertDialog.NORMAL_TYPE);
-                    sweetAlertDialog.setContentText(result.get(i).toString());
-                    sweetAlertDialog.show();
-                    Log.v("FavDialog", result.get(i).toString());
-                }
+                try {
+                    if (result.get(i).getRoomInfo(0).getRoomName().trim().equals(roomName)) {
+                        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(FavRoomsFragment.this.getContext(), SweetAlertDialog.NORMAL_TYPE);
+                        sweetAlertDialog.setContentText(result.get(i).toString());
+                        sweetAlertDialog.show();
+                        Log.v("FavDialog", result.get(i).toString());
+                    }
+                } catch (Exception e) { }
+
             }
             realm.commitTransaction();
         }
@@ -140,9 +143,9 @@ public class FavRoomsFragment extends Fragment {
         //creating an arraylist which contains available rooms
         listOfFavRooms = new ArrayList<>();
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<RoomInfo> rooms = realm.where(RoomInfo.class).findAll();
-        for (RoomInfo roomInfo:rooms) {
-            listOfFavRooms.add(roomInfo.getRoomName());
+        RealmResults<RoomInfoRealmList> rooms = realm.where(RoomInfoRealmList.class).findAll();
+        for (RoomInfoRealmList roomInfoRealmList:rooms) {
+            listOfFavRooms.add(roomInfoRealmList.getRoomInfo(0).getRoomName());
         }
         return listOfFavRooms;
     }

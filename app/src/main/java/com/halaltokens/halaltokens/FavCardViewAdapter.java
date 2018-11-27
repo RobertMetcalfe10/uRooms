@@ -48,9 +48,9 @@ public class FavCardViewAdapter extends RecyclerView.Adapter<FavCardViewAdapter.
                     case R.id.unFav:
                         Realm realm = Realm.getDefaultInstance();
                         realm.beginTransaction();
-                        RealmResults<RoomInfo> result = realm.where(RoomInfo.class).findAll();
+                        RealmResults<RoomInfoRealmList> result = realm.where(RoomInfoRealmList.class).findAll();
                         for (int i=0; i<result.size(); i++) {
-                            if (result.get(i).getRoomName().trim().equals(roomName.getText().toString().trim())) {
+                            if (result.get(i).getRoomInfo(0).getRoomName().trim().equals(roomName.getText().toString().trim())) {
                                 result.deleteFromRealm(i);
                             }
                         }

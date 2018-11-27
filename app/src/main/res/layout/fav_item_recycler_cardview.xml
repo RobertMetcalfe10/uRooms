@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,7 +14,7 @@
         android:layout_margin="3dp"
         android:clickable="true"
         android:padding="4dp"
-        app:cardBackgroundColor="#90d1ff">
+        app:cardBackgroundColor="@color/gradEnd">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/card_view_layout_fav"
@@ -35,7 +34,7 @@
                 android:fontFamily="@font/roboto_black"
                 android:gravity="center"
                 android:textColor="#000000"
-                android:textSize="30sp"
+                android:textSize="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +52,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_favorite_black_24dp"
-                android:backgroundTint="#90d1ff"/>
+                android:backgroundTint="@color/gradEnd"/>
 
             <ImageButton
                 android:id="@+id/shareButton"
@@ -65,7 +64,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_share_black_24dp"
-                android:backgroundTint="#90d1ff"/>
+                android:backgroundTint="@color/gradEnd"/>
 
 
         </android.support.constraint.ConstraintLayout>
