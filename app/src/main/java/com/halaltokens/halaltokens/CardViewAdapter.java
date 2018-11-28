@@ -85,7 +85,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
                 break;
             case "SciHub":
                 holder.buildingName.setText("Science Hub");
-                holder.buildingImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arts_building));
+                holder.buildingImage.setBackground(ContextCompat.getDrawable(context, R.drawable.science_hub));
                 break;
             case "SciNorth":
                 holder.buildingName.setText("Science North");
