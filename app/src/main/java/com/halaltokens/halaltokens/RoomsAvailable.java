@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -157,6 +158,15 @@ public class RoomsAvailable extends AppCompatActivity {
         // setting list adapter
         expListView.setAdapter(listAdapter);
 
+        expListView.setOnGroupClickListener((expandableListView, view, i, l) -> {
+
+            if(expandableListView.getExpandableListAdapter().getChildrenCount(0) == 0){
+                Toast.makeText(expandableListView.getContext(), "No Rooms Available", Toast.LENGTH_SHORT).show();
+            }
+
+
+            return false;
+        });
 
         expListView.setOnChildClickListener((expandableListView, view, groupPosition, childPosition, id) -> {
             //getting the data clicked on
@@ -185,6 +195,10 @@ public class RoomsAvailable extends AppCompatActivity {
                 }
                 realm.commitTransaction();
             }
+
+//            if(data.equals("")){
+//                Toast.makeText(this, "No Rooms Available", Toast.LENGTH_LONG).show();
+//            }
 
             return true;
         });
