@@ -1,8 +1,8 @@
-/*
-In the building fragment,
+/**
+ * A fragment that displays the list of buildings to display to the user
  */
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.halaltokens.halaltokens.Adapters.CardViewAdapter;
+import com.halaltokens.halaltokens.R;
 
 import java.util.ArrayList;
 import java.util.List;

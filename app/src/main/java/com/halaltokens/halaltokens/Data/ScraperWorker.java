@@ -1,9 +1,9 @@
 /*
-In the building fragment,
+ * Scrapes the data from the website using the thread pool
  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Data;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

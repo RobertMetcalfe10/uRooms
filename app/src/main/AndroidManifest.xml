@@ -20,7 +20,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
 
-        <activity android:name=".SplashScreen" android:screenOrientation="portrait">
+        <activity android:name=".Activities.SplashScreen" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,31 +28,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginScreen"
+            android:name=".Activities.LoginScreen"
             android:label="@string/title_activity_login_screen"
-            android:parentActivityName=".SplashScreen"
+            android:parentActivityName=".Activities.SplashScreen"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:launchMode = "singleTask">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.halaltokens.halaltokens.SplashScreen" />
+                android:value="com.halaltokens.halaltokens.Activities.SplashScreen" />
         </activity>
         <activity
-            android:name=".DashboardActivity"
+            android:name=".Activities.DashboardActivity"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             android:launchMode = "singleTask"/>
         <activity
-            android:name=".RoomsAvailable"
+            android:name=".Helpers.RoomsAvailable"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".RegistrationScreen"
+            android:name=".Activities.RegistrationScreen"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ForgotPassword"
+            android:name=".Activities.ForgotPassword"
             android:screenOrientation="portrait" />
     </application>
 

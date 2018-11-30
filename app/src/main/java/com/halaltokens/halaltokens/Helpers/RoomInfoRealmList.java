@@ -1,9 +1,9 @@
 /*
-In the building fragment,
+ * Class that stores rom information into local storage
  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Helpers;
 
 import java.util.ArrayList;
 

@@ -6,8 +6,8 @@ import android.util.Log;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.halaltokens.halaltokens.R;
-import com.halaltokens.halaltokens.RoomInfo;
-import com.halaltokens.halaltokens.ScraperWorker;
+import com.halaltokens.halaltokens.Helpers.RoomInfo;
+import com.halaltokens.halaltokens.Data.ScraperWorker;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
