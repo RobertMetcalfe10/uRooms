@@ -44,7 +44,7 @@ public class DashboardActivity extends AppCompatActivity implements QRFragment.O
         setContentView(R.layout.activity_dashboard);
 
         AHBottomNavigationItem item1 = new AHBottomNavigationItem("Home", R.drawable.ic_home_black_24dp);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Favourites", R.drawable.ic_favorite_black_24dp);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Favourites", R.drawable.ic_fav_black_nav);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem("QR", R.drawable.qrcode);
         AHBottomNavigationItem item4 = new AHBottomNavigationItem("Settings", R.drawable.ic_settings_black_24dp);
         final AHBottomNavigation ahBottomNavigation = findViewById(R.id.bottom_navigation);

@@ -157,6 +157,12 @@ public class QRFragment extends Fragment {
     }
 
     @Override
+    public void onPause(){
+        super.onPause();
+        cameraSource.stop();
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
     }
