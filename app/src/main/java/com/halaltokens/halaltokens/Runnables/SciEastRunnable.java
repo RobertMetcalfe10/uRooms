@@ -50,7 +50,7 @@ public class SciEastRunnable implements Runnable {
                         break;
                     }
                 }
-            } catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

@@ -1,15 +1,19 @@
+/*
+In the building fragment,
+ */
+
+
 package com.halaltokens.halaltokens;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
 import com.iambedant.text.OutlineTextView;
 
 import java.util.List;
@@ -17,7 +21,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class FavCardViewAdapter extends RecyclerView.Adapter<FavCardViewAdapter.MyViewHolder>{
+public class FavCardViewAdapter extends RecyclerView.Adapter<FavCardViewAdapter.MyViewHolder> {
 
     private List<String> buildings;
     private static FavOnItemClickedListener onItemClickedListener;
@@ -39,8 +43,7 @@ public class FavCardViewAdapter extends RecyclerView.Adapter<FavCardViewAdapter.
             shareButton = view.findViewById(R.id.shareButton);
 
             View.OnClickListener onClickListener = v -> {
-                switch(v.getId())
-                {
+                switch (v.getId()) {
                     case R.id.roomName:
                         onItemClickedListener.OnTextItemClicked(roomName.getText().toString().trim());
                         break;
@@ -49,7 +52,7 @@ public class FavCardViewAdapter extends RecyclerView.Adapter<FavCardViewAdapter.
                         Realm realm = Realm.getDefaultInstance();
                         realm.beginTransaction();
                         RealmResults<RoomInfoRealmList> result = realm.where(RoomInfoRealmList.class).findAll();
-                        for (int i=0; i<result.size(); i++) {
+                        for (int i = 0; i < result.size(); i++) {
                             if (result.get(i).getRoomInfo(0).getRoomName().trim().equals(roomName.getText().toString().trim())) {
                                 result.deleteFromRealm(i);
                             }
@@ -102,8 +105,10 @@ public class FavCardViewAdapter extends RecyclerView.Adapter<FavCardViewAdapter.
     }
 
     public interface FavOnItemClickedListener {
-        public void OnFavItemClicked(String roomName);
-        public void OnShareItemClicked(String roomName);
-        public void OnTextItemClicked(String roomName);
+        void OnFavItemClicked(String roomName);
+
+        void OnShareItemClicked(String roomName);
+
+        void OnTextItemClicked(String roomName);
     }
 }

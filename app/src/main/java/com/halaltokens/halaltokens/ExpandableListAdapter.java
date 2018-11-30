@@ -1,3 +1,8 @@
+/*
+In the building fragment,
+ */
+
+
 package com.halaltokens.halaltokens;
 
 import java.util.HashMap;
@@ -30,8 +35,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosititon) {
-        return this.listDataChild.get(this.listDataHeader.get(groupPosition)).get(childPosititon);
+    public Object getChild(int groupPosition, int childPosition) {
+        return this.listDataChild.get(this.listDataHeader.get(groupPosition)).get(childPosition);
     }
 
     @Override
@@ -46,8 +51,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         final String childText = (String) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_item, null);
+            LayoutInflater inflaInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflaInflater.inflate(R.layout.list_item, null);
         }
 
         TextView txtListChild = convertView.findViewById(R.id.lblListItem);
@@ -90,10 +95,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this.context
+            LayoutInflater inflaInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            convertView = infalInflater.inflate(R.layout.list_group, null);
+            convertView = inflaInflater.inflate(R.layout.list_group, null);
         }
 
         TextView lblListHeader = convertView.findViewById(R.id.lblListHeader);

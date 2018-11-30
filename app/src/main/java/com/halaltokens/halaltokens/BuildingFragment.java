@@ -1,3 +1,7 @@
+/*
+In the building fragment,
+ */
+
 package com.halaltokens.halaltokens;
 
 import android.os.Bundle;
@@ -16,15 +20,9 @@ import java.util.List;
  * A placeholder fragment containing a simple view.
  */
 public class BuildingFragment extends Fragment {
-    /**
-     * The fragment argument representing the section number for this
-     * fragment.
-     */
-    private static BuildingFragment fragment;
     private static OnItemClickListener callback;
 
     private RecyclerView recyclerView;
-    private CardViewAdapter cAdapter;
     private ArrayList<String> listOfBuildings;
 
     public interface OnItemClickListener {
@@ -39,7 +37,11 @@ public class BuildingFragment extends Fragment {
      * number.
      */
     public static BuildingFragment newInstance(OnItemClickListener onBuildingClicked) {
-        fragment = new BuildingFragment();
+        /*
+      The fragment argument representing the section number for this
+      fragment.
+     */
+        BuildingFragment fragment = new BuildingFragment();
         callback = onBuildingClicked;
         return fragment;
     }
@@ -52,7 +54,7 @@ public class BuildingFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recycler_view);
 
         //initialize Adapterclass with List
-        cAdapter = new CardViewAdapter(prepareData(), callback, getContext());
+        CardViewAdapter cAdapter = new CardViewAdapter(prepareData(), callback, getContext());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(cAdapter); //add adapter to recycler view
 
@@ -65,7 +67,7 @@ public class BuildingFragment extends Fragment {
         return rootView;
     }
 
-    public List<String> prepareData(){
+    public List<String> prepareData() {
         //creating an arraylist which contains available rooms
         listOfBuildings = new ArrayList<>();
         listOfBuildings.add("HealthScience");

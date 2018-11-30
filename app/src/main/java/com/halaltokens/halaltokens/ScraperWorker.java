@@ -1,3 +1,8 @@
+/*
+In the building fragment,
+ */
+
+
 package com.halaltokens.halaltokens;
 
 import android.content.Context;
@@ -6,13 +11,8 @@ import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.halaltokens.halaltokens.Runnables.AgRunnable;
 import com.halaltokens.halaltokens.Runnables.ArtsRunnable;
@@ -29,11 +29,7 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;

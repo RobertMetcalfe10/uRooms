@@ -1,3 +1,8 @@
+/*
+In the building fragment,
+ */
+
+
 package com.halaltokens.halaltokens;
 
 import java.util.ArrayList;
@@ -10,36 +15,37 @@ import io.realm.annotations.RealmField;
 public class RoomInfoRealmList extends RealmObject {
 
     @PrimaryKey
-    private String placeholder="";
+    private String placeholder = "";
 
     @RealmField
     private RealmList<RoomInfo> roomInfoArrayList = new RealmList<>();
 
-    public RoomInfoRealmList() {}
+    public RoomInfoRealmList() {
+    }
 
-    public void add (RoomInfo roomInfo) {
+    public void add(RoomInfo roomInfo) {
         roomInfoArrayList.add(roomInfo);
-        placeholder=roomInfoArrayList.get(0).getRoomName();
+        placeholder = roomInfoArrayList.get(0).getRoomName();
     }
 
-    public void addList (ArrayList<RoomInfo> arrayList) {
+    public void addList(ArrayList<RoomInfo> arrayList) {
         roomInfoArrayList.addAll(arrayList);
-        placeholder=roomInfoArrayList.get(0).getRoomName();
+        placeholder = roomInfoArrayList.get(0).getRoomName();
     }
 
-    public RoomInfo getRoomInfo (int i) {
+    public RoomInfo getRoomInfo(int i) {
         return roomInfoArrayList.get(i);
     }
 
-    public int size () {
+    public int size() {
         return roomInfoArrayList.size();
     }
 
     @Override
     public String toString() {
-        String result="";
-        for (RoomInfo room: roomInfoArrayList) {
-            result+=room+"\n";
+        String result = "";
+        for (RoomInfo room : roomInfoArrayList) {
+            result += room + "\n";
         }
         return result;
     }

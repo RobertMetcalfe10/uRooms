@@ -47,7 +47,7 @@ public class SciNorthRunnable implements Runnable {
                         break;
                     }
                 }
-            } catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

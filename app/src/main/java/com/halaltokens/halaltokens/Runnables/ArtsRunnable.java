@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import io.realm.Realm;
-
 public class ArtsRunnable implements Runnable {
 
     private static Context context = null;

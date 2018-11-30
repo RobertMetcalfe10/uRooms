@@ -1,25 +1,20 @@
+/*
+In the building fragment,
+ */
+
+
 package com.halaltokens.halaltokens;
 
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.time.LocalDateTime;
-import java.util.concurrent.TimeUnit;
-
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
 import io.realm.Realm;
 
 public class SplashScreen extends AppCompatActivity {
@@ -27,7 +22,6 @@ public class SplashScreen extends AppCompatActivity {
     private static int WELCOME_TIMEOUT = 5000;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseAuth firebaseAuth;
-
 
 
     @Override
