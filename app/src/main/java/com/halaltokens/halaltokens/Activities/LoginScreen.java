@@ -1,9 +1,10 @@
 /*
-In the building fragment,
+ * In login screen a user can log in after they are email verified. There
+ * are a number of checks to make sure that the email and password is valid
  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.halaltokens.halaltokens.R;
 
 import java.util.Objects;
 

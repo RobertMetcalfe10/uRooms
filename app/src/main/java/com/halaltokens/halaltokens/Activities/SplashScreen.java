@@ -1,9 +1,9 @@
 /*
-In the building fragment,
+ * Splash screen
  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.view.WindowManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.halaltokens.halaltokens.R;
 
 import io.realm.Realm;
 

@@ -1,9 +1,9 @@
 /*
-In the building fragment,
+ * Rooms available displays the available rooms based on the scrapper data
  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Helpers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,6 +22,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.halaltokens.halaltokens.Adapters.ExpandableListAdapter;
+import com.halaltokens.halaltokens.R;
 
 import org.jsoup.Jsoup;
 

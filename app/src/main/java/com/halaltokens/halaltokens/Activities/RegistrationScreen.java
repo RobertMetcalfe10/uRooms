@@ -1,9 +1,9 @@
 /*
-In the building fragment,
+ * Similar to the log in activity, except this time it registers a user for the first time.
  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.halaltokens.halaltokens.R;
 
 public class RegistrationScreen extends AppCompatActivity implements View.OnClickListener {
 

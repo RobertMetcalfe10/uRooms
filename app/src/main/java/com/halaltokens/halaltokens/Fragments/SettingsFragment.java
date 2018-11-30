@@ -1,9 +1,10 @@
 /*
-In the building fragment,
+ *  Settings fragment that displays card views. The cardviews then can be clicked
+ *  that each contain different functions
  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.halaltokens.halaltokens.Activities.LoginScreen;
+import com.halaltokens.halaltokens.R;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.realm.Realm;

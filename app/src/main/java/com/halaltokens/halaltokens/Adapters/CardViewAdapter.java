@@ -1,11 +1,12 @@
 /*
-In the building fragment,
+ * The adapter creates view holders  for the card view. The adapter also then binds
+ * the view holders to their individual data
  */
 
 
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.halaltokens.halaltokens.Fragments.BuildingFragment;
+import com.halaltokens.halaltokens.R;
 import com.iambedant.text.OutlineTextView;
 
 import java.util.List;
@@ -50,7 +53,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
     }
 
     //constructor
-    CardViewAdapter(List<String> buildings, BuildingFragment.OnItemClickListener onClickListener, Context context) {
+    public CardViewAdapter(List<String> buildings, BuildingFragment.OnItemClickListener onClickListener, Context context) {
         this.buildings = buildings;
         this.clickListener = onClickListener;
         this.context = context;
