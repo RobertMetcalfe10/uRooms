@@ -56,9 +56,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         txtListChild.setText(childText);
 
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<RoomInfo> roomInfoRealmResults = realm.where(RoomInfo.class).findAll();
-        for (RoomInfo roomInfo : roomInfoRealmResults) {
-            if (roomInfo.getRoomName().trim().equals(childText)) {
+        RealmResults<RoomInfoRealmList> roomInfoRealmResults = realm.where(RoomInfoRealmList.class).findAll();
+        for (RoomInfoRealmList roomInfo : roomInfoRealmResults) {
+            if (roomInfo.getRoomInfo(0).getRoomName().trim().equals(childText)) {
                 imageView.setTag("Fav");
                 imageView.setImageResource(R.drawable.ic_favorite_black_24dp);
             }
