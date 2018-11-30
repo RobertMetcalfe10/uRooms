@@ -79,7 +79,7 @@ public class SettingsFragment extends Fragment {
         CardView faqButton = rootView.findViewById(R.id.faq_button);
         faqButton.setOnClickListener(view -> {
             ListView qsList = new ListView(getContext());
-            String[] qs = new String[]{"QA: Will we get an A+?", "Yes", "QA: How do I clear my favourites?", "The clear favourites button below", "QA: My QR scanner does not work?", "Have you tried turning your phone off and on again?"};
+            String[] qs = new String[]{"Q: Will we get an A+?", "A: Yes", "Q: How do I clear my favourites?", "A: The clear favourites button below", "Q: My QR scanner does not work?", "A: Have you tried turning your phone off and on again?"};
             ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, qs);
             qsList.setAdapter(modeAdapter);
 
