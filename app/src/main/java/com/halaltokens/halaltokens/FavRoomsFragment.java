@@ -1,3 +1,8 @@
+/*
+In the building fragment,
+ */
+
+
 package com.halaltokens.halaltokens;
 
 import android.content.Context;
@@ -36,7 +41,6 @@ public class FavRoomsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private FavCardViewAdapter cAdapter;
-    private static ArrayList<String> listOfFavRooms;
     private FavCardViewAdapter.FavOnItemClickedListener favOnItemClickedListener = new FavCardViewAdapter.FavOnItemClickedListener() {
         @Override
         public void OnFavItemClicked(String roomName) {
@@ -51,7 +55,7 @@ public class FavRoomsFragment extends Fragment {
             Realm realm = Realm.getDefaultInstance();
             realm.beginTransaction();
             RealmResults<RoomInfo> result = realm.where(RoomInfo.class).findAll();
-            for (int i=0; i<result.size(); i++) {
+            for (int i = 0; i < result.size(); i++) {
                 if (result.get(i).getRoomName().trim().equals(roomName)) {
                     sendIntent.putExtra(Intent.EXTRA_TITLE, result.get(i).getRoomName());
                     sendIntent.putExtra(Intent.EXTRA_TEXT, result.get(i).toString());
@@ -70,13 +74,13 @@ public class FavRoomsFragment extends Fragment {
             Realm realm = Realm.getDefaultInstance();
             realm.beginTransaction();
             RealmResults<RoomInfoRealmList> result = realm.where(RoomInfoRealmList.class).findAll();
-            for (int i=0; i<result.size(); i++) {
+            for (int i = 0; i < result.size(); i++) {
                 try {
                     if (result.get(i).getRoomInfo(0).getRoomName().trim().equals(roomName)) {
                         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(FavRoomsFragment.this.getContext(), SweetAlertDialog.NORMAL_TYPE);
                         ListView roomList = new ListView(getContext());
                         ArrayList<String> roomStrings = new ArrayList<>();
-                        for (int j=0; j<result.get(i).size(); j++) {
+                        for (int j = 0; j < result.get(i).size(); j++) {
                             roomStrings.add(result.get(i).getRoomInfo(j).toString());
                         }
                         ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, roomStrings);
@@ -85,14 +89,14 @@ public class FavRoomsFragment extends Fragment {
                         sweetAlertDialog.setCustomView(roomList);
                         sweetAlertDialog.show();
                     }
-                } catch (Exception e) { }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
             realm.commitTransaction();
         }
     };
-
-    private OnFragmentInteractionListener mListener;
 
     public FavRoomsFragment() {
         // Required empty public constructor
@@ -127,7 +131,6 @@ public class FavRoomsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }
@@ -136,7 +139,6 @@ public class FavRoomsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     @Override
@@ -148,12 +150,12 @@ public class FavRoomsFragment extends Fragment {
     }
 
 
-    public static List<String> prepareData(){
+    public static List<String> prepareData() {
         //creating an arraylist which contains available rooms
-        listOfFavRooms = new ArrayList<>();
+        ArrayList<String> listOfFavRooms = new ArrayList<>();
         Realm realm = Realm.getDefaultInstance();
         RealmResults<RoomInfoRealmList> rooms = realm.where(RoomInfoRealmList.class).findAll();
-        for (RoomInfoRealmList roomInfoRealmList:rooms) {
+        for (RoomInfoRealmList roomInfoRealmList : rooms) {
             listOfFavRooms.add(roomInfoRealmList.getRoomInfo(0).getRoomName());
         }
         return listOfFavRooms;
@@ -164,8 +166,8 @@ public class FavRoomsFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             if (recyclerView.getAdapter().getItemCount() == 0) {
-                Toast toast = Toast.makeText(getContext(),"You Have No Favourites", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER,0,0);
+                Toast toast = Toast.makeText(getContext(), "You Have No Favourites", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
             }
         }
@@ -182,8 +184,7 @@ public class FavRoomsFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+
     }
 
 

@@ -29,19 +29,19 @@ public class CompSciRunnable implements Runnable {
         try {
             Document doc = Jsoup.connect(context.getString(R.string.B004CSI)).cookies(ScraperWorker.response.cookies()).get();
             ref.child("CompSci").setValue(null);
-            for(int i=1; i<=10;i++) {
+            for (int i = 1; i <= 10; i++) {
                 try {
                     RoomInfo roomInfo = new RoomInfo();
                     roomInfo.setRoomName(doc.title().substring(10));
-                    roomInfo.setRoomInfo(doc.getElementById("RB200|0."+i).children());
-                    Log.v("Comp",roomInfo.toString());
+                    roomInfo.setRoomInfo(doc.getElementById("RB200|0." + i).children());
+                    Log.v("Comp", roomInfo.toString());
                     ref.child("CompSci").push().setValue(roomInfo);
                 } catch (NullPointerException e) {
                     break;
                 }
             }
-        } catch(IOException e) {
-//            e.printStackTrace();
+        } catch (IOException e) {
+         e.printStackTrace();
         }
     }
 }

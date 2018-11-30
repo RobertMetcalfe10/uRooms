@@ -1,3 +1,10 @@
+/*
+In the building fragment,
+ */
+
+
+
+
 package com.halaltokens.halaltokens;
 
 import android.annotation.SuppressLint;
@@ -15,7 +22,8 @@ import com.iambedant.text.OutlineTextView;
 
 import java.util.List;
 
-public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyViewHolder>{
+
+public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyViewHolder> {
 
     //List
     private List<String> buildings;
@@ -62,7 +70,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
         //get item at position
         String building = this.buildings.get(position);
 
-        switch (building){
+        switch (building) {
             case "CompSci":
                 holder.buildingName.setText("Computer Science");
                 holder.buildingImage.setBackground(ContextCompat.getDrawable(context, R.drawable.cs_building));
@@ -99,13 +107,13 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
                 holder.buildingName.setText("Science West");
                 holder.buildingImage.setBackground(ContextCompat.getDrawable(context, R.drawable.sci_west_building));
                 break;
-            default :
+            default:
                 holder.buildingName.setText(building);
         }
 
     }
 
-    public String buildingConverter (String buildingName) {
+    private String buildingConverter(String buildingName) {
         switch (buildingName) {
             case "Computer Science":
                 return "CompSci";
@@ -125,7 +133,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
                 return "SciSouth";
             case "Science West":
                 return "SciWest";
-            default :
+            default:
                 return "";
         }
     }

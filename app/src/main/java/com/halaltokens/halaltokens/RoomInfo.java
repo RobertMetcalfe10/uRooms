@@ -1,9 +1,13 @@
+/*
+In the building fragment,
+ */
+
+
 package com.halaltokens.halaltokens;
 
 import org.jsoup.select.Elements;
 
 import java.util.Iterator;
-import java.util.List;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -23,7 +27,7 @@ public class RoomInfo extends RealmObject {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    private void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
@@ -31,23 +35,23 @@ public class RoomInfo extends RealmObject {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    private void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
-    public String getModuleCode() {
+    private String getModuleCode() {
         return moduleCode;
     }
 
-    public void setModuleCode(String moduleCode) {
+    private void setModuleCode(String moduleCode) {
         this.moduleCode = moduleCode;
     }
 
-    public String getOrganization() {
+    private String getOrganization() {
         return organization;
     }
 
-    public void setOrganization(String organization) {
+    private void setOrganization(String organization) {
         this.organization = organization;
     }
 

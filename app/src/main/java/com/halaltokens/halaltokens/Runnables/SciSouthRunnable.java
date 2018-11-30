@@ -46,7 +46,7 @@ public class SciSouthRunnable implements Runnable {
                         break;
                     }
                 }
-            } catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

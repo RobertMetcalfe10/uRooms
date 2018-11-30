@@ -84,7 +84,7 @@ public class HealthScienceRunnable implements Runnable {
                             break;
                         }
                     }
-                } catch(IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -105,7 +105,7 @@ public class HealthScienceRunnable implements Runnable {
                             break;
                         }
                     }
-                } catch(IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -126,7 +126,7 @@ public class HealthScienceRunnable implements Runnable {
                             break;
                         }
                     }
-                } catch(IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -147,7 +147,7 @@ public class HealthScienceRunnable implements Runnable {
                             break;
                         }
                     }
-                } catch(IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }

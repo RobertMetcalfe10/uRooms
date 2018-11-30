@@ -1,3 +1,8 @@
+/*
+In the building fragment,
+ */
+
+
 package com.halaltokens.halaltokens;
 
 import android.annotation.SuppressLint;
@@ -50,7 +55,6 @@ public class RoomsAvailable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rooms_available);
-//        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
 
 
         Intent intent = getIntent();
@@ -101,18 +105,18 @@ public class RoomsAvailable extends AppCompatActivity {
 
             protected void onPostExecute(String str) {
 
-                for (Map.Entry<String,ArrayList<RoomInfo>> roomInfos : roomsMap.entrySet()) {
+                for (Map.Entry<String, ArrayList<RoomInfo>> roomInfos : roomsMap.entrySet()) {
                     boolean checked = false;
                     boolean checked1 = false;
                     for (RoomInfo roomInfo : roomInfos.getValue()) {
-                        if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == Integer.parseInt(roomInfo.getEndTime().substring(0,2))-1) {
-                            if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == LocalDateTime.now().getHour() || Integer.parseInt(roomInfo.getEndTime().substring(0,2)) == LocalDateTime.now().getHour()) {
+                        if (Integer.parseInt(roomInfo.getStartTime().substring(0, 2)) == Integer.parseInt(roomInfo.getEndTime().substring(0, 2)) - 1) {
+                            if (Integer.parseInt(roomInfo.getStartTime().substring(0, 2)) == LocalDateTime.now().getHour() || Integer.parseInt(roomInfo.getEndTime().substring(0, 2)) == LocalDateTime.now().getHour()) {
                                 checked = true;
                                 continue;
                             }
                         }
-                        if (roomInfo.getStartTime().substring(0,2).equals(roomInfo.getEndTime().substring(0,2))) {
-                            if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == LocalDateTime.now().getHour()) {
+                        if (roomInfo.getStartTime().substring(0, 2).equals(roomInfo.getEndTime().substring(0, 2))) {
+                            if (Integer.parseInt(roomInfo.getStartTime().substring(0, 2)) == LocalDateTime.now().getHour()) {
                                 checked = true;
                             }
                         }
@@ -121,7 +125,7 @@ public class RoomsAvailable extends AppCompatActivity {
                         roomsAvailableNow.add(roomInfos.getKey());
                     }
                     for (RoomInfo roomInfo : roomInfos.getValue()) {
-                        if (Integer.parseInt(roomInfo.getStartTime().substring(0,2)) == LocalDateTime.now().getHour()+1) {
+                        if (Integer.parseInt(roomInfo.getStartTime().substring(0, 2)) == LocalDateTime.now().getHour() + 1) {
                             checked1 = true;
                         }
                     }
@@ -174,7 +178,7 @@ public class RoomsAvailable extends AppCompatActivity {
                 Realm realm = Realm.getDefaultInstance();
                 realm.beginTransaction();
                 RealmResults<RoomInfoRealmList> result = realm.where(RoomInfoRealmList.class).findAll();
-                for (int i=0; i<result.size(); i++) {
+                for (int i = 0; i < result.size(); i++) {
                     if (result.get(i).getRoomInfo(0).getRoomName().trim().equals(tv.getText().toString().trim())) {
                         result.deleteFromRealm(i);
                     }

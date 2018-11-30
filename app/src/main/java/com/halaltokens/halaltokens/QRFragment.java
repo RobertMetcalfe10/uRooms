@@ -1,16 +1,19 @@
+/*
+In the building fragment,
+ */
+
+
 package com.halaltokens.halaltokens;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -21,10 +24,8 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -32,13 +33,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.iambedant.text.OutlineTextView;
 
-import org.w3c.dom.Text;
-
 import java.io.IOException;
-import java.util.Objects;
-
-import static android.media.MediaRecorder.VideoSource.CAMERA;
-import static java.util.logging.Level.parse;
 
 public class QRFragment extends Fragment {
     private static QRFragment fragment;
@@ -47,8 +42,6 @@ public class QRFragment extends Fragment {
     OutlineTextView textView2;
     BarcodeDetector barcodeDetector;
     Button button;
-
-    private OnFragmentInteractionListener mListener;
 
     public QRFragment() {
         // Required empty public constructor
@@ -65,7 +58,7 @@ public class QRFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_qr, container, false);
         surfaceView = view.findViewById(R.id.camerapreview2);
         textView2 = view.findViewById(R.id.textview2);
@@ -75,7 +68,7 @@ public class QRFragment extends Fragment {
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                // getActivity.getapplication context instead in the bottom part.
+                // getActivity.get application context instead in the bottom part.
                 if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
@@ -123,13 +116,13 @@ public class QRFragment extends Fragment {
                         webSettings.setLoadsImagesAutomatically(true);
                         myWebView.setWebViewClient(new WebViewClient() {
                             public void onPageFinished(WebView view, String url) {
-                                Log.i("Loaded", "Finished loading URL: " +url);
+                                Log.i("Loaded", "Finished loading URL: " + url);
                             }
                         });
                         myWebView.loadUrl(link);
 
                         if (link.contains("www.ucd.ie/rooms/")) {
-                            myWebView.loadUrl("https://sisweb.ucd.ie/usis/!W_HU_MENU.P_PUBLISH?p_tag=UROOMS&ROOMCODE="+link.substring(17,link.length()));
+                            myWebView.loadUrl("https://sisweb.ucd.ie/usis/!W_HU_MENU.P_PUBLISH?p_tag=UROOMS&ROOMCODE=" + link.substring(17, link.length()));
                         }
 
                         button = view.findViewById(R.id.button);
@@ -155,7 +148,6 @@ public class QRFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -165,7 +157,6 @@ public class QRFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     public interface OnFragmentInteractionListener {

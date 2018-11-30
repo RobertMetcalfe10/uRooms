@@ -15,8 +15,6 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import io.realm.Realm;
-
 public class EngRunnable implements Runnable {
 
     private static Context context = null;
@@ -53,7 +51,7 @@ public class EngRunnable implements Runnable {
                         break;
                     }
                 }
-            } catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
