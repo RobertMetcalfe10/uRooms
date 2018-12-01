@@ -28,7 +28,6 @@ import com.halaltokens.halaltokens.Fragments.FavRoomsFragment;
 import com.halaltokens.halaltokens.Fragments.QRFragment;
 import com.halaltokens.halaltokens.Fragments.SettingsFragment;
 import com.halaltokens.halaltokens.R;
-import com.halaltokens.halaltokens.Helpers.RoomsAvailable;
 
 
 public class DashboardActivity extends AppCompatActivity implements QRFragment.OnFragmentInteractionListener, FavRoomsFragment.OnFragmentInteractionListener {

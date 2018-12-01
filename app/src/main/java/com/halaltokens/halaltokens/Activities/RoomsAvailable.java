@@ -3,7 +3,7 @@
  */
 
 
-package com.halaltokens.halaltokens.Helpers;
+package com.halaltokens.halaltokens.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -24,6 +24,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.halaltokens.halaltokens.Adapters.ExpandableListAdapter;
+import com.halaltokens.halaltokens.Helpers.RoomInfo;
+import com.halaltokens.halaltokens.Helpers.RoomInfoRealmList;
 import com.halaltokens.halaltokens.R;
 
 import org.jsoup.Jsoup;
@@ -197,10 +199,6 @@ public class RoomsAvailable extends AppCompatActivity {
                 }
                 realm.commitTransaction();
             }
-
-//            if(data.equals("")){
-//                Toast.makeText(this, "No Rooms Available", Toast.LENGTH_LONG).show();
-//            }
 
             return true;
         });
