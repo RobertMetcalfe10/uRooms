@@ -1,9 +1,11 @@
 /*
-In the building fragment,
+ * This is an adapter for the card view fav fragment.
+ * It allows the user to share a room that they have favorited and also
+ * unfav it straight from the app.
  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Adapters;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
@@ -14,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.halaltokens.halaltokens.R;
+import com.halaltokens.halaltokens.Helpers.RoomInfoRealmList;
 import com.iambedant.text.OutlineTextView;
 
 import java.util.List;
@@ -76,7 +80,7 @@ public class FavCardViewAdapter extends RecyclerView.Adapter<FavCardViewAdapter.
     }
 
     //constructor
-    FavCardViewAdapter(List<String> buildings) {
+    public FavCardViewAdapter(List<String> buildings) {
         this.buildings = buildings;
     }
 

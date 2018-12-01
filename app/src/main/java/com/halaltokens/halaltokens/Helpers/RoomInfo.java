@@ -1,9 +1,9 @@
 /*
-In the building fragment,
+ *
  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Helpers;
 
 import org.jsoup.select.Elements;
 

@@ -1,9 +1,10 @@
 /*
-In the building fragment,
- */
+*  Creates two list views one as a parent and one as a child that displays
+*  when rooms are available and the child then shows the list of rooms
+*  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Adapters;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,9 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.halaltokens.halaltokens.R;
+import com.halaltokens.halaltokens.Helpers.RoomInfo;
 
 import io.realm.Realm;
 import io.realm.RealmResults;

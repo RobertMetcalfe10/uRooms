@@ -1,9 +1,9 @@
 /*
-In the building fragment,
+ * Rooms available displays the available rooms based on the scrapper data
  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Helpers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,12 +16,15 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.halaltokens.halaltokens.Adapters.ExpandableListAdapter;
+import com.halaltokens.halaltokens.R;
 
 import org.jsoup.Jsoup;
 
@@ -157,6 +160,15 @@ public class RoomsAvailable extends AppCompatActivity {
         // setting list adapter
         expListView.setAdapter(listAdapter);
 
+        expListView.setOnGroupClickListener((expandableListView, view, i, l) -> {
+
+            if(expandableListView.getExpandableListAdapter().getChildrenCount(0) == 0){
+                Toast.makeText(expandableListView.getContext(), "No Rooms Available", Toast.LENGTH_SHORT).show();
+            }
+
+
+            return false;
+        });
 
         expListView.setOnChildClickListener((expandableListView, view, groupPosition, childPosition, id) -> {
             //getting the data clicked on
@@ -185,6 +197,10 @@ public class RoomsAvailable extends AppCompatActivity {
                 }
                 realm.commitTransaction();
             }
+
+//            if(data.equals("")){
+//                Toast.makeText(this, "No Rooms Available", Toast.LENGTH_LONG).show();
+//            }
 
             return true;
         });

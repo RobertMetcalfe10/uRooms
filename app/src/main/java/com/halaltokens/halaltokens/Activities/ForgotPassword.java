@@ -1,9 +1,10 @@
 /*
-In the building fragment,
+ * If a user forgets their password they can input their email
+ * and firebase will send that user a forgot password link
  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.halaltokens.halaltokens.R;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 

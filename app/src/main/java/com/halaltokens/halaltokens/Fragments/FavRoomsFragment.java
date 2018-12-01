@@ -1,18 +1,17 @@
 /*
-In the building fragment,
+ *   In the fav fragments, users can see their fav rooms and click on each individual room which will show
+ *   the user the room information for the whole day
  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +20,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.halaltokens.halaltokens.Adapters.FavCardViewAdapter;
+import com.halaltokens.halaltokens.R;
+import com.halaltokens.halaltokens.Helpers.RoomInfo;
+import com.halaltokens.halaltokens.Helpers.RoomInfoRealmList;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 

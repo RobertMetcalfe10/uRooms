@@ -1,9 +1,10 @@
 /*
-In the building fragment,
+ * QR Fragment that scans QR codes around campus and opens a web view and directs
+ * to tha specific URL of that app
  */
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Fragments;
 
 import android.Manifest;
 import android.content.Context;
@@ -31,6 +32,7 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.halaltokens.halaltokens.R;
 import com.iambedant.text.OutlineTextView;
 
 import java.io.IOException;
@@ -152,6 +154,12 @@ public class QRFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        cameraSource.stop();
     }
 
     @Override

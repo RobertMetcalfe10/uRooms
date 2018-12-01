@@ -1,10 +1,12 @@
 /*
-In the building fragment,
+ *  This is the activity that user first sees when they open the app
+ *  The navigation drawer is initialized here at the bottom of the page
+ *  so that users can seamlessly switch between fragments
  */
 
 
 
-package com.halaltokens.halaltokens;
+package com.halaltokens.halaltokens.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,6 +23,12 @@ import android.view.Menu;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.halaltokens.halaltokens.Fragments.BuildingFragment;
+import com.halaltokens.halaltokens.Fragments.FavRoomsFragment;
+import com.halaltokens.halaltokens.Fragments.QRFragment;
+import com.halaltokens.halaltokens.Fragments.SettingsFragment;
+import com.halaltokens.halaltokens.R;
+import com.halaltokens.halaltokens.Helpers.RoomsAvailable;
 
 
 public class DashboardActivity extends AppCompatActivity implements QRFragment.OnFragmentInteractionListener, FavRoomsFragment.OnFragmentInteractionListener {
