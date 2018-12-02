@@ -1,4 +1,4 @@
-/**
+/*
  * A fragment that displays the list of buildings to display to the user
  */
 
@@ -19,9 +19,6 @@ import com.halaltokens.halaltokens.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class BuildingFragment extends Fragment {
     private static OnItemClickListener callback;
 

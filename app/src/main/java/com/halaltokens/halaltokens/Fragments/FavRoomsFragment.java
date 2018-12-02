@@ -59,11 +59,10 @@ public class FavRoomsFragment extends Fragment {
             sendIntent.setAction(Intent.ACTION_SEND);
             Realm realm = Realm.getDefaultInstance();
             realm.beginTransaction();
-            RealmResults<RoomInfo> result = realm.where(RoomInfo.class).findAll();
+            RealmResults<RoomInfoRealmList> result = realm.where(RoomInfoRealmList.class).findAll();
             for (int i = 0; i < result.size(); i++) {
-                if (result.get(i).getRoomName().trim().equals(roomName)) {
-                    sendIntent.putExtra(Intent.EXTRA_TITLE, result.get(i).getRoomName());
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, result.get(i).toString());
+                if (result.get(i).getRoomInfo(0).getRoomName().trim().equals(roomName)) {
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Room "+result.get(i).getRoomInfo(0).getRoomName()+" is free, wanna join me?\n\n"+result.get(i).getRoomInfo(0).getRoomName()+" is booked at these times:\n"+result.get(i).toStringShare());
                 }
             }
             realm.commitTransaction();

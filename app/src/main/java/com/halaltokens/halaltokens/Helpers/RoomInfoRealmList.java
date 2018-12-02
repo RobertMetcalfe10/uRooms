@@ -49,4 +49,12 @@ public class RoomInfoRealmList extends RealmObject {
         }
         return result;
     }
+
+    public String toStringShare() {
+        String result = "";
+        for (RoomInfo room : roomInfoArrayList) {
+            result += room.toStringShare() + "\n";
+        }
+        return result;
+    }
 }
