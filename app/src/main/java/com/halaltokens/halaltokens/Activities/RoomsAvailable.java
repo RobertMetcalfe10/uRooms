@@ -1,5 +1,5 @@
 /*
- * Rooms available displays the available rooms based on the scrapper data
+ * Rooms available displays the available rooms based on data pulled from firebase
  */
 
 
@@ -66,6 +66,7 @@ public class RoomsAvailable extends AppCompatActivity {
         building = intent.getStringExtra("Building");
         Log.v("Building", building);
 
+        // Async Task to pull information from firebase and separate it into rooms available now and in an hour
         @SuppressLint("StaticFieldLeak") AsyncTask<Context, String, String> asyncTask = new AsyncTask<Context, String, String>() {
 
             @Override
@@ -172,8 +173,8 @@ public class RoomsAvailable extends AppCompatActivity {
             return false;
         });
 
+        // adds a room to favourites in Realm or unfavourites
         expListView.setOnChildClickListener((expandableListView, view, groupPosition, childPosition, id) -> {
-            //getting the data clicked on
             TextView tv = view.findViewById(R.id.lblListItem);
             ImageView iv = view.findViewById(R.id.lblListImage);
             String data = tv.getText().toString();

@@ -1,5 +1,5 @@
 /*
- * Class that stores rom information into local storage
+ * Class that stores list of rooms into local storage
  */
 
 

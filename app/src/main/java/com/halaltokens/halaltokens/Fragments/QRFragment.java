@@ -92,6 +92,7 @@ public class QRFragment extends Fragment {
             }
         });
 
+        //checks for QR codes
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
@@ -116,11 +117,7 @@ public class QRFragment extends Fragment {
                         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
                         webSettings.setDomStorageEnabled(true);
                         webSettings.setLoadsImagesAutomatically(true);
-                        myWebView.setWebViewClient(new WebViewClient() {
-                            public void onPageFinished(WebView view, String url) {
-                                Log.i("Loaded", "Finished loading URL: " + url);
-                            }
-                        });
+                        myWebView.setWebViewClient(new WebViewClient());
                         myWebView.loadUrl(link);
 
                         if (link.contains("www.ucd.ie/rooms/")) {

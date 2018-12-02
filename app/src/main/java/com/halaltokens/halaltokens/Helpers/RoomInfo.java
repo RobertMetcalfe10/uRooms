@@ -1,5 +1,5 @@
 /*
- *
+ * class that stores key points of data about each room
  */
 
 

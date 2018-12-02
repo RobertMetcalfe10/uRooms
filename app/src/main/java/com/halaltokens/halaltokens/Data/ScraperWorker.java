@@ -1,5 +1,5 @@
 /*
- * Scrapes the data from the website using the thread pool
+ * Scrapes the data from the uRooms website using a thread pool
  */
 
 
@@ -47,9 +47,9 @@ public class ScraperWorker extends Worker {
         super(context, params);
     }
 
+    //checks firebase to see if scraping has already been done, if not, start each runnable in a new thread to scrape the room info
     @Override
     public Worker.Result doWork() {
-        Log.v("HELP", LocalDateTime.now().toString());
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("");
         String day = "";
@@ -78,7 +78,7 @@ public class ScraperWorker extends Worker {
                 Map<String, String> map = new HashMap<>();
                 map.put("p_butn", "1");
                 map.put("p_title", "Welcome+to+SISWeb");
-//                map.put("p_username", "15551647");
+                map.put("p_username", "15551647");
                 map.put("p_password", "Destiny10");
                 map.put("p_forward", "W_HU_MENU.P_DISPLAY_MENU¬p_menu=SI-HOME");
                 map.put("p_lmet", "SISWEB");

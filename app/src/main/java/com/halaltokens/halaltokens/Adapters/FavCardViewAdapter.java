@@ -1,7 +1,7 @@
 /*
  * This is an adapter for the card view fav fragment.
- * It allows the user to share a room that they have favorited and also
- * unfav it straight from the app.
+ * It allows the user to share a room that they have favourited and also
+ * unfavourite.
  */
 
 
@@ -37,11 +37,9 @@ public class FavCardViewAdapter extends RecyclerView.Adapter<FavCardViewAdapter.
 
         MyViewHolder(View view) {
             super(view);
-            //initialize cardview
             CardView cardView = view.findViewById(R.id.card_view_fav);
-            cardView.setCardElevation(20);//setcardview elevation
-            cardView.setRadius(30);       //set radius of cardview
-            //initialize textviews
+            cardView.setCardElevation(20);
+            cardView.setRadius(30);
             roomName = view.findViewById(R.id.roomName);
             favButton = view.findViewById(R.id.unFav);
             shareButton = view.findViewById(R.id.shareButton);
@@ -96,7 +94,6 @@ public class FavCardViewAdapter extends RecyclerView.Adapter<FavCardViewAdapter.
         return new FavCardViewAdapter.MyViewHolder(itemView);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull FavCardViewAdapter.MyViewHolder holder, int position) {
         String building = this.buildings.get(position);

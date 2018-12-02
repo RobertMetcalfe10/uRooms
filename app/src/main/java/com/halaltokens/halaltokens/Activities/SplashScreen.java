@@ -1,5 +1,5 @@
 /*
- * Splash screen
+ * Splash screen, checks is user logged in, and starts the scrapper(see bottom)
  */
 
 

@@ -34,14 +34,6 @@ import io.realm.RealmList;
 import io.realm.RealmResults;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FavRoomsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FavRoomsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FavRoomsFragment extends Fragment {
 
     private RecyclerView recyclerView;

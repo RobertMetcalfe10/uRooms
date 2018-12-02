@@ -29,24 +29,13 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.realm.Realm;
 
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class SettingsFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
 
     public SettingsFragment() {
     }
 
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
     public static SettingsFragment newInstance() {
-        /*
-      The fragment argument representing the section number for this
-      fragment.
-     */
         return new SettingsFragment();
     }
 

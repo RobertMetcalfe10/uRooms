@@ -1,3 +1,7 @@
+/*
+ *  Scrapes every room for this building
+ */
+
 package com.halaltokens.halaltokens.Runnables;
 
 import android.content.Context;
